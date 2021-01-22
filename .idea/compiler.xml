@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="1.7">
+      <module name="FinalFIleManager.app" target="1.8" />
+      <module name="FinalFIleManager.core-files" target="1.8" />
+      <module name="FinalFIleManager.core-media-player" target="1.8" />
+      <module name="FinalFIleManager.feature-images" target="1.8" />
+      <module name="FinalFIleManager.feature-rv-files-api" target="1.8" />
+      <module name="FinalFIleManager.feature-rv-files-impl" target="1.8" />
+      <module name="FinalFIleManager.feature-rv-media-api" target="1.8" />
+      <module name="FinalFIleManager.feature-rv-media-impl" target="1.8" />
+      <module name="FinalFIleManager.models" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

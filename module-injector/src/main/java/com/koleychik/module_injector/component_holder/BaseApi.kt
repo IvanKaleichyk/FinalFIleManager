@@ -1,0 +1,3 @@
+package com.koleychik.module_injector.component_holder
+
+interface BaseApi

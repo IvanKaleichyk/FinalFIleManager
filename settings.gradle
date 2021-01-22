@@ -1,0 +1,12 @@
+include ':feature-rv-files-impl'
+include ':feature-rv-files-api'
+include ':core-media-player'
+include ':feature-rv-media-impl'
+include ':feature-rv-media-api'
+include ':feature-images'
+include ':models'
+include ':data'
+include ':core-files'
+include ':module-injector'
+include ':app'
+rootProject.name = "FinalFIleManager"
