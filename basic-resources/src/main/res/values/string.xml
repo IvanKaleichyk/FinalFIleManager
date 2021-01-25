@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="folders">Folders</string>
+    <string name="files">Files</string>
+    <string name="delete">delete</string>
+    <string name="loading_item">loading item</string>
+    <string name="loading">loading</string>
+    <string name="no_resource_on_device">No resource on Device</string>
+
+
+</resources>

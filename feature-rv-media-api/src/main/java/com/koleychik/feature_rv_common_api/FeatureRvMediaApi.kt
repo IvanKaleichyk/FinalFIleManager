@@ -4,5 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 interface FeatureRvMediaApi {
-    fun <T : RecyclerView.ViewHolder> adapter(): FeatureRvMediaAdapterApi<T>
+    fun getViewHolder(): FeatureRvMediaViewHolderApi
+    fun adapter(): FeatureRvMediaAdapterApi
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -39,6 +40,11 @@ android {
 dependencies {
 
     implementation project(":basic-resources")
+    implementation project(":module-injector")
+    implementation project(":models")
+    implementation project(":core-files")
+    implementation project(":feature-rv-media-api")
+    implementation project(":feature-loading-api")
 
     implementation androidCore.kotlin_stdlib
     implementation androidCore.core
@@ -46,10 +52,18 @@ dependencies {
     implementation androidCore.material
     implementation androidCore.constraintlayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    //   Dagger
+    implementation dagger.core
+    kapt dagger.compile
+
+    // viewModel
+    implementation viewModel.lifecycle
+    implementation viewModel.fragment
+    kapt viewModel.kapt_lifecycle
+
+//    TEST
     testImplementation tests.junit
     androidTestImplementation tests.junitTestImplementation
     androidTestImplementation tests.espresso
-
-//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-//    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
 }

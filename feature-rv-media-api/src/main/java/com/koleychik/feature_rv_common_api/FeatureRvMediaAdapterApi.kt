@@ -5,7 +5,6 @@ import androidx.viewbinding.ViewBinding
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.media.MediaCarcass
 
-abstract class FeatureRvMediaAdapterApi<T : RecyclerView.ViewHolder> : RecyclerView.Adapter<T>() {
-
+abstract class FeatureRvMediaAdapterApi : RecyclerView.Adapter<FeatureRvMediaViewHolderApi>() {
     abstract fun submitList(newList: List<MediaCarcass>)
 }

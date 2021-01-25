@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -39,15 +40,21 @@ android {
 dependencies {
 
     implementation project(':models')
+    implementation project(":module-injector")
     implementation project(':feature-rv-files-api')
+
 
     implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
     implementation androidCore.material
     implementation androidCore.constraintlayout
+
+    //   Dagger
+    implementation dagger.core
+    kapt dagger.compile
+
+//    TEST
     testImplementation tests.junit
     androidTestImplementation tests.junitTestImplementation
-
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
 }

@@ -21,48 +21,12 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
-        android:id="@+id/loadingMotionLayout"
+    <ViewStub
+        android:id="@+id/viewStub"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:layoutDescription="@xml/main_loading_scene"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/firstCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/basicPadding"
-            android:contentDescription="@string/loading_item"
-            android:src="@drawable/loading_circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/secondCircle"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/secondCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/loading_item"
-            android:src="@drawable/loading_circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/thirdCircle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/basicPadding"
-            android:contentDescription="@string/loading_item"
-            android:src="@drawable/loading_circle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/secondCircle"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.motion.widget.MotionLayout>
-
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/tools"

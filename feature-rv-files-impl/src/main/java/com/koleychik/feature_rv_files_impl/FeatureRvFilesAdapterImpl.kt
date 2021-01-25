@@ -12,7 +12,7 @@ import com.koleychik.models.fileCarcass.FileCarcass
 class FeatureRvFilesAdapterImpl :
     FeatureRvFilesAdapterApi<FeatureRvFilesAdapterImpl.MainViewHolder>() {
 
-    val list: SortedList<FileCarcass>
+    private val list: SortedList<FileCarcass>
 
     init {
         list = SortedList(

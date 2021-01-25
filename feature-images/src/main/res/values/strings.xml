@@ -1,4 +1,7 @@
 <resources>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="buttonImage_to_delete">buttonImage to delete</string>
+    <string name="buttonImage_to_close">buttonImage to close</string>
+
 </resources>

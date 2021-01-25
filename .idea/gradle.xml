@@ -23,6 +23,7 @@
             <option value="$PROJECT_DIR$/feature-rv-files-impl" />
             <option value="$PROJECT_DIR$/feature-rv-media-api" />
             <option value="$PROJECT_DIR$/feature-rv-media-impl" />
+            <option value="$PROJECT_DIR$/feature-select-category" />
             <option value="$PROJECT_DIR$/models" />
             <option value="$PROJECT_DIR$/module-injector" />
           </set>
