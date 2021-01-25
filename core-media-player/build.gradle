@@ -34,7 +34,10 @@ android {
 
 dependencies {
 
-    implementation androidCore.kotlin
+    implementation project(":models")
+    implementation project(":module-injector")
+
+    implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
     testImplementation tests.junit

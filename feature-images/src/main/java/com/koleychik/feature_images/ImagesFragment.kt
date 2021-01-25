@@ -1,5 +1,6 @@
 package com.koleychik.feature_images
 
+import android.media.session.MediaSessionManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,7 +14,37 @@ class ImagesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+
         return inflater.inflate(R.layout.fragment_images, container, false)
     }
+
+    private fun subscribe() {
+
+    }
+
+    private fun loading() {}
+
+    private fun emptyList() {
+
+    }
+
+    private fun setList() {
+
+    }
+
+    private fun create
+
+    private fun createRv(){
+
+    }
+
+    private fun createSwipeToRefresh(){
+
+    }
+
+    private fun resetViews() {
+
+    }
+
 }

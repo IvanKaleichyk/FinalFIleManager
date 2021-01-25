@@ -38,14 +38,18 @@ android {
 
 dependencies {
 
-    implementation androidCore.kotlin
+    implementation project(":basic-resources")
+
+    implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
     implementation androidCore.material
     implementation androidCore.constraintlayout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     testImplementation tests.junit
     androidTestImplementation tests.junitTestImplementation
     androidTestImplementation tests.espresso
 
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
+//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+//    implementation "org.jetbrains.kotlin:kotlin-reflect:1.4.21"
 }

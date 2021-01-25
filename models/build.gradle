@@ -35,7 +35,7 @@ android {
 
 dependencies {
 
-    implementation androidCore.kotlin
+    implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
 

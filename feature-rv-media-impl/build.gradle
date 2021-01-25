@@ -40,7 +40,7 @@ dependencies {
     implementation project(':models')
     implementation project(':feature-rv-media-api')
 
-    implementation androidCore.kotlin
+    implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
     implementation androidCore.material

@@ -35,7 +35,7 @@ android {
 dependencies {
 
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:${deps.kotlin_version}"
-    implementation androidCore.kotlin
+    implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
     implementation androidCore.material
