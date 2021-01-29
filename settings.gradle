@@ -1,3 +1,4 @@
+include ':feature-music'
 include ':feature-select-category'
 include ':feature-loading-impl'
 include ':feature-loading-api'
