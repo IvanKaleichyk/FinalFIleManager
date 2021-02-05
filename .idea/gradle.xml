@@ -12,14 +12,18 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app-annotations" />
             <option value="$PROJECT_DIR$/basic-resources" />
             <option value="$PROJECT_DIR$/core-files" />
             <option value="$PROJECT_DIR$/core-media-player" />
             <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/example-images-feature" />
+            <option value="$PROJECT_DIR$/fake-data" />
             <option value="$PROJECT_DIR$/feature-images" />
             <option value="$PROJECT_DIR$/feature-loading-api" />
             <option value="$PROJECT_DIR$/feature-loading-impl" />
             <option value="$PROJECT_DIR$/feature-music" />
+            <option value="$PROJECT_DIR$/feature-music-info" />
             <option value="$PROJECT_DIR$/feature-rv-files-api" />
             <option value="$PROJECT_DIR$/feature-rv-files-impl" />
             <option value="$PROJECT_DIR$/feature-rv-media-api" />

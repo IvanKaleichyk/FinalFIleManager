@@ -37,14 +37,27 @@ dependencies {
 
     implementation project(":models")
     implementation project(":module-injector")
+    implementation project(":core-files")
 
     implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
 
-    //   Dagger
-    implementation dagger.core
-    kapt dagger.compile
+    implementation "androidx.media:media:${media.core}"
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:${glide.version}"
+    kapt "com.github.bumptech.glide:compiler:${glide.version}"
+
+    // ExoPlayer
+    implementation "com.google.android.exoplayer:exoplayer-core:${exoPlayer.version}"
+    implementation "com.google.android.exoplayer:exoplayer-dash:${exoPlayer.version}"
+    implementation "com.google.android.exoplayer:exoplayer-ui:${exoPlayer.version}"
+    implementation "com.google.android.exoplayer:extension-mediasession:${exoPlayer.version}"
+
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 
 //    TEST
     testImplementation tests.junit

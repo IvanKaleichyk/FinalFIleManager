@@ -1,3 +1,7 @@
+include ':fake-data'
+include ':example-images-feature'
+include ':app-annotations'
+include ':feature-music-info'
 include ':feature-music'
 include ':feature-select-category'
 include ':feature-loading-impl'

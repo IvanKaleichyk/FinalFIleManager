@@ -25,7 +25,7 @@
 
     <style name="logoText" parent="basicTextWithShadow">
         <item name="android:fontFamily">@font/montserrat_bold</item>
-        <item name="android:textSize">@dimen/LogoTextSize</item>
+        <item name="android:textSize">@dimen/logoTextSize</item>
     </style>
 
     <style name="textSize">
@@ -41,7 +41,7 @@
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/roboto_italic</item>
         <item name="android:textColor">@color/colorMain</item>
-        <item name="android:textSize">@dimen/LogoTextSize</item>
+        <item name="android:textSize">@dimen/logoTextSize</item>
     </style>
 
 </resources>

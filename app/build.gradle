@@ -35,6 +35,20 @@ android {
 
 dependencies {
 
+    implementation project(":module-injector")
+    implementation project(":core-media-player")
+    implementation project(":core-files")
+    implementation project(":feature-images")
+    implementation project(":feature-loading-api")
+    implementation project(":feature-loading-impl")
+    implementation project(":feature-music")
+    implementation project(":feature-music-info")
+    implementation project(":feature-rv-files-api")
+    implementation project(":feature-rv-files-impl")
+    implementation project(":feature-rv-media-api")
+    implementation project(":feature-rv-media-impl")
+    implementation project(":feature-select-category")
+
     implementation androidCore.kotlin_stdlib
     implementation androidCore.core
     implementation androidCore.appComponent
@@ -44,7 +58,12 @@ dependencies {
     androidTestImplementation tests.junitTestImplementation
     androidTestImplementation tests.espresso
 
-//   Dagger
-    implementation dagger.core
-    kapt dagger.compile
+
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${navigation.version}"
+    implementation "androidx.navigation:navigation-ui-ktx:${navigation.version}"
+
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 }

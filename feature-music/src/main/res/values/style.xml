@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="textSeekBarPosition" parent="basicText">
+        <item name="android:textSize">@dimen/basicTextSize</item>
+    </style>
+
+    <style name="imagePlayerButton">
+        <item name="android:layout_width">@dimen/widthImgPlayerButton</item>
+        <item name="android:layout_height">@dimen/heightImgPlayerButton</item>
+    </style>
+
+    <style name="textUnKnownSize" parent="basicText">
+        <item name="android:paddingStart">@dimen/basicPadding</item>
+        <item name="android:paddingEnd">@dimen/basicPadding</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="textTitle" parent="textUnKnownSize">
+        <item name="android:textSize">@dimen/logoTextSize</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="textAuthor" parent="textUnKnownSize">
+        <item name="android:textSize">@dimen/basicTextSize</item>
+        <item name="android:textColor">@color/colorGray</item>
+    </style>
+
+    <style name="textDuration" parent="basicText">
+        <item name="android:textSize">@dimen/basicTextSize</item>
+    </style>
+
+</resources>

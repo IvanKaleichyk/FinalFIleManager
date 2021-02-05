@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MusicInfoFragment">
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/basicMargin"
+        android:contentDescription="@string/image_logo"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/textTitle"
+        android:text="Title"
+        app:layout_constraintBottom_toTopOf="@+id/textAuthor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textAuthor"
+        style="@style/textAuthor"
+        android:layout_marginBottom="@dimen/basicMargin"
+        android:text="Author"
+        app:layout_constraintBottom_toTopOf="@+id/playOrPause"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/previous"
+        style="@style/imagePlayerButton"
+        android:src="@drawable/previous_icon_64_black"
+        app:layout_constraintBottom_toBottomOf="@+id/playOrPause"
+        app:layout_constraintEnd_toStartOf="@+id/playOrPause" />
+
+    <ImageView
+        android:id="@+id/playOrPause"
+        style="@style/imagePlayerButton"
+        android:layout_marginBottom="@dimen/smallMargin"
+        android:src="@drawable/pause_icon_64_dark"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintEnd_toEndOf="@+id/seekBar"
+        app:layout_constraintStart_toStartOf="@+id/seekBar" />
+
+    <ImageView
+        android:id="@+id/next"
+        style="@style/imagePlayerButton"
+        android:src="@drawable/next_icon_64_black"
+        app:layout_constraintBottom_toBottomOf="@+id/playOrPause"
+        app:layout_constraintStart_toEndOf="@+id/playOrPause" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/heightSeekBar"
+        android:layout_marginStart="@dimen/basicMargin"
+        android:layout_marginEnd="@dimen/basicMargin"
+        android:layout_marginBottom="@dimen/smallMargin"
+        android:progress="50"
+        app:layout_constraintBottom_toTopOf="@+id/nowPosition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/nowPosition"
+        style="@style/textSeekBarPosition"
+        android:layout_marginBottom="@dimen/basicMargin"
+        android:text="1:10"
+        android:textColor="@color/colorGray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/seekBar" />
+
+    <TextView
+        android:id="@+id/maxPosition"
+        style="@style/textSeekBarPosition"
+        android:layout_marginBottom="@dimen/basicMargin"
+        android:text="3:20"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/seekBar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

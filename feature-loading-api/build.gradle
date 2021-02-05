@@ -39,7 +39,9 @@ dependencies {
     implementation androidCore.kotlin_stdlib
     implementation androidCore.core
 
-    //   Dagger
-    implementation dagger.core
-    kapt dagger.compile
+    implementation "androidx.media:media:${media.core}"
+
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 }

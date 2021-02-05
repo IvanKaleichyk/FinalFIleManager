@@ -1,31 +1,38 @@
 package com.koleychik.feature_music
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.support.v4.media.MediaMetadataCompat
+import android.support.v4.media.session.MediaControllerCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.koleychik.feature_loading_api.LoadingApi
+import com.koleychik.feature_music.adapters.MusicAdapter
+import com.koleychik.feature_music.databinding.FragmentMusicBinding
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MusicFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MusicFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private var _binding: FragmentMusicBinding? = null
+
+    private val binding get() = _binding!!
+
+    @Inject
+    lateinit var adapter: MusicAdapter
+
+    @Inject
+    lateinit var viewModel: MusicViewModel
+
+    @Inject
+    lateinit var loadingApi: LoadingApi
+
+    @Inject
+    lateinit var mediaController: MediaControllerCompat
+
+    private val onClick: ((model: MediaMetadataCompat) -> Unit) by lazy {
+        {
+            viewModel.setData(it)
         }
     }
 
@@ -33,27 +40,121 @@ class MusicFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        _binding = FragmentMusicBinding.inflate(layoutInflater, container, false)
         return inflater.inflate(R.layout.fragment_music, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MusicFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MusicFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        createRv()
+        createSwipeToRefresh()
+        setupViewStub()
+        createOnCLickListener()
+        subscribe()
+    }
+
+    private fun createOnCLickListener() {
+        val onClickListener = View.OnClickListener {
+            when (it.id) {
+                R.id.previous -> mediaController.transportControls.skipToPrevious()
+                R.id.pauseOrPlay -> playOrPause()
+                R.id.next -> mediaController.transportControls.skipToNext()
             }
+        }
+        with(binding) {
+            previous.setOnClickListener(onClickListener)
+            pauseOrPlay.setOnClickListener(onClickListener)
+            next.setOnClickListener(onClickListener)
+        }
+    }
+
+    private fun playOrPause() {
+        if (viewModel.isPlaying.value == true) mediaController.transportControls.pause()
+        else mediaController.transportControls.play()
+
+    }
+
+    private fun createRv() {
+        binding.rv.adapter = adapter
+        adapter.onClick = onClick
+    }
+
+    private fun createSwipeToRefresh() {
+        with(binding.swipeToRefresh) {
+            setOnRefreshListener {
+                isRefreshing = true
+                loading()
+            }
+        }
+    }
+
+    private fun subscribe() {
+        viewModel.list.observe(viewLifecycleOwner, {
+            resetViews()
+            when {
+                it == null -> loading()
+                it.isEmpty() -> emptyList()
+                else -> showList(it)
+            }
+        })
+        viewModel.currentAudio.observe(viewLifecycleOwner, {
+            if (it == null) binding.motionLayout.transitionToState(R.id.footerClosed)
+            else {
+                updateData(it)
+                binding.motionLayout.transitionToState(R.id.footerOpen)
+            }
+        })
+        viewModel.isPlaying.observe(viewLifecycleOwner, {
+            if (it) binding.pauseOrPlay.setImageResource(R.drawable.pause_icon_48_black)
+            else binding.pauseOrPlay.setImageResource(R.drawable.play_icon_48_black)
+        })
+    }
+
+    private fun showList(list: List<MediaMetadataCompat>) {
+        adapter.submitList(list)
+        binding.rv.visibility = View.VISIBLE
+    }
+
+    private fun emptyList() {
+        binding.infoText.visibility = View.VISIBLE
+    }
+
+    private fun loading() {
+        loadingApi.apply {
+            setVisible(true)
+            startAnimation()
+        }
+        viewModel.load()
+    }
+
+    private fun setupViewStub() {
+        binding.viewStub.apply {
+            layoutResource = loadingApi.getLayoutRes()
+            inflate()
+        }
+    }
+
+    private fun updateData(model: MediaMetadataCompat) {
+        with(binding) {
+            textTitle.text = model.description.title
+            textAuthor.text = model.description.subtitle
+        }
+    }
+
+    private fun resetViews() {
+        with(binding) {
+            infoText.visibility = View.GONE
+            rv.visibility = View.INVISIBLE
+            swipeToRefresh.isRefreshing = false
+        }
+        loadingApi.apply {
+            setVisible(false)
+            endAnimation()
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

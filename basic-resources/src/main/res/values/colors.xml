@@ -14,6 +14,7 @@
     <color name="colorGray">#707070</color>
     <color name="colorGray50">#80707070</color>
     <color name="colorGrayLight">#DEDEDE</color>
+    <color name="colorGraySuperLight">#F8F5F5</color>
     <color name="colorTransparent">#FFFFFFFF</color>
     <color name="colorShadow">#7F000000</color>
 </resources>

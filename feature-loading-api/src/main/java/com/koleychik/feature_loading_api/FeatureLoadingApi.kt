@@ -1,6 +1,8 @@
 package com.koleychik.feature_loading_api
 
-interface FeatureLoadingApi {
+import com.koleychik.module_injector.component_holder.BaseApi
+
+interface FeatureLoadingApi : BaseApi {
 
     fun getLoadingApi(): LoadingApi
 

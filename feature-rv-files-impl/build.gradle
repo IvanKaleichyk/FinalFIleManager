@@ -50,9 +50,9 @@ dependencies {
     implementation androidCore.material
     implementation androidCore.constraintlayout
 
-    //   Dagger
-    implementation dagger.core
-    kapt dagger.compile
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 
 //    TEST
     testImplementation tests.junit

@@ -39,6 +39,7 @@ android {
 
 dependencies {
 
+    implementation project(":app-annotations")
     implementation project(":basic-resources")
     implementation project(":module-injector")
     implementation project(":models")
@@ -53,14 +54,18 @@ dependencies {
     implementation androidCore.constraintlayout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
-    //   Dagger
-    implementation dagger.core
-    kapt dagger.compile
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 
     // viewModel
-    implementation viewModel.lifecycle
-    implementation viewModel.fragment
-    kapt viewModel.kapt_lifecycle
+    implementation "androidx.lifecycle:lifecycle-extensions:${viewModel.lifecycle}"
+    implementation "androidx.fragment:fragment-ktx:${viewModel.fragment}"
+    kapt "androidx.lifecycle:lifecycle-common-java8:${viewModel.kapt_lifecycle}"
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines.core}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines.android}"
 
 //    TEST
     testImplementation tests.junit

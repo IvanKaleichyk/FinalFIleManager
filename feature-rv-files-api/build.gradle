@@ -43,7 +43,7 @@ dependencies {
     implementation androidCore.appComponent
     implementation androidCore.material
 
-    //   Dagger
-    implementation dagger.core
-    kapt dagger.compile
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 }

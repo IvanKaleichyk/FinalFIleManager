@@ -4,7 +4,7 @@
     <dimen name="basicTextSize">20sp</dimen>
     <dimen name="largeTextSize">32sp</dimen>
     <dimen name="smallTextSize">16sp</dimen>
-    <dimen name="LogoTextSize">24sp</dimen>
+    <dimen name="logoTextSize">24sp</dimen>
     <dimen name="extraBigTextSize">40sp</dimen>
 
     <dimen name="basicPadding">10dp</dimen>

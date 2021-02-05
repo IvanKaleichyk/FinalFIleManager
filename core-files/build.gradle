@@ -42,9 +42,11 @@ dependencies {
     implementation androidCore.core
     implementation androidCore.appComponent
 
-    //   Dagger
-    implementation dagger.core
-    kapt dagger.compile
+    implementation "androidx.media:media:${media.core}"
+
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 
 //    TEST
     testImplementation tests.junit

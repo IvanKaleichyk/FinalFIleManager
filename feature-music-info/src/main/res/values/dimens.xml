@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="widthSeekBar">200dp</dimen>
+    <dimen name="heightSeekBar">15dp</dimen>
+    <dimen name="widthImgPlayerButton">64dp</dimen>
+    <dimen name="heightImgPlayerButton">64dp</dimen>
+</resources>
