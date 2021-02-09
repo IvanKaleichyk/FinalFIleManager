@@ -2,6 +2,7 @@ package com.koleychik.finalfilemanager
 
 import android.app.Application
 import com.koleychik.finalfilemanager.di.AppComponent
+import com.koleychik.finalfilemanager.di.DaggerAppComponent
 import com.koleychik.finalfilemanager.di.modules.AppModule
 
 class App: Application() {

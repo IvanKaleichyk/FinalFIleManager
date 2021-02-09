@@ -47,8 +47,9 @@ dependencies {
     implementation androidCore.appComponent
     implementation androidCore.material
     implementation androidCore.constraintlayout
-    testImplementation tests.junit
-    androidTestImplementation tests.junitTestImplementation
+//    TEST
+    testImplementation "junit:junit:${tests.junitVersion}"
+    androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
 
     // coil
     implementation coil.core

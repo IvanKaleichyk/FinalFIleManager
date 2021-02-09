@@ -4,6 +4,5 @@ import com.koleychik.module_injector.component_holder.BaseApi
 
 
 interface RvMediaApi : BaseApi {
-    fun getViewHolder(): RvMediaViewHolderApi
     fun rvMediaAdapterApi(): RvMediaAdapterApi
 }

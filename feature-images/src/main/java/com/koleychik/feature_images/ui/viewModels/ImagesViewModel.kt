@@ -8,8 +8,10 @@ import com.koleychik.models.fileCarcass.media.ImageModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-internal class ImagesViewModel(private val repository: FilesRepository) : ViewModel() {
+internal class ImagesViewModel @Inject constructor(private val repository: FilesRepository) :
+    ViewModel() {
 
     val list = MutableLiveData<List<ImageModel>>(null)
 

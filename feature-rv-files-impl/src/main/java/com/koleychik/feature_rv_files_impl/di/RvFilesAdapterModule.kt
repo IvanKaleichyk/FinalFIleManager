@@ -12,7 +12,4 @@ internal abstract class RvFilesAdapterModule {
     @Binds
     abstract fun provideRvFilesAdapter(impl: RvFilesAdapterImpl): RvFilesAdapterApi
 
-    @Binds
-    abstract fun provideViewHolder(impl: RvFilesAdapterImpl.MainViewHolder): RvFilesAdapterViewHolder
-
 }

@@ -76,7 +76,7 @@ class MediaPlayerService : MediaBrowserServiceCompat() {
     fun prepareToPlay(_currentMetadataPosition: Int? = mediaSource.currentMetadataPosition) {
         val currentMetadata: Int = _currentMetadataPosition ?: 0
         player.apply {
-            prepare(mediaSource.list.asMediaSource(dsf))
+//            prepare(mediaSource.list.asMediaSource(dsf))
             seekTo(currentMetadata, 0L)
             playWhenReady = true
         }
@@ -92,7 +92,7 @@ class MediaPlayerService : MediaBrowserServiceCompat() {
         parentId: String,
         result: Result<MutableList<MediaBrowserCompat.MediaItem>>
     ) {
-        if (parentId == MEDIA_ROOT_ID) result.sendResult(mediaSource.list.asMediaItem())
+//        if (parentId == MEDIA_ROOT_ID) result.sendResult(mediaSource.list.asMediaItem())
     }
 
     override fun onDestroy() {

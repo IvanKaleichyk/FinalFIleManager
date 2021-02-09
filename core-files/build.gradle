@@ -35,6 +35,7 @@ android {
 
 dependencies {
 
+    implementation project(":app-annotations")
     implementation project(":models")
     implementation project(":module-injector")
 
@@ -49,6 +50,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 
 //    TEST
-    testImplementation tests.junit
-    androidTestImplementation tests.junitTestImplementation
+    testImplementation "junit:junit:${tests.junitVersion}"
+    androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
 }

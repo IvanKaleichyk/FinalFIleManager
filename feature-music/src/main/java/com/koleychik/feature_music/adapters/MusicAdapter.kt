@@ -6,14 +6,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.koleychik.feature_music.databinding.ItemRvMusicBinding
+import com.koleychik.models.fileCarcass.MusicModel
 
 class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
 
-    private val list = mutableListOf<MediaMetadataCompat>()
+    private val list = mutableListOf<MusicModel>()
 
-    var onClick: ((model: MediaMetadataCompat) -> Unit)? = null
+    var onClick: ((model: MusicModel) -> Unit)? = null
 
-    fun submitList(newList: List<MediaMetadataCompat>) {
+    fun submitList(newList: List<MusicModel>) {
         val diffUtil = MusicDiffUtil(newList, list)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         list.clear()
@@ -34,12 +35,12 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
     inner class MainViewHolder(private val binding: ItemRvMusicBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(model: MediaMetadataCompat) {
+        fun bind(model: MusicModel) {
             with(binding) {
-                textTitle.text = model.description.subtitle
-                textAuthor.text = model.description.title
-                textDuration.text = model.description.mediaDescription.toString()
-                textSize.text = model.size().toString()
+                textTitle.text = model.title
+                textAuthor.text = model.artist
+                textDuration.text = model.duration.toString()
+                textSize.text = model.sizeAbbreviation
                 binding.root.setOnClickListener {
                     onClick?.let { click -> click(model) }
                 }

@@ -56,9 +56,9 @@ def media = [
 ext.media = media
 
 def tests = [
-        junit                  : 'junit:junit:4.13.1',
-        junitTestImplementation: 'androidx.test.ext:junit:1.1.2',
-        espresso               : 'androidx.test.espresso:espresso-core:3.3.0'
+        junitVersion                  : '4.13.1',
+        junitTestImplementationVersion: '1.1.2',
+        espressoVersion               : '3.3.0'
 ]
 ext.tests = tests
 

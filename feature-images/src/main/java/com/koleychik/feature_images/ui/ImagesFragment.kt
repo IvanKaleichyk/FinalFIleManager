@@ -22,17 +22,17 @@ class ImagesFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
+    lateinit var loadingApi: LoadingApi
+
+    @Inject
     lateinit var adapter: RvMediaAdapterApi
 
     @Inject
-    internal lateinit var viewModelFactory: ImagesViewModelFactory
+    lateinit var viewModelFactory: ImagesViewModelFactory
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[ImagesViewModel::class.java]
     }
-
-    @Inject
-    lateinit var loadingApi: LoadingApi
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -13,8 +13,9 @@ import com.koleychik.feature_rv_common_api.RvMediaViewHolderApi
 import com.koleychik.feature_rv_common_impl.R
 import com.koleychik.feature_rv_common_impl.databinding.ItemRvMediaPriviewBinding
 import com.koleychik.models.fileCarcass.media.MediaCarcass
+import javax.inject.Inject
 
-internal class RvMediaAdapterImpl : RvMediaAdapterApi() {
+internal class RvMediaAdapterImpl @Inject constructor(): RvMediaAdapterApi() {
 
     private val list = mutableListOf<MediaCarcass>()
 

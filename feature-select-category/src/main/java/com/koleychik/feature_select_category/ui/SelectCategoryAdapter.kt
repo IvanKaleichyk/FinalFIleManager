@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.koleychik.feature_select_category.databinding.ItemRvSelectCategoryBinding
 import com.koleychik.models.CategoryModel
+import javax.inject.Inject
 
-class SelectCategoryAdapter : RecyclerView.Adapter<SelectCategoryAdapter.MainViewHolder>() {
+class SelectCategoryAdapter: RecyclerView.Adapter<SelectCategoryAdapter.MainViewHolder>() {
 
     private var list = listOf<CategoryModel>()
 

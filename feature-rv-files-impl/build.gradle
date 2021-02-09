@@ -55,6 +55,6 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 
 //    TEST
-    testImplementation tests.junit
-    androidTestImplementation tests.junitTestImplementation
+    testImplementation "junit:junit:${tests.junitVersion}"
+    androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_music.adapters.MusicAdapter
 import com.koleychik.feature_music.databinding.FragmentMusicBinding
+import com.koleychik.models.fileCarcass.MusicModel
 import javax.inject.Inject
 
 class MusicFragment : Fragment() {
@@ -30,7 +31,7 @@ class MusicFragment : Fragment() {
     @Inject
     lateinit var mediaController: MediaControllerCompat
 
-    private val onClick: ((model: MediaMetadataCompat) -> Unit) by lazy {
+    private val onClick: ((model: MusicModel) -> Unit) by lazy {
         {
             viewModel.setData(it)
         }
@@ -110,7 +111,7 @@ class MusicFragment : Fragment() {
         })
     }
 
-    private fun showList(list: List<MediaMetadataCompat>) {
+    private fun showList(list: List<MusicModel>) {
         adapter.submitList(list)
         binding.rv.visibility = View.VISIBLE
     }

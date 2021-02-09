@@ -17,8 +17,8 @@ class SelectCategoryFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    @Inject
-    lateinit var adapter: SelectCategoryAdapter
+
+    private val adapter = SelectCategoryAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

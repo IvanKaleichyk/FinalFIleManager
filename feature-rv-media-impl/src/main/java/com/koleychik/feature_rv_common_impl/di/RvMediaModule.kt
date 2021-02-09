@@ -11,7 +11,4 @@ internal abstract class RvMediaModule {
 
     @Binds
     abstract fun provideRvMediaAdapterApi(api: RvMediaAdapterImpl): RvMediaAdapterApi
-
-    abstract fun getViewHolder(viewHolder: RvMediaAdapterImpl.MainViewHolder): RvMediaViewHolderApi
-
 }

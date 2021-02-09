@@ -40,9 +40,10 @@ android {
 
 dependencies {
     implementation project(":basic-resources")
+    implementation project(":models")
     implementation project(":feature-loading-api")
     implementation project(":core-files")
-    implementation project(":core-media-player")
+//    implementation project(":core-media-player")
 
     implementation androidCore.kotlin_stdlib
     implementation androidCore.core
@@ -67,7 +68,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines.android}"
 
 //    TEST
-    testImplementation tests.junit
-    androidTestImplementation tests.junitTestImplementation
-    androidTestImplementation tests.espresso
+    testImplementation "junit:junit:${tests.junitVersion}"
+    androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${tests.espressoVersion}"
 }

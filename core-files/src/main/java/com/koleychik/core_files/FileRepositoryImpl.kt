@@ -11,10 +11,12 @@ import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
+import javax.inject.Inject
 
 
 @SuppressLint("Recycle")
-internal class FileRepositoryImpl(private val context: Context) : FilesRepository {
+internal class FileRepositoryImpl @Inject constructor(private val context: Context) :
+    FilesRepository {
 
     private val contentUri = "external"
 
@@ -74,18 +76,22 @@ internal class FileRepositoryImpl(private val context: Context) : FilesRepositor
             null
         ) ?: return emptyList()
 
-        while (cursor.moveToNext()) listRes.add(
-            MusicModel(
-                cursor.getString(1),
-                cursor.getString(2),
-                cursor.getString(3),
-                cursor.getString(4),
-                cursor.getLong(5),
-                Uri.withAppendedPath(uriExternal, cursor.getString(0)),
-                getSizeAbbreviation(cursor.getLong(6)),
-                cursor.getLong(7)
+        while (cursor.moveToNext()) {
+            val id = cursor.getLong(0)
+            listRes.add(
+                MusicModel(
+                    id,
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getLong(5),
+                    Uri.withAppendedPath(uriExternal, id.toString()),
+                    getSizeAbbreviation(cursor.getLong(6)),
+                    cursor.getLong(7)
+                )
             )
-        )
+        }
 
         return listRes
     }
@@ -123,7 +129,7 @@ internal class FileRepositoryImpl(private val context: Context) : FilesRepositor
             MediaStore.Files.getContentUri(contentUri),
             allFilesFromFolderProjections,
             selection = selection
-        ) ?: return listOf()
+        ) ?: return emptyList()
 
         val listRes = mutableListOf<FileCarcass>()
 //        while (cursor.moveToNext()) listRes.add(
@@ -152,7 +158,7 @@ internal class FileRepositoryImpl(private val context: Context) : FilesRepositor
     )
 
 
-    fun test(){
+    fun test() {
 
     }
 

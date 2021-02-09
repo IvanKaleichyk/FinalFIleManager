@@ -5,10 +5,9 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_loading_impl.R
+import javax.inject.Inject
 
-internal class LoadingImpl : LoadingApi {
-
-    val tag = "MAIN_APP_TAG"
+internal class LoadingImpl @Inject constructor() : LoadingApi {
 
     private lateinit var rootView: View
 

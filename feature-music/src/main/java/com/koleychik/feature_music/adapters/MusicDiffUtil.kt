@@ -2,17 +2,18 @@ package com.koleychik.feature_music.adapters
 
 import android.support.v4.media.MediaMetadataCompat
 import androidx.recyclerview.widget.DiffUtil
+import com.koleychik.models.fileCarcass.MusicModel
 
 class MusicDiffUtil(
-    private val newList: List<MediaMetadataCompat>,
-    private val oldList: List<MediaMetadataCompat>
+    private val newList: List<MusicModel>,
+    private val oldList: List<MusicModel>
 ) : DiffUtil.Callback() {
     override fun getOldListSize(): Int = oldList.size
 
     override fun getNewListSize(): Int = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition].description.mediaId == newList[newItemPosition].description.mediaId
+        oldList[oldItemPosition].id== newList[newItemPosition].id
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
         oldList[oldItemPosition] == newList[newItemPosition]
