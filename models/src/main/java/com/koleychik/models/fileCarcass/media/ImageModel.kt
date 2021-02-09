@@ -10,6 +10,5 @@ data class ImageModel(
     override val name: String,
     override val uri: Uri,
     override val sizeAbbreviation: String,
-    override val dateAdded: Long?,
-    override val imgRes: Int = R.drawable.images_icon_48_black
-) : MediaCarcass(id, name, uri, sizeAbbreviation, dateAdded, imgRes)
+    override val dateAdded: Long?
+) : MediaCarcass(id, name, uri, sizeAbbreviation, dateAdded)

@@ -20,12 +20,12 @@ class DescriptionAdapter(
 
     private val mediaController = mediaSession.controller
 
-    private fun onClick(){
-        mediaSession.
-    }
+//    private fun onClick(){
+//        mediaSession.
+//    }
 
     override fun getCurrentContentTitle(player: Player): CharSequence {
-        onClick(player.currentWindowIndex)
+//        onClick(player.currentWindowIndex)
         return mediaController.metadata.description.title.toString()
     }
 

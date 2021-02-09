@@ -10,8 +10,7 @@ abstract class FileCarcass(
     open val name: String,
     open val uri: Uri,
     open val sizeAbbreviation: String,
-    open val dateAdded: Long?,
-    open val imgRes: Int
+    open val dateAdded: Long?
 ) : Parcelable {
     val weight: Int by lazy { this.getWeight(name[0]) }
 

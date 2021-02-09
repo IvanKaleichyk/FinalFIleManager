@@ -12,5 +12,4 @@ class VideoModel(
     val duration: Long,
     override val sizeAbbreviation: String,
     override val dateAdded: Long,
-    override val imgRes: Int = R.drawable.video_icon_48_black
-) : MediaCarcass(id, name, uri, sizeAbbreviation, dateAdded, imgRes)
+) : MediaCarcass(id, name, uri, sizeAbbreviation, dateAdded)

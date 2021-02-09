@@ -1,28 +1,25 @@
 package com.koleychik.core_media_player.service
 
+import android.app.PendingIntent
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.media.MediaBrowserServiceCompat
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.PlayerNotificationManager
+import com.google.android.exoplayer2.ext.mediasession.MediaSessionConnector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.koleychik.core_media_player.service.MediaConstants.MEDIA_ROOT_ID
+import com.koleychik.core_media_player.service.callbacks.MediaQueueNavigator
+import com.koleychik.core_media_player.service.callbacks.MusicPlaybackPreparer
 import com.koleychik.core_media_player.service.extensions.asMediaItem
 import com.koleychik.core_media_player.service.extensions.asMediaSource
-import com.koleychik.core_media_player.service.extensions.createPendingIntent
 import javax.inject.Inject
-import javax.inject.Named
 
 class MediaPlayerService : MediaBrowserServiceCompat() {
 
     @Inject
     lateinit var mediaSource: MediaSource
-
-    @Inject
-    @Named("MainActivity")
-    lateinit var cls: Class<*>
 
     @Inject
     lateinit var dsf: DefaultDataSourceFactory
@@ -34,21 +31,45 @@ class MediaPlayerService : MediaBrowserServiceCompat() {
     lateinit var player: SimpleExoPlayer
 
     @Inject
+    lateinit var pendingIntent: PendingIntent
+
+    @Inject
     lateinit var playerListener: Player.EventListener
 
     @Inject
     lateinit var mediaSessionCallback: MediaSessionCompat.Callback
 
+    @Inject
+    lateinit var mediaSessionConnector: MediaSessionConnector
+
+    @Inject
+    lateinit var mediaQueueNavigator: MediaQueueNavigator
+
+    private val musicPlaybackPreparer: MusicPlaybackPreparer by lazy {
+        MusicPlaybackPreparer(mediaSource) {
+            prepareToPlay(mediaSource.list.indexOf(it))
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         setupMediaSession()
+        setupMediaSessionConnector()
     }
 
     private fun setupMediaSession() {
         mediaSession.apply {
-            setSessionActivity(createPendingIntent(cls))
+            setSessionActivity(pendingIntent)
             setSessionToken(sessionToken)
             setCallback(mediaSessionCallback)
+        }
+    }
+
+    private fun setupMediaSessionConnector() {
+        mediaSessionConnector.run {
+            setPlaybackPreparer(musicPlaybackPreparer)
+            setQueueNavigator(mediaQueueNavigator)
+            setPlayer(player)
         }
     }
 

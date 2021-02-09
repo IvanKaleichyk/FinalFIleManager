@@ -6,9 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".ImagesActivity">
 
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.koleychik.feature_images.ui.ImagesFragment"/>
+        android:name="com.koleychik.feature_images.ui.ImagesFragment"
+        app:navGraph="@navigation/nav_simple"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

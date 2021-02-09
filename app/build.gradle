@@ -58,6 +58,8 @@ dependencies {
     androidTestImplementation tests.junitTestImplementation
     androidTestImplementation tests.espresso
 
+    // EasyPermission
+    implementation 'pub.devrel:easypermissions:3.0.0'
 
     // navigation
     implementation "androidx.navigation:navigation-fragment-ktx:${navigation.version}"

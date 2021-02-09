@@ -10,5 +10,4 @@ data class DocumentModel(
     override val uri: Uri,
     override val sizeAbbreviation: String,
     override val dateAdded: Long,
-    override val imgRes: Int = R.drawable.documents_icon_48_black
-) : FileCarcass(name, uri, sizeAbbreviation, dateAdded, imgRes)
+) : FileCarcass(name, uri, sizeAbbreviation, dateAdded)

@@ -40,7 +40,8 @@
         style="@style/imagePlayerButton"
         android:src="@drawable/previous_icon_64_black"
         app:layout_constraintBottom_toBottomOf="@+id/playOrPause"
-        app:layout_constraintEnd_toStartOf="@+id/playOrPause" />
+        app:layout_constraintEnd_toStartOf="@+id/playOrPause"
+        android:contentDescription="@string/previous" />
 
     <ImageView
         android:id="@+id/playOrPause"
@@ -49,14 +50,16 @@
         android:src="@drawable/pause_icon_64_dark"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="@+id/seekBar"
-        app:layout_constraintStart_toStartOf="@+id/seekBar" />
+        app:layout_constraintStart_toStartOf="@+id/seekBar"
+        android:contentDescription="@string/play_or_pause" />
 
     <ImageView
         android:id="@+id/next"
         style="@style/imagePlayerButton"
         android:src="@drawable/next_icon_64_black"
         app:layout_constraintBottom_toBottomOf="@+id/playOrPause"
-        app:layout_constraintStart_toEndOf="@+id/playOrPause" />
+        app:layout_constraintStart_toEndOf="@+id/playOrPause"
+        android:contentDescription="@string/next" />
 
     <SeekBar
         android:id="@+id/seekBar"

@@ -46,7 +46,7 @@ def coil = [
 ext.coil = coil
 
 def navigation = [
-        version: '2.3.2',
+        version: '2.3.3',
 ]
 ext.navigation = navigation
 
@@ -63,7 +63,7 @@ def tests = [
 ext.tests = tests
 
 
-def addRepos(RepositoryHandler handler) {
+static def addRepos(RepositoryHandler handler) {
     handler.google()
     handler.jcenter()
     handler.maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }

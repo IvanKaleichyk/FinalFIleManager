@@ -36,7 +36,7 @@ class CustomPlayerNotificationManager(
         ).apply {
 
             setMediaSessionToken(token)
-            setSmallIcon(R.drawable.ic_notification)
+//            setSmallIcon(R.drawable.ic_notification)
 
             // Don't display the rewind or fast-forward buttons.
             setRewindIncrementMs(0)

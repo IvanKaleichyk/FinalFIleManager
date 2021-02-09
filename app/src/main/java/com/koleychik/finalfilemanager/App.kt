@@ -4,7 +4,7 @@ import android.app.Application
 import com.koleychik.finalfilemanager.di.AppComponent
 import com.koleychik.finalfilemanager.di.modules.AppModule
 
-class FileManagerApplication: Application() {
+class App: Application() {
 
     companion object{
         lateinit var component: AppComponent

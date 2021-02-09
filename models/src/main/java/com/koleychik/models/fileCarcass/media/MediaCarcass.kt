@@ -9,5 +9,4 @@ abstract class MediaCarcass(
     override val uri: Uri,
     override val sizeAbbreviation: String,
     override val dateAdded: Long?,
-    override val imgRes: Int
-) : FileCarcass(name, uri, sizeAbbreviation, dateAdded, imgRes)
+) : FileCarcass(name, uri, sizeAbbreviation, dateAdded)

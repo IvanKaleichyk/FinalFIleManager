@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FinalFIleManager</string>
+    <string name="cannot_without_permissions">the application cannot work without this permission</string>
 </resources>
