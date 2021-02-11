@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.DiffUtil
 import coil.clear
 import coil.load
 import coil.size.Scale
-import coil.transform.CircleCropTransformation
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaViewHolderApi
 import com.koleychik.feature_rv_common_impl.databinding.ItemRvMediaPriviewBinding
@@ -47,10 +46,8 @@ internal class RvMediaAdapterImpl @Inject constructor(): RvMediaAdapterApi() {
         holder.clear()
     }
 
-    inner class MainViewHolder(var _binding: ItemRvMediaPriviewBinding?) :
-        RvMediaViewHolderApi(_binding!!.root) {
-
-        private val binding get() = _binding!!
+    inner class MainViewHolder(private var binding: ItemRvMediaPriviewBinding) :
+        RvMediaViewHolderApi(binding.root) {
 
         override fun bind(model: MediaCarcass, position: Int) {
             loadImage(model.uri)
@@ -79,14 +76,13 @@ internal class RvMediaAdapterImpl @Inject constructor(): RvMediaAdapterApi() {
                     context.resources.getDimensionPixelSize(R.dimen.card_width),
                     context.resources.getDimensionPixelSize(R.dimen.card_width)
                 )
-                transformations(CircleCropTransformation())
+//                transformations(CircleCropTransformation())
                 scale(Scale.FILL)
             }
         }
 
         override fun clear() {
             binding.image.clear()
-            _binding = null
         }
     }
 }

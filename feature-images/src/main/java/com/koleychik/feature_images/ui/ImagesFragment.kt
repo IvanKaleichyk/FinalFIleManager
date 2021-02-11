@@ -112,6 +112,7 @@ class ImagesFragment : Fragment() {
             layoutResource = loadingApi.getLayoutRes()
             inflate()
         }
+        loadingApi.setRootView(requireView())
     }
 
     override fun onDestroyView() {

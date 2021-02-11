@@ -13,7 +13,7 @@ class App: Application() {
 
     override fun onCreate() {
         super.onCreate()
-        val component = DaggerAppComponent.builder().appModule(AppModule(applicationContext)).build()
+        component = DaggerAppComponent.builder().appModule(AppModule(applicationContext)).build()
         component.inject(this)
     }
 }

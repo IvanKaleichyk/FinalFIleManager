@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.koleychik.feature_select_category.databinding.ItemRvSelectCategoryBinding
+import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
 import com.koleychik.models.CategoryModel
 import javax.inject.Inject
 
-class SelectCategoryAdapter: RecyclerView.Adapter<SelectCategoryAdapter.MainViewHolder>() {
+class SelectCategoryAdapter @Inject constructor(private val navigationApi: SelectCategoryNavigationApi) :
+    RecyclerView.Adapter<SelectCategoryAdapter.MainViewHolder>() {
 
     private var list = listOf<CategoryModel>()
 
@@ -25,7 +27,7 @@ class SelectCategoryAdapter: RecyclerView.Adapter<SelectCategoryAdapter.MainView
 
     override fun getItemCount(): Int = list.size
 
-    class MainViewHolder(private val binding: ItemRvSelectCategoryBinding) :
+    inner class MainViewHolder(private val binding: ItemRvSelectCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(model: CategoryModel) {
@@ -34,11 +36,10 @@ class SelectCategoryAdapter: RecyclerView.Adapter<SelectCategoryAdapter.MainView
 
             binding.cardView.setOnClickListener {
                 when (model.id) {
-//                    0 -> navigation.navigate(R.id.action_selectCategoryFragment_to_imagesFragment)
-//                    1 -> navigation.navigate(R.id.)
-//                    2 -> navigation.navigate(R.id.)
-//                    3 -> navigation.navigate(R.id.action_selectCategoryFragment_to_documentsFragment)
-//                    4 -> navigation.navigate(R.id.)
+                    0 -> navigationApi.selectCategoryFeatureGoToImagesFragment()
+                    1 -> navigationApi.selectCategoryFeatureGoToVideoFragment()
+                    2 -> navigationApi.selectCategoryFeatureGoToMusicFragment()
+                    3 -> navigationApi.selectCategoryFeatureGoToDocumentsFragment()
                 }
             }
         }

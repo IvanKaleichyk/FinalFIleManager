@@ -50,7 +50,7 @@ dependencies {
     implementation project(":feature-rv-media-impl")
     implementation project(":feature-select-category")
 
-    implementation androidCore.kotlin_stdlib
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${androidCore.kotlin_version}"
     implementation androidCore.core
     implementation androidCore.appComponent
     implementation androidCore.material

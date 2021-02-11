@@ -30,7 +30,6 @@ class DestroyerModule {
         override fun destroy() {
             LoadingComponentHolder.reset()
         }
-
     }
 
     @Provides

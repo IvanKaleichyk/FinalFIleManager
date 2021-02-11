@@ -21,7 +21,7 @@ class DocumentsFragment : Fragment() {
 
     private var _binding: FragmentDocumentsBinding? = null
 
-    private val binding = _binding!!
+    private val binding get() = _binding!!
 
     @Inject
     internal lateinit var loadingApi: LoadingApi
@@ -119,6 +119,7 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun setupViewStub() {
+        loadingApi.setRootView(requireView())
         binding.viewStub.apply {
             layoutResource = loadingApi.getLayoutRes()
             inflate()

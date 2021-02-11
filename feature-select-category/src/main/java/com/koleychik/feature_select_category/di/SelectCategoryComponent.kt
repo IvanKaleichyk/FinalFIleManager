@@ -4,7 +4,10 @@ import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_select_category.ui.SelectCategoryFragment
 import dagger.Component
 
-@Component(dependencies = [SelectCategoryDependencies::class])
+@Component(
+    modules = [SelectCategoryFeatureModule::class],
+    dependencies = [SelectCategoryDependencies::class]
+)
 interface SelectCategoryComponent : SelectCategoryApi {
 
     fun inject(fragment: SelectCategoryFragment)

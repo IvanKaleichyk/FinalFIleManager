@@ -5,6 +5,6 @@ import com.koleychik.module_injector.navigation.NavigatorApi
 
 interface ImagesFeatureNavigationApi : NavigatorApi {
 
-    fun goToImageInfo(bundle: Bundle? = null)
+    fun imagesFeatureGoToImageInfo(bundle: Bundle? = null)
 
 }

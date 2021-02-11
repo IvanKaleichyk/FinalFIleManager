@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="small_card_radius">16dp</dimen>
+    <dimen name="textSizeOfDocumentFormatName">14dp</dimen>
 
 </resources>

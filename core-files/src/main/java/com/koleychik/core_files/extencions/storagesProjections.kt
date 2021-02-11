@@ -34,13 +34,15 @@ val videoProjections = arrayOf(
 val documentsProjections = arrayOf(
     FilesStorage._ID,
     FilesStorage.DISPLAY_NAME,
+    FilesStorage.SIZE,
     FilesStorage.DATE_ADDED
 )
 
 val allFilesFromFolderProjections = arrayOf(
     FilesStorage._ID,
     FilesStorage.DISPLAY_NAME,
-    FilesStorage.RELATIVE_PATH)
+    FilesStorage.RELATIVE_PATH
+)
 
 fun getSizeAbbreviation(size: Long): String {
     return size.toString()

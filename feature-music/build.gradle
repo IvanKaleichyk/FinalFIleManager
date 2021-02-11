@@ -47,7 +47,7 @@ dependencies {
     implementation project(":core-files")
 //    implementation project(":core-media-player")
 
-    implementation androidCore.kotlin_stdlib
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${androidCore.kotlin_version}"
     implementation androidCore.core
     implementation androidCore.appComponent
     implementation androidCore.material

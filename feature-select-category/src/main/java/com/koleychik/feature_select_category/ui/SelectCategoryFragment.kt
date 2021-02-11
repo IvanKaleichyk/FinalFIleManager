@@ -10,6 +10,7 @@ import com.koleychik.feature_select_category.databinding.FragmentSelectCategoryB
 import com.koleychik.feature_select_category.di.SelectCategoryComponentHolder
 import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationComponentHolder
 import com.koleychik.models.CategoryModel
+import javax.inject.Inject
 
 class SelectCategoryFragment : Fragment() {
 
@@ -17,8 +18,8 @@ class SelectCategoryFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-
-    private val adapter = SelectCategoryAdapter()
+    @Inject
+    internal lateinit var adapter : SelectCategoryAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

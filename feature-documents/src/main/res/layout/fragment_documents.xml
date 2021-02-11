@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".ui.DocumentsFragment">
 
     <LinearLayout
@@ -16,19 +17,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/typeTXT"
+            android:id="@+id/typeTxt"
             style="@style/documentType"
             android:text="@string/txt" />
 
         <TextView
+            android:id="@+id/typePdf"
             style="@style/documentType"
             android:text="@string/pdf" />
 
         <TextView
+            android:id="@+id/typeEpub"
             style="@style/documentType"
             android:text="@string/epub" />
 
         <TextView
+            android:id="@+id/typeB2"
             style="@style/documentType"
             android:text="@string/b2" />
 
@@ -44,20 +48,26 @@
         app:layout_constraintTop_toBottomOf="@+id/documentsTypesFirstLine">
 
         <TextView
+            android:id="@+id/typeDoc"
             style="@style/documentType"
             android:text="@string/doc" />
 
         <TextView
+            android:id="@+id/typeDocx"
             style="@style/documentType"
             android:text="@string/docx" />
 
         <TextView
-            style="@style/documentType"
-            android:text="@string/xls" />
-
-        <TextView
+            android:id="@+id/typePpt"
             style="@style/documentType"
             android:text="@string/ppt" />
+
+        <TextView
+            android:id="@+id/typeOther"
+            style="@style/documentType"
+            android:background="@drawable/bg_type_document_dont_selected"
+            android:text="OTHER" />
+
     </LinearLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

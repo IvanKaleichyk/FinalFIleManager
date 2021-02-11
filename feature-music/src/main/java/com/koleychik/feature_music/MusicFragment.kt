@@ -48,9 +48,10 @@ class MusicFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupViewStub()
         createRv()
         createSwipeToRefresh()
-        setupViewStub()
         createOnCLickListener()
         subscribe()
     }
@@ -134,6 +135,7 @@ class MusicFragment : Fragment() {
             layoutResource = loadingApi.getLayoutRes()
             inflate()
         }
+        loadingApi.setRootView(requireView())
     }
 
     private fun updateData(model: MediaMetadataCompat) {

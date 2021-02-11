@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/motionLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:layoutDescription="@xml/item_rv_files_layout_scene">
+    android:layout_height="wrap_content">
+    <!--    app:layoutDescription="@xml/item_rv_files_layout_scene"-->
+
 
     <FrameLayout
         android:id="@+id/delete"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="@color/colorRed"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -45,13 +47,19 @@
 
         <TextView
             android:id="@+id/name"
-            style="@style/textForMemoryInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            style="@style/documentName"
             android:layout_marginStart="@dimen/basicPadding"
-            android:paddingStart="10dp"
-            android:paddingTop="@dimen/basicPadding"
-            android:paddingBottom="@dimen/basicPadding"
-            android:text="Name"
+            android:layout_marginEnd="@dimen/basicPadding"
+            android:layout_marginTop="@dimen/basicPadding"
+            android:layout_marginBottom="@dimen/basicPadding"
+            android:text="ljvldfjvldfjl lrvjldfjvl ldfvlfdjvllvfdlvj"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/size"
+            app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlSymmetry" />
@@ -68,4 +76,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

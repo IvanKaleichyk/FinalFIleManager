@@ -19,16 +19,17 @@ class Navigator(
     private val documentsFeatureApi: Provider<DocumentsFeatureApi>
 ) : ImagesFeatureNavigationApi, SelectCategoryNavigationApi {
 
-    private var navController: NavController? = null
+    private var _navController: NavController? = null
+    private val navController get() = _navController!!
 
     fun bind(newNavController: NavController) {
-        navController = newNavController.apply {
-            createSetOnDestinationListener()
+        _navController = newNavController.apply {
+            addOnDestinationChangedListener(createSetOnDestinationListener())
         }
     }
 
     fun unbind() {
-        navController = null
+        _navController = null
     }
 
     private fun createSetOnDestinationListener() =
@@ -39,26 +40,37 @@ class Navigator(
                 R.id.musicFragment -> musicFeatureApi.get()
                 R.id.documentsFragment -> documentsFeatureApi.get()
             }
-            Log.d("MAIN_APP", "destination changed id is " + destination.id)
+            Log.d("MAIN_APP_TAG", "destination changed id is " + destination.id)
         }
 
-    override fun goToImageInfo(bundle: Bundle?) {
-
+    override fun imagesFeatureGoToImageInfo(bundle: Bundle?) {
+        if (navController.currentDestination?.id == R.id.imagesFragment) {
+//            navController.navigate(R.id.LLImage, bundle)
+        }
     }
 
-    override fun goToMusicFragment() {
-
+    override fun selectCategoryFeatureGoToMusicFragment(bundle: Bundle?) {
+        if (navController.currentDestination?.id == R.id.selectCategoryFragment) {
+            navController.navigate(R.id.action_selectCategoryFragment_to_musicFragment, bundle)
+        }
     }
 
-    override fun goToImagesFragment() {
-
+    override fun selectCategoryFeatureGoToImagesFragment(bundle: Bundle?) {
+        if (navController.currentDestination?.id == R.id.selectCategoryFragment) {
+            navController.navigate(R.id.action_selectCategoryFragment_to_imagesFragment, bundle)
+        }
     }
 
-    override fun goToDocumentsFragment() {
-
+    override fun selectCategoryFeatureGoToDocumentsFragment(bundle: Bundle?) {
+        if (navController.currentDestination?.id == R.id.selectCategoryFragment) {
+            navController.navigate(R.id.action_selectCategoryFragment_to_documentsFragment, bundle)
+        }
     }
 
-    override fun goToVideoFragment() {
-
+    override fun selectCategoryFeatureGoToVideoFragment(bundle: Bundle?) {
+        if (navController.currentDestination?.id == R.id.selectCategoryFragment) {
+//            navController.navigate(R.id., bundle)
+        }
     }
+
 }

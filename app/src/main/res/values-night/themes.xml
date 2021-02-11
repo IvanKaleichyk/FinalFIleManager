@@ -15,7 +15,7 @@
     </style>
 
     <style name="splashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/main_icon_128</item>
+        <item name="android:windowBackground">@drawable/splash_bg</item>
     </style>
 
 </resources>
