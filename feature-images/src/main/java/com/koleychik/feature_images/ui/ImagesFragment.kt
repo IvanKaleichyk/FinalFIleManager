@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.feature_images.databinding.FragmentImagesBinding
 import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
+import com.koleychik.feature_images.navigation.ImagesFeatureNavigationComponentHolder
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModel
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
@@ -116,5 +117,7 @@ class ImagesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        ImagesFeatureComponentHolder.reset()
+        ImagesFeatureNavigationComponentHolder.reset()
     }
 }

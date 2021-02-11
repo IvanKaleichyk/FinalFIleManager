@@ -16,9 +16,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     private lateinit var controller: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_FinalFIleManager)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
         App.component.inject(this)
         navigator.bind(controller)
     }
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
-
+        setContentView(R.layout.activity_main)
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {

@@ -3,6 +3,7 @@ package com.koleychik.models.fileCarcass
 import android.net.Uri
 import android.os.Parcelable
 import com.koleychik.models.getWeight
+import java.io.File
 
 
 abstract class FileCarcass(
@@ -13,6 +14,7 @@ abstract class FileCarcass(
     open val dateAdded: Long?
 ) : Parcelable {
     val weight: Int by lazy { this.getWeight(name[0]) }
+
 
 
 }

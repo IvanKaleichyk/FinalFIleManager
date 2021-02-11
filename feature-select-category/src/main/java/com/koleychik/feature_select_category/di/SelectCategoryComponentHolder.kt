@@ -1,10 +1,11 @@
 package com.koleychik.feature_select_category.di
 
 import com.koleychik.feature_select_category.SelectCategoryApi
+import com.koleychik.module_injector.component_holder.BaseDestroyer
 import com.koleychik.module_injector.component_holder.ComponentHolder
 
 object SelectCategoryComponentHolder :
-    ComponentHolder<SelectCategoryApi, SelectCategoryDependencies> {
+    ComponentHolder<SelectCategoryApi, SelectCategoryDependencies, BaseDestroyer> {
 
     @Volatile
     private var component: SelectCategoryComponent? = null
@@ -12,8 +13,8 @@ object SelectCategoryComponentHolder :
 
     internal fun getComponent() = component!!
 
-    override fun init(dependency: SelectCategoryDependencies) {
-        component = SelectCategoryComponent.initAndGet(dependency)
+    override fun init(dependencies: SelectCategoryDependencies, destroyer: BaseDestroyer) {
+        component = SelectCategoryComponent.initAndGet(dependencies)
     }
 
     override fun get(): SelectCategoryApi = component!!

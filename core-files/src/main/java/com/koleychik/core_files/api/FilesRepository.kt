@@ -18,5 +18,8 @@ interface FilesRepository {
 
     fun gelFilesFromFolder(path: String = ""): List<FileCarcass>
 
+    fun delete(model: FileCarcass)
+
+    fun openFile(model: FileCarcass)
 
 }

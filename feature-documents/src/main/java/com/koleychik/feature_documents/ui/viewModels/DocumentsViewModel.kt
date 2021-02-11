@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.models.fileCarcass.DocumentModel
+import com.koleychik.models.fileCarcass.FileCarcass
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,8 +23,8 @@ class DocumentsViewModel @Inject constructor(private val repository: FilesReposi
         }
     }
 
-    fun delete() = viewModelScope.launch(Dispatchers.IO){
-//        repository.
+    fun delete(model: FileCarcass) = viewModelScope.launch(Dispatchers.IO){
+        repository.delete(model)
     }
 
 }

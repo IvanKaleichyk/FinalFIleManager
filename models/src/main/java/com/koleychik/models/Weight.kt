@@ -26,11 +26,11 @@ fun FileCarcass.getWeight(firstLatter: Char): Int {
         }
         is DocumentModel -> {
             println(50)
-            weight *= 50
+            weight *= 50 * getWeightOfDocumentModel()
         }
         is FolderModel -> {
-            println(300)
-            weight *= 300
+            println(20000)
+            weight *= 1000
         }
         else -> {
             println(1)
@@ -40,5 +40,16 @@ fun FileCarcass.getWeight(firstLatter: Char): Int {
 
     println("firstLatter.toInt() = ${firstLatter.toInt()}")
     return weight * firstLatter.toInt()
+}
 
-} 
+private fun DocumentModel.getWeightOfDocumentModel(): Int {
+    Formats.documentFormats.forEachIndexed { index, format ->
+        if (name.endsWith(format)) return index * 10
+    }
+    return 1
+}
+
+fun String.checkFormat(formats: Array<String>): Boolean {
+    for (i in formats) if (this.endsWith(i)) return true
+    return false
+}

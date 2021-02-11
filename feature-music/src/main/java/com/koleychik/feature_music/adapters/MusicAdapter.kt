@@ -1,6 +1,5 @@
 package com.koleychik.feature_music.adapters
 
-import android.support.v4.media.MediaMetadataCompat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

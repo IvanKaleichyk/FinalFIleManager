@@ -2,8 +2,11 @@ package com.koleychik.core_files
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
+import androidx.core.content.ContextCompat
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extencions.*
 import com.koleychik.models.fileCarcass.DocumentModel
@@ -58,7 +61,7 @@ internal class FileRepositoryImpl @Inject constructor(private val context: Conte
                 name = cursor.getString(1),
                 uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
                 sizeAbbreviation = getSizeAbbreviation(cursor.getLong(2)),
-                dateAdded = cursor.getLong(3)
+                dateAdded = cursor.getLong(3),
             )
         )
         cursor.close()
@@ -141,6 +144,17 @@ internal class FileRepositoryImpl @Inject constructor(private val context: Conte
 //        )
         cursor.close()
         return listRes
+    }
+
+    override fun delete(model: FileCarcass) {
+        TODO("Not yet implemented")
+    }
+
+    override fun openFile(model: FileCarcass) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = model.uri
+        val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
+        ContextCompat.startActivity(context, intentOpen, Bundle())
     }
 
     private fun queryContentResolver(

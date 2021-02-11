@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="documentType">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">65dp</item>
+        <item name="android:textSize">@dimen/smallTextSize</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:background">@drawable/bg_type_document</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">@dimen/smallCardMargin</item>
+        <item name="android:layout_marginBottom">@dimen/smallCardMargin</item>
+        <item name="android:layout_marginStart">@dimen/smallCardMargin</item>
+        <item name="android:layout_marginEnd">@dimen/smallCardMargin</item>
+        <item name="android:padding">@dimen/basicPadding</item>
+    </style>
+</resources>

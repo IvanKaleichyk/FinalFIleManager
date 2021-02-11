@@ -39,8 +39,10 @@ android {
 }
 
 dependencies {
+    implementation project(":app-annotations")
     implementation project(":basic-resources")
     implementation project(":models")
+    implementation project(":module-injector")
     implementation project(":feature-loading-api")
     implementation project(":core-files")
 //    implementation project(":core-media-player")

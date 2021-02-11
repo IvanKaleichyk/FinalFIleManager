@@ -1,6 +1,5 @@
 package com.koleychik.fake_data.api
 
-import android.support.v4.media.MediaMetadataCompat
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.fake_data.data.FakeImagesData
 import com.koleychik.models.fileCarcass.DocumentModel
@@ -28,6 +27,14 @@ class FakeFileRepository : FilesRepository {
     }
 
     override fun gelFilesFromFolder(path: String): List<FileCarcass> {
+        TODO("Not yet implemented")
+    }
+
+    override fun delete(model: FileCarcass) {
+        TODO("Not yet implemented")
+    }
+
+    override fun openFile(model: FileCarcass) {
         TODO("Not yet implemented")
     }
 }

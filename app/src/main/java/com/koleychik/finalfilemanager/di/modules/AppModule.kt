@@ -1,7 +1,9 @@
 package com.koleychik.finalfilemanager.di.modules
 
 import android.content.Context
+import com.koleychik.feature_documents.di.DocumentsFeatureApi
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
+import com.koleychik.feature_music.di.MusicFeatureApi
 import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.finalfilemanager.navigation.Navigator
 import dagger.Module
@@ -20,7 +22,9 @@ class AppModule(private val context: Context) {
     @Singleton
     fun provideNavigator(
         imagesFeatureApi: Provider<ImagesFeatureApi>,
-        selectCategoryApi: Provider<SelectCategoryApi>
-    ) = Navigator(imagesFeatureApi, selectCategoryApi)
+        selectCategoryApi: Provider<SelectCategoryApi>,
+        musicFeatureApi: Provider<MusicFeatureApi>,
+        documentsFeatureApi: Provider<DocumentsFeatureApi>
+    ) = Navigator(selectCategoryApi, imagesFeatureApi, musicFeatureApi, documentsFeatureApi)
 
 }

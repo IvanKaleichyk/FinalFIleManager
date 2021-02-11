@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.feature_select_category.databinding.FragmentSelectCategoryBinding
 import com.koleychik.feature_select_category.di.SelectCategoryComponentHolder
+import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationComponentHolder
 import com.koleychik.models.CategoryModel
-import javax.inject.Inject
 
 class SelectCategoryFragment : Fragment() {
 
@@ -49,4 +49,10 @@ class SelectCategoryFragment : Fragment() {
         CategoryModel.DownloadsCategory
     )
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        SelectCategoryComponentHolder.reset()
+        SelectCategoryNavigationComponentHolder.reset()
+    }
 }

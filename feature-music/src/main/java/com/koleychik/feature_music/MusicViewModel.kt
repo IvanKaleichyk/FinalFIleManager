@@ -8,8 +8,9 @@ import com.koleychik.models.fileCarcass.MusicModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MusicViewModel() : ViewModel() {
+class MusicViewModel @Inject constructor() : ViewModel() {
 
     val list = MutableLiveData<List<MusicModel>>(null)
 

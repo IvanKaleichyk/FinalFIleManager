@@ -43,6 +43,7 @@ dependencies {
     implementation project(":feature-loading-impl")
     implementation project(":feature-music")
     implementation project(":feature-music-info")
+    implementation project(":feature-documents")
     implementation project(":feature-rv-files-api")
     implementation project(":feature-rv-files-impl")
     implementation project(":feature-rv-media-api")

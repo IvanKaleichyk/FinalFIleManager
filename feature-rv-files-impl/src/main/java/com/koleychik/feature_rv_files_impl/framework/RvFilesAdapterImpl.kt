@@ -1,16 +1,21 @@
 package com.koleychik.feature_rv_files_impl.framework
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterViewHolder
+import com.koleychik.feature_rv_files_impl.R
 import com.koleychik.feature_rv_files_impl.databinding.ItemRvFilesLayoutBinding
+import com.koleychik.models.fileCarcass.DocumentModel
 import com.koleychik.models.fileCarcass.FileCarcass
 import javax.inject.Inject
 
-internal class RvFilesAdapterImpl @Inject constructor(): RvFilesAdapterApi() {
+internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
     private val list: SortedList<FileCarcass> = SortedList(
         FileCarcass::class.java,
@@ -41,11 +46,26 @@ internal class RvFilesAdapterImpl @Inject constructor(): RvFilesAdapterApi() {
 
     override fun getItemCount(): Int = list.size()
 
-    class MainViewHolder(binding: ItemRvFilesLayoutBinding) :
+    class MainViewHolder(private val binding: ItemRvFilesLayoutBinding) :
         RvFilesAdapterViewHolder(binding.root) {
 
         override fun bind(model: FileCarcass) {
+            val img =
+                if (model is DocumentModel) model.imgRes else R.drawable.folder_icon_48_main_color
 
+            with(binding) {
+                icon.setImageResource(img)
+                name.text = model.name
+                size.text = model.sizeAbbreviation
+                root.setOnClickListener { openFile(model) }
+            }
+        }
+
+        private fun openFile(model: FileCarcass) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = model.uri
+            val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
+            ContextCompat.startActivity(binding.root.context, intentOpen, Bundle())
         }
 
     }

@@ -2,7 +2,6 @@ package com.koleychik.feature_music
 
 import android.os.Bundle
 import android.support.v4.media.MediaMetadataCompat
-import android.support.v4.media.session.MediaControllerCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_music.adapters.MusicAdapter
 import com.koleychik.feature_music.databinding.FragmentMusicBinding
+import com.koleychik.feature_music.di.MusicFeatureComponentHolder
 import com.koleychik.models.fileCarcass.MusicModel
 import javax.inject.Inject
 
@@ -28,8 +28,8 @@ class MusicFragment : Fragment() {
     @Inject
     lateinit var loadingApi: LoadingApi
 
-    @Inject
-    lateinit var mediaController: MediaControllerCompat
+//    @Inject
+//    lateinit var mediaController: MediaControllerCompat
 
     private val onClick: ((model: MusicModel) -> Unit) by lazy {
         {
@@ -42,6 +42,7 @@ class MusicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMusicBinding.inflate(layoutInflater, container, false)
+        MusicFeatureComponentHolder.getComponent().inject(this)
         return inflater.inflate(R.layout.fragment_music, container, false)
     }
 
@@ -57,9 +58,9 @@ class MusicFragment : Fragment() {
     private fun createOnCLickListener() {
         val onClickListener = View.OnClickListener {
             when (it.id) {
-                R.id.previous -> mediaController.transportControls.skipToPrevious()
-                R.id.pauseOrPlay -> playOrPause()
-                R.id.next -> mediaController.transportControls.skipToNext()
+//                R.id.previous -> mediaController.transportControls.skipToPrevious()
+//                R.id.pauseOrPlay -> playOrPause()
+//                R.id.next -> mediaController.transportControls.skipToNext()
             }
         }
         with(binding) {
@@ -69,11 +70,11 @@ class MusicFragment : Fragment() {
         }
     }
 
-    private fun playOrPause() {
-        if (viewModel.isPlaying.value == true) mediaController.transportControls.pause()
-        else mediaController.transportControls.play()
-
-    }
+//    private fun playOrPause() {
+//        if (viewModel.isPlaying.value == true) mediaController.transportControls.pause()
+//        else mediaController.transportControls.play()
+//
+//    }
 
     private fun createRv() {
         binding.rv.adapter = adapter
