@@ -1,4 +1,4 @@
-package com.koleychik.feature_images.ui
+package com.koleychik.feature_video.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,39 +7,41 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.koleychik.feature_images.databinding.FragmentImagesBinding
-import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
-import com.koleychik.feature_images.ui.viewModels.ImagesViewModel
-import com.koleychik.feature_images.ui.viewModels.ImagesViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
-import com.koleychik.models.fileCarcass.media.ImageModel
+import com.koleychik.feature_video.databinding.FragmentVideoBinding
+import com.koleychik.feature_video.di.VideoFeatureComponentHolder
+import com.koleychik.feature_video.ui.viewModel.VideoViewModel
+import com.koleychik.feature_video.ui.viewModel.ViewModelFactory
+import com.koleychik.models.fileCarcass.media.VideoModel
 import javax.inject.Inject
 
-class ImagesFragment : Fragment() {
+class VideoFragment : Fragment() {
 
-    private var _binding: FragmentImagesBinding? = null
+    private var _binding: FragmentVideoBinding? = null
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var loadingApi: LoadingApi
+    internal lateinit var adapterApi: RvMediaAdapterApi
 
     @Inject
-    lateinit var adapter: RvMediaAdapterApi
+    internal lateinit var loadingApi: LoadingApi
 
     @Inject
-    lateinit var viewModelFactory: ImagesViewModelFactory
+    internal lateinit var viewModelFactory: ViewModelFactory
 
-    private val viewModel by lazy {
-        ViewModelProvider(this, viewModelFactory)[ImagesViewModel::class.java]
+    private val viewModel: VideoViewModel by lazy {
+        ViewModelProvider(
+            this,
+            viewModelFactory
+        )[VideoViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentImagesBinding.inflate(layoutInflater, container, false)
-        ImagesFeatureComponentHolder.getComponent().inject(this)
+        _binding = FragmentVideoBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -53,7 +55,7 @@ class ImagesFragment : Fragment() {
 
     private fun subscribe() {
         viewModel.list.observe(viewLifecycleOwner, {
-            resetViews()
+            resetUI()
             when {
                 it == null -> loading()
                 it.isEmpty() -> emptyList()
@@ -67,44 +69,42 @@ class ImagesFragment : Fragment() {
             setVisible(true)
             startAnimation()
         }
-        viewModel.getImages()
+        viewModel.getVideo()
     }
 
     private fun emptyList() {
         binding.infoText.visibility = View.VISIBLE
     }
 
-    private fun showList(list: List<ImageModel>) {
-        adapter.submitList(list)
+    private fun showList(list: List<VideoModel>) {
+        adapterApi.submitList(list)
         binding.rv.visibility = View.VISIBLE
     }
 
-    private fun createSwipeToRefresh() {
-        with(binding.swipeToRefresh) {
-            setOnRefreshListener {
-                isRefreshing = true
-                viewModel.getImages()
-            }
+    private fun resetUI() {
+        with(binding) {
+            rv.visibility = View.INVISIBLE
+            infoText.visibility = View.GONE
+            swipeToRefresh.isRefreshing = false
+        }
+        loadingApi.run {
+            endAnimation()
+            setVisible(false)
         }
     }
 
     private fun createRv() {
         with(binding) {
             rv.layoutManager = GridLayoutManager(context, 2)
-            rv.adapter = adapter
+            rv.adapter = adapterApi
             rv.setHasFixedSize(true)
         }
     }
 
-    private fun resetViews() {
-        loadingApi.apply {
-            setVisible(false)
-            endAnimation()
-        }
-        with(binding) {
-            rv.visibility = View.INVISIBLE
-            infoText.visibility = View.GONE
-            swipeToRefresh.isRefreshing = false
+    private fun createSwipeToRefresh() {
+        binding.swipeToRefresh.setOnRefreshListener {
+            binding.swipeToRefresh.isRefreshing = true
+            viewModel.getVideo()
         }
     }
 
@@ -119,6 +119,6 @@ class ImagesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        ImagesFeatureComponentHolder.reset()
+        VideoFeatureComponentHolder.reset()
     }
 }

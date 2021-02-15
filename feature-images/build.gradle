@@ -59,9 +59,9 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 
     // viewModel
-    implementation "androidx.lifecycle:lifecycle-extensions:${viewModel.lifecycle}"
-    implementation "androidx.fragment:fragment-ktx:${viewModel.fragment}"
-    kapt "androidx.lifecycle:lifecycle-common-java8:${viewModel.kapt_lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
+    kapt "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
 
     //coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines.core}"

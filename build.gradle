@@ -2,7 +2,9 @@
 buildscript {
     apply from: 'versions.gradle'
     ext {
-        androidCore.kotlin_version = '1.4.30'
+        versions.kotlin = '1.4.30'
+        versions.kotlin = '1.4.30'
+        versions.kotlin = '1.4.30'
     }
 //    ext {
 //        kotlin_version = '1.4.21'
@@ -12,7 +14,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${androidCore.kotlin_version}"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
     }
 }
 

@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-kapt'
 }
@@ -9,13 +9,13 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
-        applicationId "com.koleychik.finalfilemanager"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -23,6 +23,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    buildFeatures {
+        viewBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,44 +37,36 @@ android {
 }
 
 dependencies {
-
+    implementation project(":app-annotations")
+    implementation project(":basic-resources")
     implementation project(":module-injector")
-//    implementation project(":core-media-player")
+    implementation project(":models")
     implementation project(":core-files")
-    implementation project(":feature-images")
-    implementation project(":feature-image-info")
-    implementation project(":feature-loading-api")
-    implementation project(":feature-loading-impl")
-    implementation project(":feature-music")
-    implementation project(":feature-music-info")
-    implementation project(":feature-documents")
-    implementation project(":feature-video")
-    implementation project(":feature-rv-files-api")
-    implementation project(":feature-rv-files-impl")
     implementation project(":feature-rv-media-api")
-    implementation project(":feature-rv-media-impl")
-    implementation project(":feature-select-category")
+    implementation project(":feature-loading-api")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
     implementation "androidx.core:core-ktx:${versions.core}"
     implementation "androidx.appcompat:appcompat:${versions.appComponent}"
     implementation "com.google.android.material:material:${versions.material}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
+    
+    // viewModel
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
+    kapt "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines.core}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines.android}"
 
 //    TEST
     testImplementation "junit:junit:${tests.junitVersion}"
     androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${tests.espressoVersion}"
-
-    // EasyPermission
-    implementation 'pub.devrel:easypermissions:3.0.0'
-
-    // navigation
-    implementation "androidx.navigation:navigation-fragment-ktx:${navigation.version}"
-    implementation "androidx.navigation:navigation-ui-ktx:${navigation.version}"
-
-    // dagger
-    implementation "com.google.dagger:dagger:${dagger.core}"
-    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 }

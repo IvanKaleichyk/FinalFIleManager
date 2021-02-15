@@ -1,30 +1,20 @@
-
-
 def versions = [
         kotlin          : '1.4.30',
         core            : '1.3.2',
         appComponent    : '1.2.0',
         material        : '1.3.0',
-        constraintlayout: '2.0.4'
+        constraintlayout: '2.0.4',
+        lifecycle       : '2.2.0',
+        fragment        : '1.3.0'
 ]
 ext.versions = versions
 
-def androidCore = [
-        kotlin_version          : '1.4.30',
-        kotlin_stdlib           : "org.jetbrains.kotlin:kotlin-stdlib:1.4.21",
-        core_version            : '1.3.2',
-        appComponent_version    : '1.2.0',
-        material_version        : '1.2.1',
-        constraintlayout_version: '2.0.4'
-]
-ext.androidCore = androidCore
-
-def viewModel = [
-        lifecycle     : '2.2.0',
-        fragment      : '1.3.0',
-        kapt_lifecycle: '2.2.0',
-]
-ext.viewModel = viewModel
+//def viewModel = [
+////        lifecycle     : '2.2.0',
+//fragment: '1.3.0',
+////        kapt_lifecycle: '2.2.0',
+//]
+//ext.viewModel = viewModel
 
 def coroutines = [
         core   : '1.4.2',
@@ -49,7 +39,7 @@ def glide = [
 ext.glide = glide
 
 def coil = [
-        core: 'io.coil-kt:coil:1.1.1'
+        version: '1.1.1'
 ]
 ext.coil = coil
 
@@ -64,7 +54,7 @@ def media = [
 ext.media = media
 
 def tests = [
-        junitVersion                  : '4.13.1',
+        junitVersion                  : '4.13.2',
         junitTestImplementationVersion: '1.1.2',
         espressoVersion               : '3.3.0'
 ]

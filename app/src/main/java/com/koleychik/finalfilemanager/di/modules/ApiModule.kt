@@ -27,6 +27,10 @@ import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_select_category.di.SelectCategoryComponentHolder
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationComponentHolder
+import com.koleychik.feature_video.di.VideoFeatureApi
+import com.koleychik.feature_video.di.VideoFeatureComponentHolder
+import com.koleychik.feature_video.di.VideoFeatureDependencies
+import com.koleychik.feature_video.di.VideoFeatureDestroyer
 import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.component_holder.BaseDependencies
 import com.koleychik.module_injector.component_holder.BaseDestroyer
@@ -63,6 +67,16 @@ class ApiModule {
     ): MusicFeatureApi {
         MusicFeatureComponentHolder.init(dependencies, destroyer)
         return MusicFeatureComponentHolder.get()
+    }
+
+
+    @Provides
+    fun provideVideoFeatureApi(
+        dependencies: VideoFeatureDependencies,
+        destroyer: VideoFeatureDestroyer
+    ): VideoFeatureApi {
+        VideoFeatureComponentHolder.init(dependencies, destroyer)
+        return VideoFeatureComponentHolder.get()
     }
 
     @Provides

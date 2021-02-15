@@ -9,6 +9,7 @@ import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_music.di.MusicFeatureApi
 import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
+import com.koleychik.feature_video.di.VideoFeatureApi
 import com.koleychik.finalfilemanager.R
 import javax.inject.Provider
 
@@ -16,7 +17,8 @@ class Navigator(
     private val selectCategoryApi: Provider<SelectCategoryApi>,
     private val imagesFeatureApi: Provider<ImagesFeatureApi>,
     private val musicFeatureApi: Provider<MusicFeatureApi>,
-    private val documentsFeatureApi: Provider<DocumentsFeatureApi>
+    private val documentsFeatureApi: Provider<DocumentsFeatureApi>,
+    private val videoFeatureApi: Provider<VideoFeatureApi>
 ) : ImagesFeatureNavigationApi, SelectCategoryNavigationApi {
 
     private var _navController: NavController? = null
@@ -39,6 +41,7 @@ class Navigator(
                 R.id.imagesFragment -> imagesFeatureApi.get()
                 R.id.musicFragment -> musicFeatureApi.get()
                 R.id.documentsFragment -> documentsFeatureApi.get()
+                R.id.videoFragment -> videoFeatureApi.get()
             }
             Log.d("MAIN_APP_TAG", "destination changed id is " + destination.id)
         }
@@ -69,7 +72,7 @@ class Navigator(
 
     override fun selectCategoryFeatureGoToVideoFragment(bundle: Bundle?) {
         if (navController.currentDestination?.id == R.id.selectCategoryFragment) {
-//            navController.navigate(R.id., bundle)
+            navController.navigate(R.id.action_selectCategoryFragment_to_videoFragment, bundle)
         }
     }
 

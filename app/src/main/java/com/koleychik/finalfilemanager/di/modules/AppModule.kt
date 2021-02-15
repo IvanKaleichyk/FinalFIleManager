@@ -5,6 +5,7 @@ import com.koleychik.feature_documents.di.DocumentsFeatureApi
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
 import com.koleychik.feature_music.di.MusicFeatureApi
 import com.koleychik.feature_select_category.SelectCategoryApi
+import com.koleychik.feature_video.di.VideoFeatureApi
 import com.koleychik.finalfilemanager.navigation.Navigator
 import dagger.Module
 import dagger.Provides
@@ -24,7 +25,14 @@ class AppModule(private val context: Context) {
         imagesFeatureApi: Provider<ImagesFeatureApi>,
         selectCategoryApi: Provider<SelectCategoryApi>,
         musicFeatureApi: Provider<MusicFeatureApi>,
-        documentsFeatureApi: Provider<DocumentsFeatureApi>
-    ) = Navigator(selectCategoryApi, imagesFeatureApi, musicFeatureApi, documentsFeatureApi)
+        documentsFeatureApi: Provider<DocumentsFeatureApi>,
+        videoFeatureApi: Provider<VideoFeatureApi>
+    ) = Navigator(
+        selectCategoryApi,
+        imagesFeatureApi,
+        musicFeatureApi,
+        documentsFeatureApi,
+        videoFeatureApi
+    )
 
 }

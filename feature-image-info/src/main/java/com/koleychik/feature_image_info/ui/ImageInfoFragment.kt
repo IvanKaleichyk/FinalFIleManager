@@ -129,5 +129,6 @@ class ImageInfoFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        ImageInfoFeatureComponentHolder.reset()
     }
 }

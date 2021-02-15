@@ -21,6 +21,16 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
+    <TextView
+        android:id="@+id/infoText"
+        style="@style/textInfo"
+        android:text="@string/no_resource_on_device"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ViewStub
         android:id="@+id/viewStub"
         android:layout_width="match_parent"
@@ -60,13 +70,5 @@
             android:src="@drawable/close_icon_32_black" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/infoText"
-        style="@style/textInfo"
-        android:text="@string/no_resource_on_device"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.motion.widget.MotionLayout>

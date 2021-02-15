@@ -57,9 +57,9 @@ dependencies {
     implementation "androidx.media:media:${media.core}"
 
     // viewModel
-    implementation "androidx.lifecycle:lifecycle-extensions:${viewModel.lifecycle}"
-    implementation "androidx.fragment:fragment-ktx:${viewModel.fragment}"
-    kapt "androidx.lifecycle:lifecycle-common-java8:${viewModel.kapt_lifecycle}"
+    implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
+    kapt "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
 
     // dagger
     implementation "com.google.dagger:dagger:${dagger.core}"

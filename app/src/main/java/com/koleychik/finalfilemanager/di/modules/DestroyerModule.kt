@@ -7,6 +7,7 @@ import com.koleychik.feature_loading_impl.di.LoadingComponentHolder
 import com.koleychik.feature_music.di.MusicFeatureDestroyer
 import com.koleychik.feature_rv_common_impl.di.RvMediaComponentHolder
 import com.koleychik.feature_rv_files_impl.di.RvFilesAdapterComponentHolder
+import com.koleychik.feature_video.di.VideoFeatureDestroyer
 import com.koleychik.module_injector.component_holder.BaseDestroyer
 import dagger.Module
 import dagger.Provides
@@ -22,6 +23,16 @@ class DestroyerModule {
             LoadingComponentHolder.reset()
             RvFilesAdapterComponentHolder.reset()
         }
+    }
+
+    @Provides
+    @Singleton
+    fun provideVideoFeatureDestroyer() = object : VideoFeatureDestroyer {
+        override fun destroy() {
+            LoadingComponentHolder.reset()
+            RvMediaComponentHolder.reset()
+        }
+
     }
 
     @Provides

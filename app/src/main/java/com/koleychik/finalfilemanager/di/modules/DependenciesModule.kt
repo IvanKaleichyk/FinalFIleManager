@@ -16,6 +16,7 @@ import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesApi
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
+import com.koleychik.feature_video.di.VideoFeatureDependencies
 import com.koleychik.finalfilemanager.navigation.Navigator
 import dagger.Module
 import dagger.Provides
@@ -43,6 +44,22 @@ class DependenciesModule {
 
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
         override fun rvFilesAdapterApi(): RvFilesAdapterApi = filesApi.getAdapter()
+    }
+
+    @Provides
+    @Singleton
+    fun provideVideoFeatureDependencies(
+        context: Context,
+        featureLoadingApi: FeatureLoadingApi,
+        rvMediaApi: RvMediaApi
+    ) = object : VideoFeatureDependencies {
+        override fun repository(): FilesRepository =
+            FileCoreComponent.get(context).getFileRepository()
+
+        override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
+
+        override fun mediaAdapter(): RvMediaAdapterApi = rvMediaApi.rvMediaAdapterApi()
+
     }
 
     @Provides
