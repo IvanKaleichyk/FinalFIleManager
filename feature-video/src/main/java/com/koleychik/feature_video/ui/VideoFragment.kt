@@ -1,9 +1,11 @@
 package com.koleychik.feature_video.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +15,7 @@ import com.koleychik.feature_video.databinding.FragmentVideoBinding
 import com.koleychik.feature_video.di.VideoFeatureComponentHolder
 import com.koleychik.feature_video.ui.viewModel.VideoViewModel
 import com.koleychik.feature_video.ui.viewModel.ViewModelFactory
+import com.koleychik.models.fileCarcass.media.MediaCarcass
 import com.koleychik.models.fileCarcass.media.VideoModel
 import javax.inject.Inject
 
@@ -99,6 +102,16 @@ class VideoFragment : Fragment() {
             rv.adapter = adapterApi
             rv.setHasFixedSize(true)
         }
+        adapterApi.setOnCLick { model, _ ->
+            openFile(model)
+        }
+    }
+
+    private fun openFile(model: MediaCarcass) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = model.uri
+        val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
+        ContextCompat.startActivity(binding.root.context, intentOpen, Bundle())
     }
 
     private fun createSwipeToRefresh() {
