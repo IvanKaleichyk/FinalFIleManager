@@ -25,7 +25,11 @@
         android:id="@+id/imagesFragment"
         android:name="com.koleychik.feature_images.ui.ImagesFragment"
         android:label="ImagesFragment"
-        tools:layout="@layout/fragment_images" />
+        tools:layout="@layout/fragment_images">
+        <action
+            android:id="@+id/action_imagesFragment_to_imageInfoFragment"
+            app:destination="@id/imageInfoFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/musicFragment"
@@ -38,4 +42,9 @@
         android:name="com.koleychik.feature_documents.ui.DocumentsFragment"
         android:label="DocumentsFragment"
         tools:layout="@layout/fragment_documents" />
+    <fragment
+        android:id="@+id/imageInfoFragment"
+        android:name="com.koleychik.feature_image_info.ui.ImageInfoFragment"
+        android:label="ImageInfoFragment"
+        tools:layout="@layout/fragment_image_info" />
 </navigation>

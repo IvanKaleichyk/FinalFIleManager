@@ -11,8 +11,8 @@ import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterViewHolder
 import com.koleychik.feature_rv_files_impl.R
 import com.koleychik.feature_rv_files_impl.databinding.ItemRvFilesLayoutBinding
-import com.koleychik.models.fileCarcass.DocumentModel
 import com.koleychik.models.fileCarcass.FileCarcass
+import com.koleychik.models.fileCarcass.document.DocumentModel
 import javax.inject.Inject
 
 internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {

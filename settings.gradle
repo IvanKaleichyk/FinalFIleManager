@@ -1,3 +1,4 @@
+include ':feature-image-info'
 include ':feature-documents'
 include ':fake-data'
 include ':app-annotations'

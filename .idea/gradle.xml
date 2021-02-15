@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/fake-data" />
             <option value="$PROJECT_DIR$/feature-documents" />
+            <option value="$PROJECT_DIR$/feature-image-info" />
             <option value="$PROJECT_DIR$/feature-images" />
             <option value="$PROJECT_DIR$/feature-loading-api" />
             <option value="$PROJECT_DIR$/feature-loading-impl" />

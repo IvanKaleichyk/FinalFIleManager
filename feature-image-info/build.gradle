@@ -1,0 +1,76 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation project(":app-annotations")
+    implementation project(":basic-resources")
+    implementation project(":module-injector")
+    implementation project(":core-files")
+    implementation project(":models")
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+    implementation "androidx.core:core-ktx:${versions.core}"
+    implementation "androidx.appcompat:appcompat:${versions.appComponent}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:${glide.version}"
+
+    // dagger
+    implementation "com.google.dagger:dagger:${dagger.core}"
+    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
+
+    // viewModel
+    implementation "androidx.lifecycle:lifecycle-extensions:${viewModel.lifecycle}"
+    implementation "androidx.fragment:fragment-ktx:${viewModel.fragment}"
+    kapt "androidx.lifecycle:lifecycle-common-java8:${viewModel.kapt_lifecycle}"
+
+    //coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines.core}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines.android}"
+
+//    TEST
+    testImplementation "junit:junit:${tests.junitVersion}"
+    androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${tests.espressoVersion}"
+}

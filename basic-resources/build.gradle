@@ -35,7 +35,7 @@ android {
 dependencies {
     implementation project(":module-injector")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${androidCore.kotlin_version}"
-    implementation androidCore.core
-    implementation androidCore.appComponent
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+    implementation "androidx.core:core-ktx:${versions.core}"
+    implementation "androidx.appcompat:appcompat:${versions.appComponent}"
 }

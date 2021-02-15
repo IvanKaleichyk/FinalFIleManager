@@ -45,7 +45,7 @@ class Navigator(
 
     override fun imagesFeatureGoToImageInfo(bundle: Bundle?) {
         if (navController.currentDestination?.id == R.id.imagesFragment) {
-//            navController.navigate(R.id.LLImage, bundle)
+            navController.navigate(R.id.action_imagesFragment_to_imageInfoFragment, bundle)
         }
     }
 

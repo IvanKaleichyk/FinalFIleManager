@@ -47,11 +47,11 @@ dependencies {
     implementation project(":core-files")
 //    implementation project(":core-media-player")
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${androidCore.kotlin_version}"
-    implementation androidCore.core
-    implementation androidCore.appComponent
-    implementation androidCore.material
-    implementation androidCore.constraintlayout
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+    implementation "androidx.core:core-ktx:${versions.core}"
+    implementation "androidx.appcompat:appcompat:${versions.appComponent}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     implementation "androidx.media:media:${media.core}"

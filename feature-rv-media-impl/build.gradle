@@ -42,11 +42,11 @@ dependencies {
     implementation project(":module-injector")
     implementation project(':feature-rv-media-api')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:${androidCore.kotlin_version}"
-    implementation androidCore.core
-    implementation androidCore.appComponent
-    implementation androidCore.material
-    implementation androidCore.constraintlayout
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
+    implementation "androidx.core:core-ktx:${versions.core}"
+    implementation "androidx.appcompat:appcompat:${versions.appComponent}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
 //    TEST
     testImplementation "junit:junit:${tests.junitVersion}"
     androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"

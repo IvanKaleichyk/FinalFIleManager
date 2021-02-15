@@ -1,8 +1,8 @@
 package com.koleychik.core_files.api
 
-import com.koleychik.models.fileCarcass.DocumentModel
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
+import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
 
@@ -21,5 +21,4 @@ interface FilesRepository {
     fun delete(model: FileCarcass)
 
     fun openFile(model: FileCarcass)
-
 }

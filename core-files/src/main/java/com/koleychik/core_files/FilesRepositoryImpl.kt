@@ -9,16 +9,16 @@ import android.provider.MediaStore
 import androidx.core.content.ContextCompat
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extencions.*
-import com.koleychik.models.fileCarcass.DocumentModel
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
+import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
 import javax.inject.Inject
 
 
 @SuppressLint("Recycle")
-internal class FileRepositoryImpl @Inject constructor(private val context: Context) :
+internal class FilesRepositoryImpl @Inject constructor(private val context: Context) :
     FilesRepository {
 
     private val contentUri = "external"
@@ -42,7 +42,7 @@ internal class FileRepositoryImpl @Inject constructor(private val context: Conte
                     id = id,
                     name = cursor.getString(1),
                     uri = Uri.withAppendedPath(uriExternal, id.toString()),
-                    sizeAbbreviation = getSizeAbbreviation(cursor.getLong(2)),
+                    sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3)
                 )
             )
@@ -60,7 +60,7 @@ internal class FileRepositoryImpl @Inject constructor(private val context: Conte
             DocumentModel(
                 name = cursor.getString(1),
                 uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
-                sizeAbbreviation = getSizeAbbreviation(cursor.getLong(2)),
+                sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                 dateAdded = cursor.getLong(3),
             )
         )
@@ -90,7 +90,7 @@ internal class FileRepositoryImpl @Inject constructor(private val context: Conte
                     cursor.getString(4),
                     cursor.getLong(5),
                     Uri.withAppendedPath(uriExternal, id.toString()),
-                    getSizeAbbreviation(cursor.getLong(6)),
+                    context.getSizeAbbreviation(cursor.getLong(6)),
                     cursor.getLong(7)
                 )
             )
@@ -115,7 +115,7 @@ internal class FileRepositoryImpl @Inject constructor(private val context: Conte
                     name = cursor.getString(1),
                     uri = Uri.withAppendedPath(uriExternal, id.toString()),
                     duration = cursor.getLong(2),
-                    sizeAbbreviation = getSizeAbbreviation(cursor.getLong(3)),
+                    sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(3)),
                     dateAdded = cursor.getLong(4)
                 )
             )

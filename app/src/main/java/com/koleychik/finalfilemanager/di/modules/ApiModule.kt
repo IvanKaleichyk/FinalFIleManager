@@ -4,6 +4,9 @@ import com.koleychik.feature_documents.di.DocumentFeatureDestroyer
 import com.koleychik.feature_documents.di.DocumentsFeatureApi
 import com.koleychik.feature_documents.di.DocumentsFeatureComponentHolder
 import com.koleychik.feature_documents.di.DocumentsFeatureDependencies
+import com.koleychik.feature_image_info.di.ImageInfoFeatureApi
+import com.koleychik.feature_image_info.di.ImageInfoFeatureComponentHolder
+import com.koleychik.feature_image_info.di.ImageInfoFeatureDependencies
 import com.koleychik.feature_images.ImagesFeatureDestroyer
 import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
 import com.koleychik.feature_images.di.ImagesFeatureDependencies
@@ -42,6 +45,15 @@ class ApiModule {
         ImagesFeatureComponentHolder.init(dependencies, destroyer)
         ImagesFeatureNavigationComponentHolder.init(navigator)
         return ImagesFeatureComponentHolder.get()
+    }
+
+    @Provides
+    fun provideImageInfoFeatureApi(
+        dependencies: ImageInfoFeatureDependencies,
+        destroyer: BaseDestroyer
+    ): ImageInfoFeatureApi {
+        ImageInfoFeatureComponentHolder.init(dependencies, destroyer)
+        return ImageInfoFeatureComponentHolder.get()
     }
 
     @Provides

@@ -2,9 +2,9 @@ package com.koleychik.fake_data.api
 
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.fake_data.data.FakeImagesData
-import com.koleychik.models.fileCarcass.DocumentModel
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
+import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
 

@@ -4,6 +4,7 @@ import android.content.Context
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.di.FileCoreComponent
 import com.koleychik.feature_documents.di.DocumentsFeatureDependencies
+import com.koleychik.feature_image_info.di.ImageInfoFeatureDependencies
 import com.koleychik.feature_images.di.ImagesFeatureDependencies
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_loading_api.FeatureLoadingApi
@@ -43,6 +44,14 @@ class DependenciesModule {
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
         override fun rvFilesAdapterApi(): RvFilesAdapterApi = filesApi.getAdapter()
     }
+
+    @Provides
+    @Singleton
+    fun provideImageInfoFeatureDependencies(context: Context) =
+        object : ImageInfoFeatureDependencies {
+            override fun getRepository(): FilesRepository =
+                FileCoreComponent.get(context).getFileRepository()
+        }
 
     @Provides
     @Singleton
