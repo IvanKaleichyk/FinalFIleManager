@@ -78,12 +78,12 @@ class MusicFragment : Fragment() {
 //    }
 
     private fun createRv() {
-        binding.rv.adapter = adapter
+        binding.carcass.rv.adapter = adapter
         adapter.onClick = onClick
     }
 
     private fun createSwipeToRefresh() {
-        with(binding.swipeToRefresh) {
+        with(binding.carcass.swipeToRefresh) {
             setOnRefreshListener {
                 isRefreshing = true
                 loading()
@@ -115,11 +115,11 @@ class MusicFragment : Fragment() {
 
     private fun showList(list: List<MusicModel>) {
         adapter.submitList(list)
-        binding.rv.visibility = View.VISIBLE
+        binding.carcass.rv.visibility = View.VISIBLE
     }
 
     private fun emptyList() {
-        binding.infoText.visibility = View.VISIBLE
+        binding.carcass.infoText.visibility = View.VISIBLE
     }
 
     private fun loading() {
@@ -131,7 +131,7 @@ class MusicFragment : Fragment() {
     }
 
     private fun setupViewStub() {
-        binding.viewStub.apply {
+        binding.carcass.viewStub.apply {
             layoutResource = loadingApi.getLayoutRes()
             inflate()
         }
@@ -146,7 +146,7 @@ class MusicFragment : Fragment() {
     }
 
     private fun resetViews() {
-        with(binding) {
+        with(binding.carcass) {
             infoText.visibility = View.GONE
             rv.visibility = View.INVISIBLE
             swipeToRefresh.isRefreshing = false

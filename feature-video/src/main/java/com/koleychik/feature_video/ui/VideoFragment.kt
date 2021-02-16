@@ -76,16 +76,16 @@ class VideoFragment : Fragment() {
     }
 
     private fun emptyList() {
-        binding.infoText.visibility = View.VISIBLE
+        binding.carcass.infoText.visibility = View.VISIBLE
     }
 
     private fun showList(list: List<VideoModel>) {
         adapterApi.submitList(list)
-        binding.rv.visibility = View.VISIBLE
+        binding.carcass.rv.visibility = View.VISIBLE
     }
 
     private fun resetUI() {
-        with(binding) {
+        with(binding.carcass) {
             rv.visibility = View.INVISIBLE
             infoText.visibility = View.GONE
             swipeToRefresh.isRefreshing = false
@@ -97,7 +97,7 @@ class VideoFragment : Fragment() {
     }
 
     private fun createRv() {
-        with(binding) {
+        with(binding.carcass) {
             rv.layoutManager = GridLayoutManager(context, 2)
             rv.adapter = adapterApi
             rv.setHasFixedSize(true)
@@ -115,15 +115,15 @@ class VideoFragment : Fragment() {
     }
 
     private fun createSwipeToRefresh() {
-        binding.swipeToRefresh.setOnRefreshListener {
-            binding.swipeToRefresh.isRefreshing = true
+        binding.carcass.swipeToRefresh.setOnRefreshListener {
+            binding.carcass.swipeToRefresh.isRefreshing = true
             viewModel.getVideo()
         }
     }
 
     private fun setupViewStub() {
         loadingApi.setRootView(requireView())
-        binding.viewStub.apply {
+        binding.carcass.viewStub.apply {
             layoutResource = loadingApi.getLayoutRes()
             inflate()
         }

@@ -124,15 +124,15 @@ class DocumentsFragment : Fragment() {
 
     private fun showList(list: List<FileCarcass>) {
         adapterApi.submitList(list)
-        binding.rv.visibility = View.VISIBLE
+        binding.carcass.rv.visibility = View.VISIBLE
     }
 
     private fun emptyList() {
-        binding.infoText.visibility = View.VISIBLE
+        binding.carcass.infoText.visibility = View.VISIBLE
     }
 
     private fun resetUI() {
-        with(binding) {
+        with(binding.carcass) {
             rv.visibility = View.INVISIBLE
             infoText.visibility = View.GONE
             swipeToRefresh.isRefreshing = false
@@ -148,7 +148,7 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun createSwipeToRefresh() {
-        binding.swipeToRefresh.apply {
+        binding.carcass.swipeToRefresh.apply {
             setOnRefreshListener {
                 isRefreshing = false
                 viewModel.getDocuments()
@@ -161,7 +161,7 @@ class DocumentsFragment : Fragment() {
             requireContext(),
             LinearLayout.VERTICAL
         )
-        binding.rv.apply {
+        binding.carcass.rv.apply {
             adapter = adapterApi
             addItemDecoration(itemDecoration)
         }
@@ -169,7 +169,7 @@ class DocumentsFragment : Fragment() {
 
     private fun setupViewStub() {
         loadingApi.setRootView(requireView())
-        binding.viewStub.apply {
+        binding.carcass.viewStub.apply {
             layoutResource = loadingApi.getLayoutRes()
             inflate()
         }

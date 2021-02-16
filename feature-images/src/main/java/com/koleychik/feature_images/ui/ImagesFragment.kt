@@ -71,16 +71,16 @@ class ImagesFragment : Fragment() {
     }
 
     private fun emptyList() {
-        binding.infoText.visibility = View.VISIBLE
+        binding.carcass.infoText.visibility = View.VISIBLE
     }
 
     private fun showList(list: List<ImageModel>) {
         adapter.submitList(list)
-        binding.rv.visibility = View.VISIBLE
+        binding.carcass.rv.visibility = View.VISIBLE
     }
 
     private fun createSwipeToRefresh() {
-        with(binding.swipeToRefresh) {
+        with(binding.carcass.swipeToRefresh) {
             setOnRefreshListener {
                 isRefreshing = true
                 viewModel.getImages()
@@ -89,7 +89,7 @@ class ImagesFragment : Fragment() {
     }
 
     private fun createRv() {
-        with(binding) {
+        with(binding.carcass) {
             rv.layoutManager = GridLayoutManager(context, 2)
             rv.adapter = adapter
             rv.setHasFixedSize(true)
@@ -101,7 +101,7 @@ class ImagesFragment : Fragment() {
             setVisible(false)
             endAnimation()
         }
-        with(binding) {
+        with(binding.carcass) {
             rv.visibility = View.INVISIBLE
             infoText.visibility = View.GONE
             swipeToRefresh.isRefreshing = false
@@ -110,7 +110,7 @@ class ImagesFragment : Fragment() {
 
     private fun setupViewStub() {
         loadingApi.setRootView(requireView())
-        binding.viewStub.apply {
+        binding.carcass.viewStub.apply {
             layoutResource = loadingApi.getLayoutRes()
             inflate()
         }
