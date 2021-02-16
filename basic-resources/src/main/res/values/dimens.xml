@@ -17,6 +17,7 @@
     <dimen name="smallMargin">16dp</dimen>
     <dimen name="extraSmallMargin">10dp</dimen>
     <dimen name="smallCardMargin">5dp</dimen>
+    <dimen name="marginFloatingBar">16dp</dimen>
 
     <dimen name="card_width">140dp</dimen>
     <dimen name="card_height">140dp</dimen>
@@ -26,5 +27,6 @@
 
     <dimen name="basic_corner_radius">30dp</dimen>
     <dimen name="height_bar">60dp</dimen>
+
 
 </resources>

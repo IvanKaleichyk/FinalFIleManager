@@ -48,6 +48,7 @@ class DocumentsFragment : Fragment() {
     ): View {
         _binding = FragmentDocumentsBinding.inflate(layoutInflater, container, false)
         DocumentsFeatureComponentHolder.getComponent().inject(this)
+
         return binding.root
     }
 
