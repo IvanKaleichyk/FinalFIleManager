@@ -1,3 +1,5 @@
+include ':feature-searching-impl'
+include ':feature-searching-api'
 include ':feature-video'
 include ':feature-image-info'
 include ':feature-documents'

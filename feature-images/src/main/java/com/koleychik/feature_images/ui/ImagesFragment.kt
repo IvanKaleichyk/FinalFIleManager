@@ -1,6 +1,8 @@
 package com.koleychik.feature_images.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,9 @@ import com.koleychik.feature_images.ui.viewModels.ImagesViewModel
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
+import com.koleychik.feature_searching_api.SearchingApi
 import com.koleychik.models.fileCarcass.media.ImageModel
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class ImagesFragment : Fragment() {
@@ -34,6 +38,8 @@ class ImagesFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[ImagesViewModel::class.java]
     }
 
+    private val coroutineScore = CoroutineScope(Job() + Dispatchers.IO)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -46,6 +52,7 @@ class ImagesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewStub()
+        setupSearching()
         createRv()
         createSwipeToRefresh()
         subscribe()
@@ -60,6 +67,29 @@ class ImagesFragment : Fragment() {
                 else -> showList(it)
             }
         })
+        viewModel.searchingWord.observe(viewLifecycleOwner, {
+            if (it == null || it == "") {
+                if (searchingApi.getCurrentList().isNotEmpty()) viewModel.list.value =
+                    searchingApi.getCurrentList()
+            }
+            else startSearch(it)
+        })
+    }
+
+    private fun startSearch(searchWord: String) {
+        resetViews()
+        loadingApi.startAnimation()
+        coroutineScore.cancel(searchWord)
+        searchByName(searchWord)
+    }
+
+    private fun searchByName(searchWord: String) {
+        coroutineScore.launch {
+            val newList = searchingApi.searchByName(searchWord)
+            withContext(Dispatchers.Main) {
+                viewModel.list.value = newList
+            }
+        }
     }
 
     private fun loading() {
@@ -75,6 +105,7 @@ class ImagesFragment : Fragment() {
     }
 
     private fun showList(list: List<ImageModel>) {
+        searchingApi.setFullList(list)
         adapter.submitList(list)
         binding.carcass.rv.visibility = View.VISIBLE
     }
@@ -108,6 +139,29 @@ class ImagesFragment : Fragment() {
         }
     }
 
+    private fun setupSearching() {
+        binding.searchingViewStub.run {
+            layoutResource = searchingApi.getSearchLayoutId()
+            inflate()
+        }
+        searchingApi.run {
+            setRootView(binding.searchingViewStub)
+            setTextWatcher(createTextWatcher())
+            endSetup()
+        }
+    }
+
+    private fun createTextWatcher() = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            viewModel.searchingWord.value = (viewModel.searchingWord.value.toString() + s).trim()
+        }
+
+    }
+
     private fun setupViewStub() {
         loadingApi.setRootView(requireView())
         binding.carcass.viewStub.apply {
@@ -119,6 +173,7 @@ class ImagesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        coroutineScore.cancel()
         ImagesFeatureComponentHolder.reset()
     }
 }

@@ -17,7 +17,9 @@ import com.koleychik.feature_documents.ui.viewModels.DocumentsViewModel
 import com.koleychik.feature_documents.ui.viewModels.DocumentsViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
+import com.koleychik.feature_searching_api.SearchingApi
 import com.koleychik.models.fileCarcass.FileCarcass
+import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.document.DocumentType
 import javax.inject.Inject
 
@@ -37,6 +39,9 @@ class DocumentsFragment : Fragment() {
 
     @Inject
     internal lateinit var viewModelFactory: DocumentsViewModelFactory
+
+    @Inject
+    internal lateinit var searchingApi: SearchingApi<DocumentModel>
 
     private val viewModel: DocumentsViewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[DocumentsViewModel::class.java]

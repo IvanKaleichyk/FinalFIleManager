@@ -36,7 +36,7 @@ android {
 dependencies {
 
     implementation project(":module-injector")
-//    implementation project(":core-media-player")
+    implementation project(":models")
     implementation project(":core-files")
     implementation project(":feature-images")
     implementation project(":feature-image-info")
@@ -48,6 +48,8 @@ dependencies {
     implementation project(":feature-video")
     implementation project(":feature-rv-files-api")
     implementation project(":feature-rv-files-impl")
+    implementation project(":feature-searching-api")
+    implementation project(":feature-searching-impl")
     implementation project(":feature-rv-media-api")
     implementation project(":feature-rv-media-impl")
     implementation project(":feature-select-category")

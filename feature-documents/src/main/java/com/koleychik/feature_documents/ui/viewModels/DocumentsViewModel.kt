@@ -19,6 +19,7 @@ class DocumentsViewModel @Inject constructor(private val repository: FilesReposi
 
     val fullList = MutableLiveData<List<DocumentModel>>()
 
+
     val listTypes = listOf(
         DocumentType.TXT,
         DocumentType.PDF,

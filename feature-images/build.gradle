@@ -46,6 +46,7 @@ dependencies {
     implementation project(":core-files")
     implementation project(":feature-rv-media-api")
     implementation project(":feature-loading-api")
+    implementation project(":feature-searching-api")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
     implementation "androidx.core:core-ktx:${versions.core}"

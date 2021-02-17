@@ -66,7 +66,7 @@
             android:id="@+id/typeOther"
             style="@style/documentType"
             android:background="@drawable/bg_type_document_dont_selected"
-            android:text="OTHER" />
+            android:text="@string/other" />
 
     </LinearLayout>
 

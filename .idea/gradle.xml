@@ -28,6 +28,8 @@
             <option value="$PROJECT_DIR$/feature-rv-files-impl" />
             <option value="$PROJECT_DIR$/feature-rv-media-api" />
             <option value="$PROJECT_DIR$/feature-rv-media-impl" />
+            <option value="$PROJECT_DIR$/feature-searching-api" />
+            <option value="$PROJECT_DIR$/feature-searching-impl" />
             <option value="$PROJECT_DIR$/feature-select-category" />
             <option value="$PROJECT_DIR$/feature-video" />
             <option value="$PROJECT_DIR$/models" />
