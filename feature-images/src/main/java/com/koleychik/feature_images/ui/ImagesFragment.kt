@@ -3,21 +3,29 @@ package com.koleychik.feature_images.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewStub
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import com.koleychik.basic_resources.Constants
+import com.koleychik.basic_resources.Constants.TAG
 import com.koleychik.feature_images.databinding.FragmentImagesBinding
 import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
+import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModel
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
-import com.koleychik.feature_searching_api.SearchingApi
+import com.koleychik.feature_searching_api.SearchingUIApi
 import com.koleychik.models.fileCarcass.media.ImageModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import javax.inject.Inject
 
 class ImagesFragment : Fragment() {
@@ -59,37 +67,35 @@ class ImagesFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.list.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetViews()
             when {
-                it == null -> loading()
-                it.isEmpty() -> emptyList()
-                else -> showList(it)
+                it == null -> {
+                    Log.d(TAG, "list was null")
+                    loading()
+                }
+                it.isEmpty() -> {
+                    emptyList()
+                    Log.d(TAG, "list was empty")
+                }
+                else -> {
+                    showList(it)
+                    Log.d(TAG, "list was full")
+                }
             }
         })
         viewModel.searchingWord.observe(viewLifecycleOwner, {
-            if (it == null || it == "") {
-                if (searchingApi.getCurrentList().isNotEmpty()) viewModel.list.value =
-                    searchingApi.getCurrentList()
-            }
-            else startSearch(it)
+            startSearch()
         })
     }
 
-    private fun startSearch(searchWord: String) {
+    private fun startSearch() {
         resetViews()
-        loadingApi.startAnimation()
-        coroutineScore.cancel(searchWord)
-        searchByName(searchWord)
-    }
-
-    private fun searchByName(searchWord: String) {
-        coroutineScore.launch {
-            val newList = searchingApi.searchByName(searchWord)
-            withContext(Dispatchers.Main) {
-                viewModel.list.value = newList
-            }
+        loadingApi.run {
+            setVisible(true)
+            startAnimation()
         }
+        viewModel.search()
     }
 
     private fun loading() {
@@ -105,7 +111,6 @@ class ImagesFragment : Fragment() {
     }
 
     private fun showList(list: List<ImageModel>) {
-        searchingApi.setFullList(list)
         adapter.submitList(list)
         binding.carcass.rv.visibility = View.VISIBLE
     }
@@ -141,13 +146,22 @@ class ImagesFragment : Fragment() {
 
     private fun setupSearching() {
         binding.searchingViewStub.run {
-            layoutResource = searchingApi.getSearchLayoutId()
+            layoutResource = searchingUIApi.getSearchLayoutId()
             inflate()
+            visibility = View.VISIBLE
+            setOnInflateListener(createOnInflaterListener())
         }
-        searchingApi.run {
-            setRootView(binding.searchingViewStub)
+    }
+
+    private fun createOnInflaterListener() = ViewStub.OnInflateListener { stub, inflated ->
+        searchingUIApi.run {
+            setOnCloseSearching {
+                viewModel.searchingWord.value = null
+            }
+            setRootView(binding.searchingViewStub.rootView)
             setTextWatcher(createTextWatcher())
             endSetup()
+            isShowIconVisible(true)
         }
     }
 

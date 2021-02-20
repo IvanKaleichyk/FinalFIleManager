@@ -11,33 +11,33 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class ImagesViewModel @Inject constructor(
+class ImagesViewModel @Inject constructor(
     private val repository: FilesRepository,
-    private val searchingApi: SearchingApi<ImageModel>
-) :
-    ViewModel() {
+    private val searchingApi: SearchingApi
+) : ViewModel() {
 
-    val list = MutableLiveData<List<ImageModel>>(null)
+    val fullList = MutableLiveData<List<ImageModel>>(null)
+    val currentList = MutableLiveData<List<ImageModel>>(null)
 
     val searchingWord = MutableLiveData<String>(null)
 
-    fun search(value: String) = viewModelScope.launch(Dispatchers.IO) {
-        val newList = searchingApi.searchByName(value)
-        withContext(Dispatchers.Main){
-            list.value =
+    fun search() = viewModelScope.launch(Dispatchers.IO) {
+        var newCurrentList = listOf<ImageModel>()
+        fullList.value?.let { fullList ->
+            newCurrentList = searchingApi.searchByName(fullList, searchingWord.value)
+        }
+        withContext(Dispatchers.Main) {
+            fullList.value = newCurrentList
         }
     }
 
     fun getImages() = viewModelScope.launch(Dispatchers.IO) {
-        val newList = repository.getImages()
-
-        searchingApi.run {
-            setFullList(newList)
-            searchByName(searchingWord.value)
-        }
+        val newFullList = repository.getImages()
+        val newCurrentList = searchingApi.searchByName(newFullList, searchingWord.value)
 
         withContext(Dispatchers.Main) {
-            list.value = newList
+            fullList.value = newFullList
+            currentList.value = newCurrentList
         }
     }
 }

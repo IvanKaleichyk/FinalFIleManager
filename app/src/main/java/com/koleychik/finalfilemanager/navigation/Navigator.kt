@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavController
 import com.koleychik.feature_documents.di.DocumentsFeatureApi
+import com.koleychik.feature_image_info.di.ImageInfoFeatureApi
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_music.di.MusicFeatureApi
@@ -18,32 +19,17 @@ class Navigator(
     private val imagesFeatureApi: Provider<ImagesFeatureApi>,
     private val musicFeatureApi: Provider<MusicFeatureApi>,
     private val documentsFeatureApi: Provider<DocumentsFeatureApi>,
-    private val videoFeatureApi: Provider<VideoFeatureApi>
+    private val videoFeatureApi: Provider<VideoFeatureApi>,
+    private val imageInfoFeatureApi: Provider<ImageInfoFeatureApi>
 ) : ImagesFeatureNavigationApi, SelectCategoryNavigationApi {
 
     private var _navController: NavController? = null
     private val navController get() = _navController!!
 
-    fun bind(newNavController: NavController) {
-        _navController = newNavController.apply {
-            addOnDestinationChangedListener(createSetOnDestinationListener())
-        }
-    }
-
-    fun unbind() {
-        _navController = null
-    }
-
-    private fun createSetOnDestinationListener() =
-        NavController.OnDestinationChangedListener { controller, destination, arguments ->
-            when (destination.id) {
-                R.id.selectCategoryFragment -> selectCategoryApi.get()
-                R.id.imagesFragment -> imagesFeatureApi.get()
-                R.id.musicFragment -> musicFeatureApi.get()
-                R.id.documentsFragment -> documentsFeatureApi.get()
-                R.id.videoFragment -> videoFeatureApi.get()
-            }
+    private val onDestinationChangeListener =
+        NavController.OnDestinationChangedListener { _, destination, _ ->
             Log.d("MAIN_APP_TAG", "destination changed id is " + destination.id)
+            startFragmentById(destination.id)
         }
 
     override fun imagesFeatureGoToImageInfo(bundle: Bundle?) {
@@ -75,5 +61,4 @@ class Navigator(
             navController.navigate(R.id.action_selectCategoryFragment_to_videoFragment, bundle)
         }
     }
-
 }

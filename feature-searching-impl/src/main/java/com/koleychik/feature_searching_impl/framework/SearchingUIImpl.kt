@@ -2,34 +2,29 @@ package com.koleychik.feature_searching_impl.framework
 
 import android.text.TextWatcher
 import android.view.View
-import android.widget.EditText
-import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.core.view.isVisible
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.koleychik.feature_searching_api.SearchingUIApi
 import com.koleychik.feature_searching_impl.R
+import com.koleychik.feature_searching_impl.databinding.LayoutSearchingBinding
+import javax.inject.Inject
 
-class SearchingUIImpl : SearchingUIApi {
+class SearchingUIImpl @Inject constructor() : SearchingUIApi {
 
 
     private var onClose: (() -> Unit)? = null
 
     private var textWatcher: TextWatcher? = null
 
-    private lateinit var rootView: View
-
     private var isSearchingOpen = false
 
-    private lateinit var motionLayout: MotionLayout
-    private lateinit var fabIcon: FloatingActionButton
+    private lateinit var binding: LayoutSearchingBinding
 
     override fun endSetup() {
-        val edt = rootView.findViewById<EditText>(R.id.edtSearching)
-        fabIcon = rootView.findViewById(R.id.fabSearch)
-        motionLayout = rootView.findViewById(R.id.motionLayout)
-
-        edt.addTextChangedListener(textWatcher)
-        fabIcon.setOnClickListener(createOnClickToFabIcon())
+        with(binding) {
+            edtSearching.addTextChangedListener(textWatcher)
+            fabSearch.setOnClickListener(createOnClickToFabIcon())
+            motionLayout.visibility = View.VISIBLE
+        }
     }
 
     private fun createOnClickToFabIcon() = View.OnClickListener {
@@ -39,14 +34,18 @@ class SearchingUIImpl : SearchingUIApi {
     }
 
     private fun openEdt() {
-        motionLayout.transitionToState(R.id.open)
-        fabIcon.setImageResource(R.drawable.search_icon_32_black)
+        with(binding) {
+            motionLayout.transitionToState(R.id.open)
+            fabSearch.setImageResource(R.drawable.search_icon_32_black)
+        }
     }
 
     private fun closeEdt() {
         onClose?.let { close -> close() }
-        motionLayout.transitionToState(R.id.close)
-        fabIcon.setImageResource(R.drawable.close_icon_32_black)
+        with(binding) {
+            motionLayout.transitionToState(R.id.close)
+            fabSearch.setImageResource(R.drawable.close_icon_32_black)
+        }
     }
 
     override fun getSearchLayoutId(): Int = R.layout.layout_searching
@@ -60,10 +59,11 @@ class SearchingUIImpl : SearchingUIApi {
     }
 
     override fun setRootView(rootView: View) {
-        this.rootView = rootView
+        binding = LayoutSearchingBinding.bind(rootView)
+//        this.rootView = rootView
     }
 
     override fun isShowIconVisible(boolean: Boolean) {
-        fabIcon.isVisible = boolean
+        binding.fabSearch.isVisible = boolean
     }
 }

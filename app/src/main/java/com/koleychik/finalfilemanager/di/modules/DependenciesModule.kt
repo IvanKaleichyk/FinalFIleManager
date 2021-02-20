@@ -14,10 +14,13 @@ import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesApi
+import com.koleychik.feature_searching_api.SearchingApi
+import com.koleychik.feature_searching_api.SearchingFeatureApi
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
 import com.koleychik.feature_video.di.VideoFeatureDependencies
 import com.koleychik.finalfilemanager.navigation.Navigator
+import com.koleychik.module_injector.component_holder.BaseDependencies
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -76,7 +79,8 @@ class DependenciesModule {
         context: Context,
         navigator: Navigator,
         rvMediaApi: RvMediaApi,
-        featureLoadingApi: FeatureLoadingApi
+        featureLoadingApi: FeatureLoadingApi,
+        searchingFeatureApi: SearchingFeatureApi
     ) = object : ImagesFeatureDependencies {
         override fun repository(): FilesRepository =
             FileCoreComponent.get(context).getFileRepository()
@@ -84,6 +88,8 @@ class DependenciesModule {
         override fun navigator(): ImagesFeatureNavigationApi = navigator
         override fun rvMediaAdapterApi(): RvMediaAdapterApi = rvMediaApi.rvMediaAdapterApi()
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
+        override fun searchingUIApi() = searchingFeatureApi.searchingUIApi()
+        override fun searchingApi(): SearchingApi = searchingFeatureApi.searchingApi()
     }
 
     @Provides
@@ -92,4 +98,9 @@ class DependenciesModule {
         object : SelectCategoryDependencies {
             override fun selectCategoryNavigationApi(): SelectCategoryNavigationApi = navigator
         }
+
+    @Provides
+    @Singleton
+    fun provideBaseDependencies() = object : BaseDependencies{}
+
 }

@@ -2,6 +2,7 @@ package com.koleychik.finalfilemanager.di.modules
 
 import android.content.Context
 import com.koleychik.feature_documents.di.DocumentsFeatureApi
+import com.koleychik.feature_image_info.di.ImageInfoFeatureApi
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
 import com.koleychik.feature_music.di.MusicFeatureApi
 import com.koleychik.feature_select_category.SelectCategoryApi
@@ -26,13 +27,15 @@ class AppModule(private val context: Context) {
         selectCategoryApi: Provider<SelectCategoryApi>,
         musicFeatureApi: Provider<MusicFeatureApi>,
         documentsFeatureApi: Provider<DocumentsFeatureApi>,
-        videoFeatureApi: Provider<VideoFeatureApi>
+        videoFeatureApi: Provider<VideoFeatureApi>,
+        imageInfoFeatureApi: Provider<ImageInfoFeatureApi>
     ) = Navigator(
         selectCategoryApi,
         imagesFeatureApi,
         musicFeatureApi,
         documentsFeatureApi,
-        videoFeatureApi
+        videoFeatureApi,
+        imageInfoFeatureApi
     )
 
 }

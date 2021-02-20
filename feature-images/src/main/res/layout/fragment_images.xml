@@ -12,6 +12,15 @@
         android:id="@+id/carcass"
         layout="@layout/carcass_layout" />
 
+    <ViewStub
+        android:id="@+id/searchingViewStub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/tools"
         android:layout_width="wrap_content"
@@ -41,14 +50,5 @@
             android:contentDescription="@string/buttonImage_to_close"
             android:src="@drawable/close_icon_32_black" />
     </LinearLayout>
-
-    <ViewStub
-        android:id="@+id/searchingViewStub"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

@@ -2,11 +2,7 @@ package com.koleychik.feature_searching_api
 
 import com.koleychik.models.fileCarcass.FileCarcass
 
-interface SearchingApi<T : FileCarcass> {
+interface SearchingApi {
 
-    fun searchByName(value: String?): List<T>
-    fun getCurrentList(): List<T>
-    fun getFullList(): List<T>
-    fun setFullList(newList: List<T>)
-
+    fun <T : FileCarcass> searchByName(fullList: List<T>, value: String?): List<T>
 }
