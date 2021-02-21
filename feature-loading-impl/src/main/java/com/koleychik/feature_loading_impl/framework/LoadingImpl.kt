@@ -3,6 +3,7 @@ package com.koleychik.feature_loading_impl.framework
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
+import androidx.core.view.isVisible
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_loading_impl.R
 import javax.inject.Inject
@@ -47,8 +48,7 @@ internal class LoadingImpl @Inject constructor() : LoadingApi {
     }
 
     override fun setVisible(isVisible: Boolean) {
-        if (isVisible) motionLayout.visibility = View.VISIBLE
-        else motionLayout.visibility = View.GONE
+        motionLayout.isVisible = isVisible
     }
 
     override fun getLayoutRes(): Int = R.layout.layout_loading

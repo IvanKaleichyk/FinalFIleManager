@@ -16,6 +16,7 @@ object VideoFeatureComponentHolder :
         if (component == null) synchronized(VideoFeatureComponentHolder::class.java) {
             if (component == null) component = VideoFeatureComponent.initAndGet(dependencies)
         }
+        this.destroyer = destroyer
     }
 
     override fun get(): VideoFeatureApi = component!!

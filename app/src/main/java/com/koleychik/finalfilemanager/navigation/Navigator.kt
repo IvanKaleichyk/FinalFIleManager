@@ -32,6 +32,28 @@ class Navigator(
             startFragmentById(destination.id)
         }
 
+
+    fun bind(newNavController: NavController) {
+        _navController = newNavController.apply {
+            addOnDestinationChangedListener(onDestinationChangeListener)
+        }
+    }
+
+    fun unbind() {
+        _navController = null
+    }
+
+    fun startFragmentById(id: Int) {
+        when (id) {
+            R.id.selectCategoryFragment -> selectCategoryApi.get()
+            R.id.imagesFragment -> imagesFeatureApi.get()
+            R.id.musicFragment -> musicFeatureApi.get()
+            R.id.documentsFragment -> documentsFeatureApi.get()
+            R.id.videoFragment -> videoFeatureApi.get()
+            R.id.imageInfoFragment -> imageInfoFeatureApi.get()
+        }
+    }
+
     override fun imagesFeatureGoToImageInfo(bundle: Bundle?) {
         if (navController.currentDestination?.id == R.id.imagesFragment) {
             navController.navigate(R.id.action_imagesFragment_to_imageInfoFragment, bundle)

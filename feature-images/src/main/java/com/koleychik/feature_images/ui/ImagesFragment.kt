@@ -11,11 +11,9 @@ import android.view.ViewStub
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.koleychik.basic_resources.Constants
 import com.koleychik.basic_resources.Constants.TAG
 import com.koleychik.feature_images.databinding.FragmentImagesBinding
 import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
-import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModel
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
@@ -41,6 +39,9 @@ class ImagesFragment : Fragment() {
 
     @Inject
     lateinit var viewModelFactory: ImagesViewModelFactory
+
+    @Inject
+    internal lateinit var searchingUIApi: SearchingUIApi
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[ImagesViewModel::class.java]
@@ -84,12 +85,13 @@ class ImagesFragment : Fragment() {
                 }
             }
         })
-        viewModel.searchingWord.observe(viewLifecycleOwner, {
-            startSearch()
-        })
+//        viewModel.searchingWord.observe(viewLifecycleOwner, {
+//            startSearch()
+//        })
     }
 
     private fun startSearch() {
+        Log.d(TAG, "startSearch")
         resetViews()
         loadingApi.run {
             setVisible(true)
@@ -133,6 +135,7 @@ class ImagesFragment : Fragment() {
     }
 
     private fun resetViews() {
+        Log.d(TAG, "resetViews")
         loadingApi.apply {
             setVisible(false)
             endAnimation()

@@ -45,6 +45,7 @@ class VideoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentVideoBinding.inflate(layoutInflater, container, false)
+        VideoFeatureComponentHolder.getComponent().inject(this)
         return binding.root
     }
 
