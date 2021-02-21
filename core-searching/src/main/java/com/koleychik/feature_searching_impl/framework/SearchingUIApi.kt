@@ -1,7 +1,7 @@
-package com.koleychik.feature_searching_api
+package com.koleychik.feature_searching_impl.framework
 
 import android.text.TextWatcher
-import android.view.View
+import com.koleychik.feature_searching_impl.databinding.LayoutSearchingBinding
 
 interface SearchingUIApi {
 
@@ -9,7 +9,6 @@ interface SearchingUIApi {
     fun getSearchLayoutId(): Int
     fun setOnCloseSearching(onClose: () -> Unit)
     fun setTextWatcher(textWatcher: TextWatcher)
-    fun setRootView(rootView: View)
+    fun setRootView(binding: LayoutSearchingBinding)
     fun isShowIconVisible(boolean: Boolean)
-
 }

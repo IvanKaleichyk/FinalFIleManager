@@ -4,8 +4,7 @@ import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
-import com.koleychik.feature_searching_api.SearchingApi
-import com.koleychik.feature_searching_api.SearchingUIApi
+import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.module_injector.component_holder.BaseDependencies
 
 interface ImagesFeatureDependencies : BaseDependencies {
@@ -14,5 +13,4 @@ interface ImagesFeatureDependencies : BaseDependencies {
     fun rvMediaAdapterApi(): RvMediaAdapterApi
     fun loadingApi(): LoadingApi
     fun searchingUIApi(): SearchingUIApi
-    fun searchingApi(): SearchingApi
 }

@@ -41,12 +41,12 @@ dependencies {
 
     implementation project(":app-annotations")
     implementation project(":basic-resources")
+    implementation project(":core-searching")
     implementation project(":module-injector")
     implementation project(":models")
     implementation project(":core-files")
     implementation project(":feature-rv-media-api")
     implementation project(":feature-loading-api")
-    implementation project(":feature-searching-api")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
     implementation "androidx.core:core-ktx:${versions.core}"

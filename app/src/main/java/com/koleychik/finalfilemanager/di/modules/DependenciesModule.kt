@@ -14,8 +14,7 @@ import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesApi
-import com.koleychik.feature_searching_api.SearchingApi
-import com.koleychik.feature_searching_api.SearchingFeatureApi
+import com.koleychik.feature_searching_impl.di.SearchingFeatureComponent
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
 import com.koleychik.feature_video.di.VideoFeatureDependencies
@@ -80,7 +79,6 @@ class DependenciesModule {
         navigator: Navigator,
         rvMediaApi: RvMediaApi,
         featureLoadingApi: FeatureLoadingApi,
-        searchingFeatureApi: SearchingFeatureApi
     ) = object : ImagesFeatureDependencies {
         override fun repository(): FilesRepository =
             FileCoreComponent.get(context).getFileRepository()
@@ -88,8 +86,7 @@ class DependenciesModule {
         override fun navigator(): ImagesFeatureNavigationApi = navigator
         override fun rvMediaAdapterApi(): RvMediaAdapterApi = rvMediaApi.rvMediaAdapterApi()
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
-        override fun searchingUIApi() = searchingFeatureApi.searchingUIApi()
-        override fun searchingApi(): SearchingApi = searchingFeatureApi.searchingApi()
+        override fun searchingUIApi() = SearchingFeatureComponent.get().searchingUIApi()
     }
 
     @Provides
@@ -101,6 +98,6 @@ class DependenciesModule {
 
     @Provides
     @Singleton
-    fun provideBaseDependencies() = object : BaseDependencies{}
+    fun provideBaseDependencies() = object : BaseDependencies {}
 
 }

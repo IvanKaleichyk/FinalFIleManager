@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewStub
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,7 +17,7 @@ import com.koleychik.feature_images.ui.viewModels.ImagesViewModel
 import com.koleychik.feature_images.ui.viewModels.ImagesViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
-import com.koleychik.feature_searching_api.SearchingUIApi
+import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.models.fileCarcass.media.ImageModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -91,13 +90,14 @@ class ImagesFragment : Fragment() {
     }
 
     private fun startSearch() {
-        Log.d(TAG, "startSearch")
+        val word = getTextFromEdtSearching()
+        if (word.isEmpty()) return
         resetViews()
         loadingApi.run {
             setVisible(true)
             startAnimation()
         }
-        viewModel.search()
+        viewModel.search(word)
     }
 
     private fun loading() {
@@ -105,7 +105,7 @@ class ImagesFragment : Fragment() {
             setVisible(true)
             startAnimation()
         }
-        viewModel.getImages()
+        viewModel.getImages(getTextFromEdtSearching())
     }
 
     private fun emptyList() {
@@ -121,7 +121,7 @@ class ImagesFragment : Fragment() {
         with(binding.carcass.swipeToRefresh) {
             setOnRefreshListener {
                 isRefreshing = true
-                viewModel.getImages()
+                viewModel.getImages(getTextFromEdtSearching())
             }
         }
     }
@@ -148,25 +148,20 @@ class ImagesFragment : Fragment() {
     }
 
     private fun setupSearching() {
-        binding.searchingViewStub.run {
-            layoutResource = searchingUIApi.getSearchLayoutId()
-            inflate()
-            visibility = View.VISIBLE
-            setOnInflateListener(createOnInflaterListener())
-        }
-    }
-
-    private fun createOnInflaterListener() = ViewStub.OnInflateListener { stub, inflated ->
         searchingUIApi.run {
             setOnCloseSearching {
-                viewModel.searchingWord.value = null
+                binding.searchingInclude.edtSearching.text = null
+                viewModel.currentList.value = viewModel.fullList.value
             }
-            setRootView(binding.searchingViewStub.rootView)
+            setRootView(binding.searchingInclude)
             setTextWatcher(createTextWatcher())
             endSetup()
             isShowIconVisible(true)
         }
     }
+
+    private fun getTextFromEdtSearching() =
+        binding.searchingInclude.edtSearching.text.toString().trim()
 
     private fun createTextWatcher() = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -174,7 +169,7 @@ class ImagesFragment : Fragment() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable?) {
-            viewModel.searchingWord.value = (viewModel.searchingWord.value.toString() + s).trim()
+            startSearch()
         }
 
     }

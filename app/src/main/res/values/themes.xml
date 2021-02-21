@@ -6,9 +6,9 @@
         <item name="colorPrimaryVariant">@color/colorMainDark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorGray</item>
-        <item name="colorSecondaryVariant">@color/colorBlackLight</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/colorMain</item>
+        <item name="colorSecondaryVariant">@color/colorMainDark</item>
+        <item name="colorOnSecondary">@color/colorBlack</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="android:windowFullscreen">true</item>

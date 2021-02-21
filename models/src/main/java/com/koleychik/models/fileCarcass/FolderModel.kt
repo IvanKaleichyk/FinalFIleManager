@@ -1,7 +1,6 @@
 package com.koleychik.models.fileCarcass
 
 import android.net.Uri
-import com.koleychik.models.R
 import kotlinx.parcelize.Parcelize
 
 
@@ -11,5 +10,4 @@ data class FolderModel(
     override val uri: Uri,
     override val sizeAbbreviation: String,
     override val dateAdded: Long?,
-) : FileCarcass(name, uri, sizeAbbreviation, dateAdded) {
-}
+) : FileCarcass(name, uri, sizeAbbreviation, dateAdded)

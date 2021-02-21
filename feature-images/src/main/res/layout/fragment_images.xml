@@ -10,12 +10,7 @@
 
     <include
         android:id="@+id/carcass"
-        layout="@layout/carcass_layout" />
-
-    <ViewStub
-        android:id="@+id/searchingViewStub"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        layout="@layout/carcass_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,5 +45,13 @@
             android:contentDescription="@string/buttonImage_to_close"
             android:src="@drawable/close_icon_32_black" />
     </LinearLayout>
+
+    <include
+        android:id="@+id/searchingInclude"
+        layout="@layout/layout_searching"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

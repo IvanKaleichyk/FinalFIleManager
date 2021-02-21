@@ -7,6 +7,7 @@
         <item name="android:padding">@dimen/basicPadding</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:maxLength">100</item>
     </style>
 
 </resources>
