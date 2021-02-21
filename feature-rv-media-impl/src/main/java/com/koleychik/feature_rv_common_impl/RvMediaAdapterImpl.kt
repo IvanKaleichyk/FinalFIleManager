@@ -10,10 +10,11 @@ import coil.size.Scale
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaViewHolderApi
 import com.koleychik.feature_rv_common_impl.databinding.ItemRvMediaPriviewBinding
+import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.MediaCarcass
 import javax.inject.Inject
 
-internal class RvMediaAdapterImpl @Inject constructor(): RvMediaAdapterApi() {
+internal class RvMediaAdapterImpl @Inject constructor() : RvMediaAdapterApi() {
 
     private val list = mutableListOf<MediaCarcass>()
 
@@ -50,7 +51,8 @@ internal class RvMediaAdapterImpl @Inject constructor(): RvMediaAdapterApi() {
         RvMediaViewHolderApi(binding.root) {
 
         override fun bind(model: MediaCarcass, position: Int) {
-            loadImage(model.uri)
+            if (model is ImageModel) loadImage(model.uri)
+            else loadVideoPreview()
             with(binding) {
                 nameImage.text = model.name
                 size.text = model.sizeAbbreviation
@@ -64,6 +66,9 @@ internal class RvMediaAdapterImpl @Inject constructor(): RvMediaAdapterApi() {
                     click(model, position)
                 }
             }
+        }
+
+        private fun loadVideoPreview() {
 
         }
 
@@ -76,7 +81,6 @@ internal class RvMediaAdapterImpl @Inject constructor(): RvMediaAdapterApi() {
                     context.resources.getDimensionPixelSize(R.dimen.card_width),
                     context.resources.getDimensionPixelSize(R.dimen.card_width)
                 )
-//                transformations(CircleCropTransformation())
                 scale(Scale.FILL)
             }
         }

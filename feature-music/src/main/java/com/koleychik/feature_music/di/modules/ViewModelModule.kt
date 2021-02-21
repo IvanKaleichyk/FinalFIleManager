@@ -2,7 +2,7 @@ package com.koleychik.feature_music.di.modules
 
 import androidx.lifecycle.ViewModel
 import com.koleychik.app_annotations.ViewModelKey
-import com.koleychik.feature_music.MusicViewModel
+import com.koleychik.feature_music.ui.viewModel.MusicViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

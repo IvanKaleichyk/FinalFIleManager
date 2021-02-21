@@ -36,7 +36,7 @@
 
     <fragment
         android:id="@+id/musicFragment"
-        android:name="com.koleychik.feature_music.MusicFragment"
+        android:name="com.koleychik.feature_music.ui.MusicFragment"
         android:label="MusicFragment"
         tools:layout="@layout/fragment_music" />
 

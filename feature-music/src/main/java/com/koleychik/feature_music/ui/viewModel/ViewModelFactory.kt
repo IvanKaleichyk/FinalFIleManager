@@ -1,4 +1,4 @@
-package com.koleychik.basic_resources
+package com.koleychik.feature_music.ui.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

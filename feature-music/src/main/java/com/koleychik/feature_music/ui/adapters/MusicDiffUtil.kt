@@ -1,6 +1,5 @@
-package com.koleychik.feature_music.adapters
+package com.koleychik.feature_music.ui.adapters
 
-import android.support.v4.media.MediaMetadataCompat
 import androidx.recyclerview.widget.DiffUtil
 import com.koleychik.models.fileCarcass.MusicModel
 

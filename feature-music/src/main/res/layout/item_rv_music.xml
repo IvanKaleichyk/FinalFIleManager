@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/basicPadding"
@@ -23,8 +22,11 @@
 
             <TextView
                 android:id="@+id/textTitle"
+                android:layout_width="0dp"
                 style="@style/textTitle"
-                android:text="Title"
+                android:text="Titleocjlidj dlcjdl ljlcjdc jdlcj ljdlcj jldcj"
+                app:layout_constraintEnd_toStartOf="@+id/textDuration"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,8 +34,10 @@
                 android:id="@+id/textAuthor"
                 style="@style/textAuthor"
                 android:text="Author"
+                app:layout_constraintEnd_toStartOf="@+id/textDuration"
+                app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@+id/textTitle"
-                app:layout_constraintTop_toBottomOf="@+id/textTitle"/>
+                app:layout_constraintTop_toBottomOf="@+id/textTitle" />
 
             <TextView
                 android:id="@+id/textDuration"
@@ -49,8 +53,8 @@
     <TextView
         android:id="@+id/textSize"
         style="@style/textSize"
-        android:text="50 mb"
         android:padding="@dimen/basicPadding"
+        android:text="50 mb"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />

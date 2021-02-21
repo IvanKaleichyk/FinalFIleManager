@@ -7,6 +7,8 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
+import com.koleychik.finalfilemanager.AppConstants.LAST_DESTINATION_ID
+import com.koleychik.finalfilemanager.AppConstants.START_FRAGMENT_ID
 import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.AppConstants
 import pub.devrel.easypermissions.AfterPermissionGranted
@@ -26,10 +28,6 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     private val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     private val tag = "MAIN_APP_TAG"
-
-    companion object {
-        const val LAST_DESTINATION_ID = "LAST_DESTINATION_ID"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_FinalFIleManager)
@@ -54,8 +52,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
 
 
     private fun getStartFragment(state: Bundle?) {
-        val id = state?.getInt(LAST_DESTINATION_ID, R.id.selectCategoryFragment)
-            ?: R.id.selectCategoryFragment
+        val id = state?.getInt(LAST_DESTINATION_ID, START_FRAGMENT_ID)
+            ?: START_FRAGMENT_ID
         navigator.startFragmentById(id)
     }
 

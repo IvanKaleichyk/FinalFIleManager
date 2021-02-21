@@ -1,8 +1,8 @@
 package com.koleychik.feature_music.di
 
-import com.koleychik.feature_music.MusicFragment
 import com.koleychik.feature_music.di.modules.MusicFeatureModule
 import com.koleychik.feature_music.di.modules.ViewModelModule
+import com.koleychik.feature_music.ui.MusicFragment
 import dagger.Component
 
 @Component(

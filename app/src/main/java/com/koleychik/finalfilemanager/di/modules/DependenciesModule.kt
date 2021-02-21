@@ -30,9 +30,14 @@ class DependenciesModule {
 
     @Provides
     @Singleton
-    fun provideMusicFeatureDependencies(featureLoadingApi: FeatureLoadingApi) =
+    fun provideMusicFeatureDependencies(context: Context, featureLoadingApi: FeatureLoadingApi) =
         object : MusicFeatureDependencies {
+            override fun filesRepository(): FilesRepository =
+                FileCoreComponent.get(context).getFileRepository()
+
             override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
+            override fun searchingUIApi(): SearchingUIApi =
+                SearchingFeatureComponent.get().searchingUIApi()
         }
 
     @Provides

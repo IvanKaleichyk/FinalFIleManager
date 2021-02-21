@@ -14,7 +14,7 @@ val imagesProjections = arrayOf(
 val audioProjections = arrayOf(
     AudioStorage._ID,
     AudioStorage.DISPLAY_NAME,
-    AudioStorage.AUTHOR,
+    AudioStorage.ARTIST,
     AudioStorage.TITLE,
     AudioStorage.ALBUM,
     AudioStorage.DURATION,

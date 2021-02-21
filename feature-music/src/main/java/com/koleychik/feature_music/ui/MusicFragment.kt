@@ -1,15 +1,20 @@
-package com.koleychik.feature_music
+package com.koleychik.feature_music.ui
 
 import android.os.Bundle
-import android.support.v4.media.MediaMetadataCompat
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.koleychik.feature_loading_api.LoadingApi
-import com.koleychik.feature_music.adapters.MusicAdapter
 import com.koleychik.feature_music.databinding.FragmentMusicBinding
 import com.koleychik.feature_music.di.MusicFeatureComponentHolder
+import com.koleychik.feature_music.ui.adapters.MusicAdapter
+import com.koleychik.feature_music.ui.viewModel.MusicViewModel
+import com.koleychik.feature_music.ui.viewModel.ViewModelFactory
+import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.models.fileCarcass.MusicModel
 import javax.inject.Inject
 
@@ -20,96 +25,73 @@ class MusicFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    lateinit var adapter: MusicAdapter
+    internal lateinit var adapter: MusicAdapter
 
     @Inject
-    lateinit var viewModel: MusicViewModel
+    internal lateinit var viewModelFactory: ViewModelFactory
 
-    @Inject
-    lateinit var loadingApi: LoadingApi
-
-//    @Inject
-//    lateinit var mediaController: MediaControllerCompat
-
-    private val onClick: ((model: MusicModel) -> Unit) by lazy {
-        {
-            viewModel.setData(it)
-        }
+    private val viewModel: MusicViewModel by lazy {
+        ViewModelProvider(this, viewModelFactory)[MusicViewModel::class.java]
     }
+
+    @Inject
+    internal lateinit var loadingApi: LoadingApi
+
+    @Inject
+    internal lateinit var searchingUIApi: SearchingUIApi
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentMusicBinding.inflate(layoutInflater, container, false)
         MusicFeatureComponentHolder.getComponent().inject(this)
-        return inflater.inflate(R.layout.fragment_music, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewStub()
+        setupSearching()
         createRv()
         createSwipeToRefresh()
-        createOnCLickListener()
         subscribe()
     }
 
-    private fun createOnCLickListener() {
-        val onClickListener = View.OnClickListener {
-            when (it.id) {
-//                R.id.previous -> mediaController.transportControls.skipToPrevious()
-//                R.id.pauseOrPlay -> playOrPause()
-//                R.id.next -> mediaController.transportControls.skipToNext()
-            }
+    private fun startSearch() {
+        val word = getTextFromEdtSearching()
+        if (word.isEmpty()) return
+        resetViews()
+        loadingApi.run {
+            setVisible(true)
+            startAnimation()
         }
-        with(binding) {
-            previous.setOnClickListener(onClickListener)
-            pauseOrPlay.setOnClickListener(onClickListener)
-            next.setOnClickListener(onClickListener)
-        }
+        viewModel.search(word)
     }
-
-//    private fun playOrPause() {
-//        if (viewModel.isPlaying.value == true) mediaController.transportControls.pause()
-//        else mediaController.transportControls.play()
-//
-//    }
 
     private fun createRv() {
         binding.carcass.rv.adapter = adapter
-        adapter.onClick = onClick
+//        adapter.onClick = onClick
     }
 
     private fun createSwipeToRefresh() {
         with(binding.carcass.swipeToRefresh) {
             setOnRefreshListener {
                 isRefreshing = true
-                loading()
+                viewModel.getMusic(getTextFromEdtSearching())
             }
         }
     }
 
     private fun subscribe() {
-        viewModel.list.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetViews()
             when {
                 it == null -> loading()
                 it.isEmpty() -> emptyList()
                 else -> showList(it)
             }
-        })
-        viewModel.currentAudio.observe(viewLifecycleOwner, {
-            if (it == null) binding.motionLayout.transitionToState(R.id.footerClosed)
-            else {
-                updateData(it)
-                binding.motionLayout.transitionToState(R.id.footerOpen)
-            }
-        })
-        viewModel.isPlaying.observe(viewLifecycleOwner, {
-            if (it) binding.pauseOrPlay.setImageResource(R.drawable.pause_icon_48_black)
-            else binding.pauseOrPlay.setImageResource(R.drawable.play_icon_48_black)
         })
     }
 
@@ -127,33 +109,52 @@ class MusicFragment : Fragment() {
             setVisible(true)
             startAnimation()
         }
-        viewModel.load()
+        viewModel.getMusic(getTextFromEdtSearching())
+    }
+
+    private fun setupSearching() {
+        searchingUIApi.run {
+            setOnCloseSearching {
+                binding.searchingInclude.edtSearching.text = null
+                viewModel.currentList.value = viewModel.fullList.value
+            }
+            setRootView(binding.searchingInclude)
+            setTextWatcher(createTextWatcher())
+            endSetup()
+            isShowIconVisible(true)
+        }
+    }
+
+    private fun getTextFromEdtSearching() =
+        binding.searchingInclude.edtSearching.text.toString().trim()
+
+    private fun createTextWatcher() = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            startSearch()
+        }
     }
 
     private fun setupViewStub() {
+        loadingApi.setRootView(requireView())
         binding.carcass.viewStub.apply {
             layoutResource = loadingApi.getLayoutRes()
             inflate()
         }
-        loadingApi.setRootView(requireView())
-    }
-
-    private fun updateData(model: MediaMetadataCompat) {
-        with(binding) {
-            textTitle.text = model.description.title
-            textAuthor.text = model.description.subtitle
-        }
     }
 
     private fun resetViews() {
+        loadingApi.apply {
+            setVisible(false)
+            endAnimation()
+        }
         with(binding.carcass) {
             infoText.visibility = View.GONE
             rv.visibility = View.INVISIBLE
             swipeToRefresh.isRefreshing = false
-        }
-        loadingApi.apply {
-            setVisible(false)
-            endAnimation()
         }
     }
 

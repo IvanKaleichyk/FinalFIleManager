@@ -7,8 +7,7 @@ import com.koleychik.feature_searching_impl.R
 import com.koleychik.feature_searching_impl.databinding.LayoutSearchingBinding
 import javax.inject.Inject
 
-class SearchingUIImpl @Inject constructor() : SearchingUIApi {
-
+internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
 
     private var onClose: (() -> Unit)? = null
 

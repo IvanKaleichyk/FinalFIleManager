@@ -1,17 +1,21 @@
-package com.koleychik.feature_music.adapters
+package com.koleychik.feature_music.ui.adapters
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.koleychik.feature_music.databinding.ItemRvMusicBinding
+import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 
 class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
 
     private val list = mutableListOf<MusicModel>()
 
-    var onClick: ((model: MusicModel) -> Unit)? = null
+//    var onClick: ((model: MusicModel) -> Unit)? = null
 
     fun submitList(newList: List<MusicModel>) {
         val diffUtil = MusicDiffUtil(newList, list)
@@ -41,11 +45,17 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
                 textDuration.text = model.duration.toString()
                 textSize.text = model.sizeAbbreviation
                 binding.root.setOnClickListener {
-                    onClick?.let { click -> click(model) }
+                    openFile(model)
                 }
             }
         }
 
+        private fun openFile(model: FileCarcass) {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = model.uri
+            val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
+            ContextCompat.startActivity(binding.root.context, intentOpen, Bundle())
+        }
     }
 
 }

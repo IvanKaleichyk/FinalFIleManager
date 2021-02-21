@@ -18,17 +18,17 @@
     </style>
 
     <style name="textTitle" parent="textUnKnownSize">
-        <item name="android:textSize">@dimen/logoTextSize</item>
+        <item name="android:textSize">@dimen/basicTextSize</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="textAuthor" parent="textUnKnownSize">
-        <item name="android:textSize">@dimen/basicTextSize</item>
+        <item name="android:textSize">@dimen/smallTextSize</item>
         <item name="android:textColor">@color/colorGray</item>
     </style>
 
     <style name="textDuration" parent="basicText">
-        <item name="android:textSize">@dimen/basicTextSize</item>
+        <item name="android:textSize">@dimen/smallTextSize</item>
     </style>
 
 </resources>
