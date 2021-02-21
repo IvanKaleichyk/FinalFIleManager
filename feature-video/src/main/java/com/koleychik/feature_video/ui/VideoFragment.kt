@@ -2,6 +2,8 @@ package com.koleychik.feature_video.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
+import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.feature_video.databinding.FragmentVideoBinding
 import com.koleychik.feature_video.di.VideoFeatureComponentHolder
 import com.koleychik.feature_video.ui.viewModel.VideoViewModel
@@ -33,6 +36,9 @@ class VideoFragment : Fragment() {
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory
 
+    @Inject
+    internal lateinit var searchingUIApi: SearchingUIApi
+
     private val viewModel: VideoViewModel by lazy {
         ViewModelProvider(
             this,
@@ -52,13 +58,14 @@ class VideoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViewStub()
+        setupSearching()
         createRv()
         createSwipeToRefresh()
         subscribe()
     }
 
     private fun subscribe() {
-        viewModel.list.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetUI()
             when {
                 it == null -> loading()
@@ -73,7 +80,7 @@ class VideoFragment : Fragment() {
             setVisible(true)
             startAnimation()
         }
-        viewModel.getVideo()
+        viewModel.getVideo(getTextFromEdtSearching())
     }
 
     private fun emptyList() {
@@ -97,6 +104,17 @@ class VideoFragment : Fragment() {
         }
     }
 
+    private fun startSearch() {
+        val word = getTextFromEdtSearching()
+        if (word.isEmpty()) return
+        resetUI()
+        loadingApi.run {
+            setVisible(true)
+            startAnimation()
+        }
+        viewModel.search(word)
+    }
+
     private fun createRv() {
         with(binding.carcass) {
             rv.layoutManager = GridLayoutManager(context, 2)
@@ -118,7 +136,30 @@ class VideoFragment : Fragment() {
     private fun createSwipeToRefresh() {
         binding.carcass.swipeToRefresh.setOnRefreshListener {
             binding.carcass.swipeToRefresh.isRefreshing = true
-            viewModel.getVideo()
+            viewModel.getVideo(getTextFromEdtSearching())
+        }
+    }
+
+    private fun setupSearching() {
+        searchingUIApi.run {
+            setOnCloseSearching {
+                binding.searchingInclude.edtSearching.text = null
+                viewModel.currentList.value = viewModel.fullList.value
+            }
+            setRootView(binding.searchingInclude)
+            setTextWatcher(createTextWatcher())
+            endSetup()
+            isShowIconVisible(true)
+        }
+    }
+
+    private fun createTextWatcher() = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            startSearch()
         }
     }
 
@@ -129,6 +170,9 @@ class VideoFragment : Fragment() {
             inflate()
         }
     }
+
+    private fun getTextFromEdtSearching() =
+        binding.searchingInclude.edtSearching.text.toString().trim()
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -171,7 +171,6 @@ class ImagesFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             startSearch()
         }
-
     }
 
     private fun setupViewStub() {

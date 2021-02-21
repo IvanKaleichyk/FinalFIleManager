@@ -41,6 +41,7 @@ android {
 dependencies {
     implementation project(":app-annotations")
     implementation project(":basic-resources")
+    implementation project(":core-searching")
     implementation project(":models")
     implementation project(":module-injector")
     implementation project(":feature-loading-api")

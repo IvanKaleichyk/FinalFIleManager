@@ -3,11 +3,9 @@ package com.koleychik.finalfilemanager
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.AppConstants
@@ -117,10 +115,6 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
             Log.d(AppConstants.TAG, "onActivityResult")
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

@@ -15,6 +15,7 @@ import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesApi
 import com.koleychik.feature_searching_impl.di.SearchingFeatureComponent
+import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
 import com.koleychik.feature_video.di.VideoFeatureDependencies
@@ -61,6 +62,8 @@ class DependenciesModule {
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
 
         override fun mediaAdapter(): RvMediaAdapterApi = rvMediaApi.rvMediaAdapterApi()
+        override fun searchingUiApi(): SearchingUIApi =
+            SearchingFeatureComponent.get().searchingUIApi()
 
     }
 
