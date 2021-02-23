@@ -1,4 +1,4 @@
-package com.koleychik.core_files.extencions
+package com.koleychik.core_files.extensions
 
 import android.content.Context
 import com.koleychik.core_files.*

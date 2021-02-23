@@ -1,6 +1,7 @@
 package com.koleychik.feature_rv_common_impl
 
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -54,6 +55,7 @@ internal class RvMediaAdapterImpl @Inject constructor() : RvMediaAdapterApi() {
             if (model is ImageModel) loadImage(model.uri)
             else loadVideoPreview()
             with(binding) {
+                Log.d("MAIN_APP_TAG", "model.name = ${model.name}")
                 nameImage.text = model.name
                 size.text = model.sizeAbbreviation
             }

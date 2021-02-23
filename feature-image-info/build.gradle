@@ -79,4 +79,6 @@ dependencies {
     testImplementation "junit:junit:${tests.junitVersion}"
     androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${tests.espressoVersion}"
+
+    testImplementation "org.assertj:assertj-core:${testVersion.assertj}"
 }

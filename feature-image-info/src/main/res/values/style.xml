@@ -18,7 +18,7 @@
         <item name="android:gravity">end</item>
     </style>
 
-    <style name="textImageName" parent="basicText">
+    <style name="imageName" parent="basicText">
         <item name="android:textSize">@dimen/basicTextSize</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:fontFamily">@font/roboto_medium</item>

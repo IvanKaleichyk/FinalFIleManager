@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import androidx.core.content.ContextCompat
 import com.koleychik.core_files.api.FilesRepository
-import com.koleychik.core_files.extencions.*
+import com.koleychik.core_files.extensions.*
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
