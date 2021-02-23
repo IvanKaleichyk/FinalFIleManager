@@ -1,16 +1,26 @@
 package com.koleychik.feature_image_info.ui.adapter
 
 import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import coil.clear
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.koleychik.feature_image_info.databinding.ImageSliderItemBinding
 import com.koleychik.models.fileCarcass.media.ImageModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class ImageInfoAdapter : RecyclerView.Adapter<ImageInfoAdapter.MainViewHolder>() {
 
@@ -35,10 +45,57 @@ class ImageInfoAdapter : RecyclerView.Adapter<ImageInfoAdapter.MainViewHolder>()
 
     override fun getItemCount(): Int = list.size
 
+    override fun onViewRecycled(holder: MainViewHolder) {
+        super.onViewRecycled(holder)
+        holder.destroy()
+    }
+
     class MainViewHolder(private val binding: ImageSliderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        private var loader: Job? = null
+
         fun bind(model: ImageModel) {
+            loader = loadImageUsingCoil(model)
+        }
+
+        fun destroy() {
+            binding.sliderImage.clear()
+            loader?.cancel()
+        }
+
+        private fun loadImageUsingCoil(model: ImageModel) =
+            CoroutineScope(Dispatchers.Main).launch {
+                val context = binding.root.context.applicationContext
+
+                val request = ImageRequest.Builder(context)
+                    .data(model.uri)
+                    .target(
+                        onStart = { placeholder ->
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.sliderImage.visibility = View.INVISIBLE
+                            binding.infoText.visibility = View.GONE
+                        },
+                        onSuccess = { result ->
+                            binding.progressBar.visibility = View.GONE
+                            binding.infoText.visibility = View.GONE
+                            binding.sliderImage.run {
+                                setImageBitmap((result as BitmapDrawable).bitmap)
+                                visibility = View.VISIBLE
+                            }
+                        },
+                        onError = { error ->
+                            binding.progressBar.visibility = View.GONE
+                            binding.sliderImage.visibility = View.INVISIBLE
+                            binding.infoText.visibility = View.VISIBLE
+                            Toast.makeText(context, error.toString(), Toast.LENGTH_LONG).show()
+                        }
+                    )
+                    .build()
+                context.imageLoader.execute(request)
+            }
+
+        private fun loadImageUsingGlide(model: ImageModel) {
             Glide.with(binding.root.context)
                 .asBitmap()
                 .load(model.uri)
@@ -53,5 +110,6 @@ class ImageInfoAdapter : RecyclerView.Adapter<ImageInfoAdapter.MainViewHolder>()
                     override fun onLoadCleared(placeholder: Drawable?) {}
                 })
         }
+
     }
 }

@@ -56,10 +56,6 @@ class ImageInfoFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.isBarOpen.observe(viewLifecycleOwner, {
-            if (it) openBars()
-            else closeBars()
-        })
         viewModel.currentImagePosition.observe(viewLifecycleOwner, { updateUI(adapter.list[it]) })
     }
 
@@ -79,19 +75,11 @@ class ImageInfoFragment : Fragment() {
         }
     }
 
-    private fun closeBars() {
-        binding.motionLayout.transitionToState(R.id.closeBar)
-    }
-
-    private fun openBars() {
-        binding.motionLayout.transitionToState(R.id.openBars)
-    }
-
     private fun setupViewPager() {
+
         with(binding) {
             viewPager.adapter = adapter
             viewPager.registerOnPageChangeCallback(createRegisterOnPageChangeCallback())
-            viewPager.currentItem = getStarPosition()
         }
         adapter.submitList(getListImages())
     }
@@ -107,7 +95,7 @@ class ImageInfoFragment : Fragment() {
     private fun getListImages(): List<ImageModel> =
         requireArguments().getParcelableArrayList(Constants.PARCELABLE_LIST) ?: emptyList()
 
-    private fun getStarPosition() = viewModel.currentImagePosition.value
+    private fun getStartPosition() = viewModel.currentImagePosition.value
         ?: requireArguments().getInt(Constants.PARCELABLE_POSITION, 0)
 
     private fun createSetOnClickListener() {
@@ -115,7 +103,6 @@ class ImageInfoFragment : Fragment() {
         val onClickListener = View.OnClickListener {
             when (it.id) {
                 R.id.trashCan -> viewModel.deleteImage(adapter.list[viewModel.currentImagePosition.value!!])
-                R.id.viewPager -> viewModel.isBarOpen.value = viewModel.isBarOpen.value ?: true
                 R.id.share -> shareImage(adapter.list[viewModel.currentImagePosition.value!!])
             }
         }
@@ -123,8 +110,12 @@ class ImageInfoFragment : Fragment() {
         with(binding) {
             trashCan.setOnClickListener(onClickListener)
             share.setOnClickListener(onClickListener)
-            viewPager.setOnClickListener(onClickListener)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding.viewPager.setCurrentItem(getStartPosition(), false)
     }
 
     override fun onDestroyView() {

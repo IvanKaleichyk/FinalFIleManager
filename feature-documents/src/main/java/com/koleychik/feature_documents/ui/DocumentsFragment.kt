@@ -1,15 +1,18 @@
 package com.koleychik.feature_documents.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.koleychik.basic_resources.Constants.TAG
 import com.koleychik.feature_documents.R
 import com.koleychik.feature_documents.databinding.FragmentDocumentsBinding
 import com.koleychik.feature_documents.di.DocumentsFeatureComponentHolder
@@ -17,6 +20,7 @@ import com.koleychik.feature_documents.ui.viewModels.DocumentsViewModel
 import com.koleychik.feature_documents.ui.viewModels.DocumentsViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
+import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.document.DocumentType
 import javax.inject.Inject
@@ -27,10 +31,13 @@ class DocumentsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private lateinit var mapTypes: Map<Int, MutableLiveData<DocumentType>>
+    private val mapTypes: Map<Int, DocumentType> by lazy { createMap() }
 
     @Inject
     internal lateinit var loadingApi: LoadingApi
+
+    @Inject
+    internal lateinit var searchingUIApi: SearchingUIApi
 
     @Inject
     internal lateinit var adapterApi: RvFilesAdapterApi
@@ -59,14 +66,15 @@ class DocumentsFragment : Fragment() {
 //        mapTypes = createMap()
 
         setupViewStub()
-        createOnCLickListener()
+        setupSearching()
+        createOnClickListener()
         createRv()
         createSwipeToRefresh()
         subscribe()
     }
 
     private fun subscribe() {
-        viewModel.list.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetUI()
             when {
                 it == null -> loading()
@@ -74,61 +82,59 @@ class DocumentsFragment : Fragment() {
                 else -> showList(it)
             }
         })
+        viewModel.listSelectFormats.observe(viewLifecycleOwner, {
+            viewModel.setFullList(getTextFromEdtSearching())
+        })
     }
 
-    private fun createOnCLickListener() {
+    private fun createOnClickListener() {
         val onClickListener = View.OnClickListener {
-            val documentType = mapTypes[it.id]?.value ?: return@OnClickListener
-            var isSelected = documentType.isSelected
-            mapTypes[it.id]?.value?.isSelected = !isSelected
-            isSelected = !isSelected
-            if (isSelected) {
-                (it as TextView).setBackgroundResource(R.drawable.bg_type_document)
-                viewModel.addToListDocumentsWithType(documentType)
-            } else {
-                (it as TextView).setBackgroundResource(R.drawable.bg_type_document_dont_selected)
-                viewModel.deleteDocumentsWithType(documentType)
+            viewModel.listSelectFormats.value.run {
+                val type = mapTypes[it.id] ?: return@run
+
+                if (this!!.contains(type)) {
+                    (it as TextView).setBackgroundResource(R.drawable.bg_type_document_dont_selected)
+                    viewModel.listSelectFormats.value?.remove(type)
+                }
+                else {
+                    (it as TextView).setBackgroundResource(R.drawable.bg_type_document)
+                    viewModel.listSelectFormats.value?.add(type)
+                }
             }
         }
 
         with(binding) {
-            typeTxt.setOnClickListener(onClickListener)
+            typePpt.setOnClickListener(onClickListener)
+            typeDoc.setOnClickListener(onClickListener)
+            typeDocx.setOnClickListener(onClickListener)
+            typeB2.setOnClickListener(onClickListener)
             typePdf.setOnClickListener(onClickListener)
             typeEpub.setOnClickListener(onClickListener)
-            typeB2.setOnClickListener(onClickListener)
-            typeDocx.setOnClickListener(onClickListener)
-            typeDoc.setOnClickListener(onClickListener)
-            typePpt.setOnClickListener(onClickListener)
+            typeTxt.setOnClickListener(onClickListener)
             typeOther.setOnClickListener(onClickListener)
         }
+
     }
 
+
     private fun loading() {
+        Log.d(TAG, "start loading")
         loadingApi.run {
             setVisible(true)
             startAnimation()
         }
-        viewModel.getDocuments()
+        viewModel.getDocuments(getTextFromEdtSearching())
     }
-
-//    private fun createMap() = mapOf(
-//        binding.typeTxt.id to viewModel.listTypes[0],
-//        binding.typePdf.id to viewModel.listTypes[1],
-//        binding.typeEpub.id to viewModel.listTypes[2],
-//        binding.typeB2.id to viewModel.listTypes[3],
-//        binding.typeDoc.id to viewModel.listTypes[4],
-//        binding.typeDocx.id to viewModel.listTypes[5],
-//        binding.typePpt.id to viewModel.listTypes[6],
-//        binding.typeOther.id to viewModel.listTypes[7],
-//    )
 
 
     private fun showList(list: List<FileCarcass>) {
+        Log.d(TAG, "show list")
         adapterApi.submitList(list)
         binding.carcass.rv.visibility = View.VISIBLE
     }
 
     private fun emptyList() {
+        Log.d(TAG, "show list")
         binding.carcass.infoText.visibility = View.VISIBLE
     }
 
@@ -152,7 +158,7 @@ class DocumentsFragment : Fragment() {
         binding.carcass.swipeToRefresh.apply {
             setOnRefreshListener {
                 isRefreshing = false
-                viewModel.getDocuments()
+                viewModel.getDocuments(getTextFromEdtSearching())
             }
         }
     }
@@ -175,6 +181,54 @@ class DocumentsFragment : Fragment() {
             inflate()
         }
     }
+
+    private fun setupSearching() {
+        searchingUIApi.run {
+            setOnCloseSearching {
+                binding.searchingInclude.edtSearching.text = null
+                viewModel.currentList.value = viewModel.fullList.value
+            }
+            setRootView(binding.searchingInclude)
+            setTextWatcher(createTextWatcher())
+            endSetup()
+            isShowIconVisible(true)
+        }
+    }
+
+    private fun startSearch() {
+        val word = getTextFromEdtSearching()
+        if (word.isEmpty()) return
+        resetUI()
+        loadingApi.run {
+            setVisible(true)
+            startAnimation()
+        }
+        viewModel.search(word)
+    }
+
+    private fun createTextWatcher() = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+        override fun afterTextChanged(s: Editable?) {
+            startSearch()
+        }
+    }
+
+    private fun getTextFromEdtSearching() =
+        binding.searchingInclude.edtSearching.text.toString().trim()
+
+    private fun createMap() = mapOf(
+        binding.typeTxt.id to DocumentType.TXT,
+        binding.typePdf.id to DocumentType.PDF,
+        binding.typeEpub.id to DocumentType.EPUB,
+        binding.typeB2.id to DocumentType.B2,
+        binding.typeDoc.id to DocumentType.DOC,
+        binding.typeDocx.id to DocumentType.DOCX,
+        binding.typePpt.id to DocumentType.PPT,
+        binding.typeOther.id to DocumentType.OTHER
+    )
 
     override fun onDestroyView() {
         super.onDestroyView()

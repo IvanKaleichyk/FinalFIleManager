@@ -69,6 +69,12 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines.core}"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines.android}"
 
+    //coil
+    implementation "io.coil-kt:coil:${coil.version}"
+
+    //    progressBar
+    implementation 'com.github.rahatarmanahmed:circularprogressview:2.5.0'
+
 //    TEST
     testImplementation "junit:junit:${tests.junitVersion}"
     androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"

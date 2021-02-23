@@ -52,6 +52,7 @@ class DependenciesModule {
 
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
         override fun rvFilesAdapterApi(): RvFilesAdapterApi = filesApi.getAdapter()
+        override fun searchingUIApi(): SearchingUIApi = SearchingFeatureComponent.get().searchingUIApi()
     }
 
     @Provides

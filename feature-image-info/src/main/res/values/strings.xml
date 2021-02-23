@@ -4,4 +4,5 @@
     <string name="image">image</string>
     <string name="buttonImage_to_delete">imageButton to delete image</string>
     <string name="share">share</string>
+    <string name="cannotLoadImage">Cannot load this image</string>
 </resources>

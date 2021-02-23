@@ -48,9 +48,9 @@ fun Context.getSizeAbbreviation( value: Long): String {
     val mb = kb * 1024
     val gb = mb * 1024
     return when {
-        value > kb -> "$value ${getString(R.string.bytes)}"
-        value >= mb -> "${transform(value, kb)} ${getString(R.string.kb)}"
-        value >= gb -> "${transform(value, mb)} ${getString(R.string.mb)}"
+        value < kb -> "$value ${getString(R.string.bytes)}"
+        value <= mb -> "${transform(value, kb)} ${getString(R.string.kb)}"
+        value <= gb -> "${transform(value, mb)} ${getString(R.string.mb)}"
         else -> "${transform(value, gb)} ${getString(R.string.gb)}"
     }
 }

@@ -1,9 +1,7 @@
 package com.koleychik.models.fileCarcass
 
 import android.net.Uri
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class MusicModel(
     val id: Long,
     override val name: String,

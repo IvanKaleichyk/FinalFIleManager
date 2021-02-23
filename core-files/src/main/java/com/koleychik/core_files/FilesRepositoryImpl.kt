@@ -12,6 +12,7 @@ import com.koleychik.core_files.extencions.*
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
+import com.koleychik.models.fileCarcass.document.getTypeOfDocument
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
 import javax.inject.Inject
@@ -56,14 +57,18 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         val uriExternal: Uri = MediaStore.Files.getContentUri(contentUri)
         val cursor = queryContentResolver(uriExternal, documentsProjections) ?: return emptyList()
 
-        while (cursor.moveToNext()) listRes.add(
-            DocumentModel(
-                name = cursor.getString(1),
-                uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
-                sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
-                dateAdded = cursor.getLong(3),
+        while (cursor.moveToNext()) {
+            val name = cursor.getString(1)
+            listRes.add(
+                DocumentModel(
+                    name = name,
+                    uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
+                    sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
+                    dateAdded = cursor.getLong(3),
+                    getTypeOfDocument(name)
+                )
             )
-        )
+        }
         cursor.close()
         return listRes
     }

@@ -1,10 +1,8 @@
 package com.koleychik.models.fileCarcass
 
 import android.net.Uri
-import kotlinx.parcelize.Parcelize
 
 
-@Parcelize
 data class FolderModel(
     override val name: String,
     override val uri: Uri,

@@ -11,7 +11,7 @@
 
     <style name="textShowFile" parent="basicText">
         <item name="android:layout_width">200dp</item>
-        <item name="android:textSize">@dimen/basicTextSize</item>
+        <item name="android:textSize">@dimen/smallTextSize</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:maxLines">1</item>
         <item name="android:ellipsize">end</item>
@@ -19,7 +19,9 @@
     </style>
 
     <style name="textImageName" parent="basicText">
-        <item name="android:textSize">@dimen/smallTextSize</item>
+        <item name="android:textSize">@dimen/basicTextSize</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
         <item name="android:ellipsize">end</item>
         <item name="android:maxLines">1</item>
     </style>

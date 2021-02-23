@@ -12,7 +12,6 @@ import javax.inject.Inject
 class ImageInfoViewModel @Inject constructor(private val repository: FilesRepository) : ViewModel() {
 
     val currentImagePosition = MutableLiveData<Int>()
-    val isBarOpen = MutableLiveData(true)
 
     fun deleteImage(model: ImageModel) = viewModelScope.launch(Dispatchers.IO) {
         repository.delete(model)

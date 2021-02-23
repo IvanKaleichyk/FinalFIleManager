@@ -9,7 +9,7 @@ import java.util.*
 
 fun transformDateToDateFormat(dateTime: Long?): String {
     if (dateTime == null) return "Error"
-    val pattern = "yyyy-MM-dd"
+    val pattern = "dd-MM-yyyy"
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         val date = LocalDate.ofEpochDay(dateTime)
         val format = DateTimeFormatter.ofPattern(pattern)
