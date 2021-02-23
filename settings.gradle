@@ -1,3 +1,4 @@
+include ':feature-folders-and-files'
 include ':core-searching'
 include ':feature-video'
 include ':feature-image-info'

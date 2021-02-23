@@ -9,12 +9,16 @@ import android.provider.MediaStore
 import androidx.core.content.ContextCompat
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extensions.*
+import com.koleychik.models.extensions.getSizeAbbreviation
+import com.koleychik.models.extensions.toDocumentModel
+import com.koleychik.models.extensions.toFolderModel
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.document.getTypeOfDocument
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
+import java.io.File
 import javax.inject.Inject
 
 
@@ -126,6 +130,17 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
             )
         }
         cursor.close()
+        return listRes
+    }
+
+    override fun getFoldersAndFiles(path: String): List<FileCarcass> {
+        val file = File(path)
+        val list = file.listFiles() ?: return emptyList()
+        val listRes = mutableListOf<FileCarcass>()
+        for (i in list) {
+            if (i.isDirectory) listRes.add(i.toFolderModel(context))
+            else listRes.add(i.toDocumentModel(context))
+        }
         return listRes
     }
 
