@@ -12,10 +12,13 @@ import com.koleychik.feature_rv_documents_api.RvFilesAdapterViewHolder
 import com.koleychik.feature_rv_files_impl.R
 import com.koleychik.feature_rv_files_impl.databinding.ItemRvFilesLayoutBinding
 import com.koleychik.models.fileCarcass.FileCarcass
+import com.koleychik.models.fileCarcass.FolderModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
 import javax.inject.Inject
 
 internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
+
+    private var onClick: ((model: FileCarcass, position: Int) -> Unit)? = null
 
     private val list: SortedList<FileCarcass> = SortedList(
         FileCarcass::class.java,
@@ -32,8 +35,13 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
                 item1 == item2
         })
 
+
     override fun submitList(newList: List<FileCarcass>) {
         list.addAll(newList)
+    }
+
+    override fun setOnClick(onClick: (model: FileCarcass, position: Int) -> Unit) {
+        this.onClick = onClick
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainViewHolder(
@@ -41,15 +49,15 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
     )
 
     override fun onBindViewHolder(holder: RvFilesAdapterViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(list[position], position)
     }
 
     override fun getItemCount(): Int = list.size()
 
-    class MainViewHolder(private val binding: ItemRvFilesLayoutBinding) :
+    inner class MainViewHolder(private val binding: ItemRvFilesLayoutBinding) :
         RvFilesAdapterViewHolder(binding.root) {
 
-        override fun bind(model: FileCarcass) {
+        override fun bind(model: FileCarcass, position: Int) {
             val img =
                 if (model is DocumentModel) model.imgRes else R.drawable.folder_icon_48_main_color
 
@@ -57,7 +65,10 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
                 icon.setImageResource(img)
                 name.text = model.name
                 size.text = model.sizeAbbreviation
-                root.setOnClickListener { openFile(model) }
+                root.setOnClickListener {
+                    if (model is FolderModel) onClick?.let { click -> click(model, position) }
+                    else openFile(model)
+                }
             }
         }
 

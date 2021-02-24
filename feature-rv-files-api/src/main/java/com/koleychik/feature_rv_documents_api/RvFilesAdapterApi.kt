@@ -7,5 +7,6 @@ import com.koleychik.models.fileCarcass.FileCarcass
 abstract class RvFilesAdapterApi : RecyclerView.Adapter<RvFilesAdapterViewHolder>() {
 
     abstract fun submitList(newList: List<FileCarcass>)
+    abstract fun setOnClick(onClick: (model: FileCarcass, position: Int) -> Unit)
 
 }

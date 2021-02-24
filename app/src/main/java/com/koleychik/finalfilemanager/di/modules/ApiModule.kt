@@ -4,6 +4,10 @@ import com.koleychik.feature_documents.di.DocumentFeatureDestroyer
 import com.koleychik.feature_documents.di.DocumentsFeatureApi
 import com.koleychik.feature_documents.di.DocumentsFeatureComponentHolder
 import com.koleychik.feature_documents.di.DocumentsFeatureDependencies
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureApi
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureComponentHolder
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureDependencies
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureDestroyer
 import com.koleychik.feature_image_info.di.ImageInfoFeatureApi
 import com.koleychik.feature_image_info.di.ImageInfoFeatureComponentHolder
 import com.koleychik.feature_image_info.di.ImageInfoFeatureDependencies
@@ -39,6 +43,15 @@ import dagger.Provides
 
 @Module
 class ApiModule {
+
+    @Provides
+    fun provideFoldersAndFilesApi(
+        dependencies: FoldersAndFilesFeatureDependencies,
+        destroyer: FoldersAndFilesFeatureDestroyer
+    ): FoldersAndFilesFeatureApi {
+        FoldersAndFilesFeatureComponentHolder.init(dependencies, destroyer)
+        return FoldersAndFilesFeatureComponentHolder.get()
+    }
 
     @Provides
     fun provideImagesFeatureApi(

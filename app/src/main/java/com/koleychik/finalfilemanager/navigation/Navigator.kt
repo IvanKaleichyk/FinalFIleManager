@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavController
 import com.koleychik.feature_documents.di.DocumentsFeatureApi
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureApi
+import com.koleychik.feature_folders_and_files.navigation.FoldersAndFilesNavigationApi
 import com.koleychik.feature_image_info.di.ImageInfoFeatureApi
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
@@ -20,8 +22,9 @@ class Navigator(
     private val musicFeatureApi: Provider<MusicFeatureApi>,
     private val documentsFeatureApi: Provider<DocumentsFeatureApi>,
     private val videoFeatureApi: Provider<VideoFeatureApi>,
-    private val imageInfoFeatureApi: Provider<ImageInfoFeatureApi>
-) : ImagesFeatureNavigationApi, SelectCategoryNavigationApi {
+    private val imageInfoFeatureApi: Provider<ImageInfoFeatureApi>,
+    private val foldersAndFilesFeatureApi: Provider<FoldersAndFilesFeatureApi>
+) : ImagesFeatureNavigationApi, SelectCategoryNavigationApi, FoldersAndFilesNavigationApi {
 
     private var _navController: NavController? = null
     private val navController get() = _navController!!
@@ -51,6 +54,7 @@ class Navigator(
             R.id.documentsFragment -> documentsFeatureApi.get()
             R.id.videoFragment -> videoFeatureApi.get()
             R.id.imageInfoFragment -> imageInfoFeatureApi.get()
+            R.id.foldersAndFilesFragment -> foldersAndFilesFeatureApi.get()
         }
     }
 
@@ -81,6 +85,12 @@ class Navigator(
     override fun selectCategoryFeatureGoToVideoFragment(bundle: Bundle?) {
         if (navController.currentDestination?.id == R.id.selectCategoryFragment) {
             navController.navigate(R.id.action_selectCategoryFragment_to_videoFragment, bundle)
+        }
+    }
+
+    override fun openFileInNewFragment(bundle: Bundle) {
+        if (navController.currentDestination?.id == R.id.foldersAndFilesFragment) {
+            navController.navigate(R.id.action_foldersAndFilesFragment_self, bundle)
         }
     }
 }

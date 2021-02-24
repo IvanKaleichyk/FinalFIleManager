@@ -2,11 +2,8 @@ package com.koleychik.core_files
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.provider.MediaStore
-import androidx.core.content.ContextCompat
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extensions.*
 import com.koleychik.models.extensions.getSizeAbbreviation
@@ -168,13 +165,6 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
 
     override fun delete(model: FileCarcass) {
         TODO("Not yet implemented")
-    }
-
-    override fun openFile(model: FileCarcass) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = model.uri
-        val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-        ContextCompat.startActivity(context, intentOpen, Bundle())
     }
 
     private fun queryContentResolver(
