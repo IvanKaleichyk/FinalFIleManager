@@ -68,6 +68,17 @@ class ImageInfoFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun deleteImage(position: Int) {
+        Log.d(TAG, "list.size = ${adapter.list.size}")
+        val img = adapter.list[position]
+        adapter.run {
+            list.removeAt(position)
+            submitList(list)
+        }
+        viewModel.deleteImage(img)
+    }
+
+
     private fun updateUI(model: ImageModel) {
         with(binding) {
             title.text = model.name
@@ -102,7 +113,7 @@ class ImageInfoFragment : Fragment() {
 
         val onClickListener = View.OnClickListener {
             when (it.id) {
-                R.id.trashCan -> viewModel.deleteImage(adapter.list[viewModel.currentImagePosition.value!!])
+                R.id.trashCan -> deleteImage(viewModel.currentImagePosition.value!!)
                 R.id.share -> shareImage(adapter.list[viewModel.currentImagePosition.value!!])
             }
         }

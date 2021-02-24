@@ -6,7 +6,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extensions.*
 import com.koleychik.models.fileCarcass.FileCarcass
@@ -15,6 +17,7 @@ import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.document.getTypeOfDocument
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
+import com.koleychik.module_injector.AppConstants.TAG
 import javax.inject.Inject
 
 
@@ -152,7 +155,12 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
     }
 
     override fun delete(model: FileCarcass) {
-        TODO("Not yet implemented")
+        val file = model.uri.toFile()
+        if (file.exists()) {
+            Log.d(TAG, "file exists")
+            if (file.delete()) Log.d(TAG, "file successful deleted")
+            else Log.d(TAG, "fail to delete file")
+        } else Log.d(TAG, "file doesn't exist")
     }
 
     override fun openFile(model: FileCarcass) {

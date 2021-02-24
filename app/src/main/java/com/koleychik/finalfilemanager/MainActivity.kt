@@ -25,7 +25,10 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         findNavController(R.id.navController)
     }
 
-    private val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val permissions = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     private val tag = "MAIN_APP_TAG"
 

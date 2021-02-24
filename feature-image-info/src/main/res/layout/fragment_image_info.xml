@@ -65,7 +65,7 @@
 
         <TextView
             android:id="@+id/dateCreated"
-            style="@style/imageName"
+            style="@style/imageDate"
             android:text="24.10.2003"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

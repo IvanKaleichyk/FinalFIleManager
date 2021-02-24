@@ -53,6 +53,7 @@ dependencies {
 
     //coil
     implementation "io.coil-kt:coil:${coil.version}"
+    implementation "io.coil-kt:coil-video:${coil.version}"
 
     // dagger
     implementation "com.google.dagger:dagger:${dagger.core}"
