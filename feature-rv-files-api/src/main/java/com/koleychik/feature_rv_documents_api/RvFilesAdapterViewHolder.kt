@@ -6,6 +6,6 @@ import com.koleychik.models.fileCarcass.FileCarcass
 
 abstract class RvFilesAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    abstract fun bind(model: FileCarcass)
+    abstract fun bind(model: FileCarcass, position: Int)
 
 }

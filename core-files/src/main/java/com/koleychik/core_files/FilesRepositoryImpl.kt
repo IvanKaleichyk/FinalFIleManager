@@ -6,18 +6,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import androidx.core.content.ContextCompat
-import androidx.core.net.toFile
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extensions.*
+import com.koleychik.models.extensions.getSizeAbbreviation
+import com.koleychik.models.extensions.toDocumentModel
+import com.koleychik.models.extensions.toFolderModel
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.document.getTypeOfDocument
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
-import com.koleychik.module_injector.AppConstants.TAG
 import javax.inject.Inject
 
 
@@ -132,6 +132,17 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         return listRes
     }
 
+    override fun getFoldersAndFiles(path: String): List<FileCarcass> {
+        val file = File(path)
+        val list = file.listFiles() ?: return emptyList()
+        val listRes = mutableListOf<FileCarcass>()
+        for (i in list) {
+            if (i.isDirectory) listRes.add(i.toFolderModel(context))
+            else listRes.add(i.toDocumentModel(context))
+        }
+        return listRes
+    }
+
     override fun gelFilesFromFolder(path: String): List<FileCarcass> {
         val selection = "relative_path = '$path'"
 //        val selection = "_data LIKE '%.jpg'"
@@ -155,12 +166,7 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
     }
 
     override fun delete(model: FileCarcass) {
-        val file = model.uri.toFile()
-        if (file.exists()) {
-            Log.d(TAG, "file exists")
-            if (file.delete()) Log.d(TAG, "file successful deleted")
-            else Log.d(TAG, "fail to delete file")
-        } else Log.d(TAG, "file doesn't exist")
+        TODO("Not yet implemented")
     }
 
     override fun openFile(model: FileCarcass) {

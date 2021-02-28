@@ -54,5 +54,14 @@
         android:id="@+id/videoFragment"
         android:name="com.koleychik.feature_video.ui.VideoFragment"
         android:label="VideoFragment"
-        tools:layout="@layout/fragment_video"/>
+        tools:layout="@layout/fragment_video" />
+    <fragment
+        android:id="@+id/foldersAndFilesFragment"
+        android:name="com.koleychik.feature_folders_and_files.ui.FoldersAndFilesFragment"
+        android:label="FoldersAndFilesFragment"
+        tools:layout="@layout/fragment_folders_and_files" >
+        <action
+            android:id="@+id/action_foldersAndFilesFragment_self"
+            app:destination="@id/foldersAndFilesFragment" />
+    </fragment>
 </navigation>

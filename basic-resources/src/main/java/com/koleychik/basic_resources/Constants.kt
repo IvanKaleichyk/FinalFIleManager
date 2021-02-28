@@ -6,4 +6,5 @@ object Constants {
 
     const val PARCELABLE_LIST = "GET PARCELABLE_LIST"
     const val PARCELABLE_POSITION = "GET PARCELABLE_POSITION"
+    const val PATH = "PATH"
 }

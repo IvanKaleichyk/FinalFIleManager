@@ -9,7 +9,7 @@ data class DocumentModel(
     override val name: String,
     override val uri: Uri,
     override val sizeAbbreviation: String,
-    override val dateAdded: Long,
+    override val dateAdded: Long?,
     val format: DocumentType,
 //    private val formatSerializer: Serializable,
     val imgRes: Int = R.drawable.documents_icon_48_black

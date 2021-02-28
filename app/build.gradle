@@ -40,6 +40,7 @@ dependencies {
     implementation project(":models")
     implementation project(":basic-resources")
     implementation project(":core-files")
+    implementation project(":feature-folders-and-files")
     implementation project(":feature-images")
     implementation project(":feature-image-info")
     implementation project(":feature-loading-api")

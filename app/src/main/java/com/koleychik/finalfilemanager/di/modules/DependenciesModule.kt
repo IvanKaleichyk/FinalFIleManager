@@ -4,6 +4,8 @@ import android.content.Context
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.di.FileCoreComponent
 import com.koleychik.feature_documents.di.DocumentsFeatureDependencies
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureDependencies
+import com.koleychik.feature_folders_and_files.navigation.FoldersAndFilesNavigationApi
 import com.koleychik.feature_image_info.di.ImageInfoFeatureDependencies
 import com.koleychik.feature_images.di.ImagesFeatureDependencies
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
@@ -30,6 +32,25 @@ class DependenciesModule {
 
     @Provides
     @Singleton
+    fun provideFoldersAndFilesFeatureDependencies(
+        context: Context,
+        featureLoadingApi: FeatureLoadingApi,
+        navigator: Navigator,
+        rvFilesApi: RvFilesApi
+    ) = object : FoldersAndFilesFeatureDependencies {
+        override fun repository(): FilesRepository =
+            FileCoreComponent.get(context).getFileRepository()
+
+        override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
+        override fun searchingUIApi(): SearchingUIApi =
+            SearchingFeatureComponent.get().searchingUIApi()
+
+        override fun navigationApi(): FoldersAndFilesNavigationApi = navigator
+        override fun adapterApi(): RvFilesAdapterApi = rvFilesApi.getAdapter()
+    }
+
+    @Provides
+    @Singleton
     fun provideMusicFeatureDependencies(context: Context, featureLoadingApi: FeatureLoadingApi) =
         object : MusicFeatureDependencies {
             override fun filesRepository(): FilesRepository =
@@ -52,7 +73,8 @@ class DependenciesModule {
 
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
         override fun rvFilesAdapterApi(): RvFilesAdapterApi = filesApi.getAdapter()
-        override fun searchingUIApi(): SearchingUIApi = SearchingFeatureComponent.get().searchingUIApi()
+        override fun searchingUIApi(): SearchingUIApi =
+            SearchingFeatureComponent.get().searchingUIApi()
     }
 
     @Provides

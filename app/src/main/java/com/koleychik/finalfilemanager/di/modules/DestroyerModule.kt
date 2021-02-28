@@ -1,6 +1,8 @@
 package com.koleychik.finalfilemanager.di.modules
 
 import com.koleychik.feature_documents.di.DocumentFeatureDestroyer
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureComponentHolder
+import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureDestroyer
 import com.koleychik.feature_images.ImagesFeatureDestroyer
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationComponentHolder
 import com.koleychik.feature_loading_impl.di.LoadingComponentHolder
@@ -15,6 +17,17 @@ import javax.inject.Singleton
 
 @Module
 class DestroyerModule {
+
+    @Provides
+    @Singleton
+    fun provideFoldersAndFilesFeatureDestroyer() = object : FoldersAndFilesFeatureDestroyer {
+        override fun destroy() {
+            LoadingComponentHolder.reset()
+            RvFilesAdapterComponentHolder.reset()
+            FoldersAndFilesFeatureComponentHolder.reset()
+            RvFilesAdapterComponentHolder.reset()
+        }
+    }
 
     @Provides
     @Singleton

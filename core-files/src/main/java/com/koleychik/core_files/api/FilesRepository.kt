@@ -1,5 +1,6 @@
 package com.koleychik.core_files.api
 
+import com.koleychik.core_files.FilesCoreConstants.ROOT_PATH
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
@@ -16,9 +17,9 @@ interface FilesRepository {
 
     fun getVideo(): List<VideoModel>
 
-    fun gelFilesFromFolder(path: String = ""): List<FileCarcass>
+    fun getFoldersAndFiles(path: String = ROOT_PATH): List<FileCarcass>
+
+    fun gelFilesFromFolder(path: String = ROOT_PATH): List<FileCarcass>
 
     fun delete(model: FileCarcass)
-
-    fun openFile(model: FileCarcass)
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="textPath" parent="textFoldersBasic">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:padding">@dimen/basicPadding</item>
+        <item name="maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:background">@drawable/border_bottom</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="textForMemoryInfo" parent="basicText">
+        <item name="android:textSize">@dimen/smallTextSize</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="textFoldersBasic" parent="basicText">
+        <item name="android:textSize">@dimen/basicTextSize</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+    </style>
+
+    <style name="customProgressBarHorizontal" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/custom_progress_bar</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">5dp</item>
+    </style>
+
+</resources>

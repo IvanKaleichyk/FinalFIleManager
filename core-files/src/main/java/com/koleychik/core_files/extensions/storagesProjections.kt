@@ -1,8 +1,9 @@
 package com.koleychik.core_files.extensions
 
-import android.content.Context
-import com.koleychik.core_files.*
-import java.math.BigDecimal
+import com.koleychik.core_files.AudioStorage
+import com.koleychik.core_files.FilesStorage
+import com.koleychik.core_files.ImagesStorage
+import com.koleychik.core_files.VideoStorage
 
 val imagesProjections = arrayOf(
     ImagesStorage._ID,
@@ -42,18 +43,3 @@ val allFilesFromFolderProjections = arrayOf(
     FilesStorage.DISPLAY_NAME,
     FilesStorage.RELATIVE_PATH
 )
-
-fun Context.getSizeAbbreviation( value: Long): String {
-    val kb = 1024
-    val mb = kb * 1024
-    val gb = mb * 1024
-    return when {
-        value < kb -> "$value ${getString(R.string.bytes)}"
-        value <= mb -> "${transform(value, kb)} ${getString(R.string.kb)}"
-        value <= gb -> "${transform(value, mb)} ${getString(R.string.mb)}"
-        else -> "${transform(value, gb)} ${getString(R.string.gb)}"
-    }
-}
-
-private fun transform(value: Long, size: Int) =
-    BigDecimal(value).divide(BigDecimal(size), BigDecimal.ROUND_HALF_EVEN)
