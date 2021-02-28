@@ -5,66 +5,29 @@ def versions = [
         material        : '1.3.0',
         constraintlayout: '2.0.4',
         lifecycle       : '2.2.0',
-        fragment        : '1.3.0'
+        fragment        : '1.3.0',
+        coroutines      : '1.4.2',
+        dagger          : '2.28.3',
+        coil            : '1.1.1',
+        navigation      : '2.3.3',
+
+
 ]
 ext.versions = versions
 
 def test = [
-        assertj: '3.18.1'
+        assertj                : '3.18.1',
+        jUnit                  : '4.13.2',
+        junitTestImplementation: '1.1.2',
+        espresso               : '3.3.0'
 ]
 ext.testVersion = test
 
-//def viewModel = [
-////        lifecycle     : '2.2.0',
-//fragment: '1.3.0',
-////        kapt_lifecycle: '2.2.0',
+//def dagger = [
+//        core   : '2.28.3',
+//        compile: '2.28.1'
 //]
-//ext.viewModel = viewModel
-
-def coroutines = [
-        core   : '1.4.2',
-        android: '1.4.2'
-]
-ext.coroutines = coroutines
-
-def dagger = [
-        core   : '2.28.3',
-        compile: '2.28.1'
-]
-ext.dagger = dagger
-
-def exoPlayer = [
-        version: '2.11.8'
-]
-ext.exoPlayer = exoPlayer
-
-def glide = [
-        version: '4.11.0'
-]
-ext.glide = glide
-
-def coil = [
-        version: '1.1.1'
-]
-ext.coil = coil
-
-def navigation = [
-        version: '2.3.3',
-]
-ext.navigation = navigation
-
-def media = [
-        core: '1.2.1'
-]
-ext.media = media
-
-def tests = [
-        junitVersion                  : '4.13.2',
-        junitTestImplementationVersion: '1.1.2',
-        espressoVersion               : '3.3.0'
-]
-ext.tests = tests
-
+//ext.dagger = dagger
 
 static def addRepos(RepositoryHandler handler) {
     handler.google()

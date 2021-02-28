@@ -66,7 +66,7 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3),
-                    getTypeOfDocument(name)
+                    format = getTypeOfDocument(name)
                 )
             )
         }

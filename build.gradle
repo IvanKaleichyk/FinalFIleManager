@@ -3,15 +3,7 @@ buildscript {
     apply from: 'versions.gradle'
     ext {
         versions.kotlin = '1.4.30'
-        versions.kotlin = '1.4.30'
-        versions.kotlin = '1.4.30'
-        versions.kotlin = '1.4.30'
-        versions.kotlin = '1.4.30'
-        versions.kotlin = '1.4.30'
     }
-//    ext {
-//        kotlin_version = '1.4.21'
-//    }
 
     addRepos(repositories)
 

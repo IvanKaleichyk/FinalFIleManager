@@ -1,7 +1,6 @@
 package com.koleychik.finalfilemanager
 
 import android.Manifest
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -10,9 +9,7 @@ import androidx.navigation.findNavController
 import com.koleychik.finalfilemanager.AppConstants.LAST_DESTINATION_ID
 import com.koleychik.finalfilemanager.AppConstants.START_FRAGMENT_ID
 import com.koleychik.finalfilemanager.navigation.Navigator
-import com.koleychik.module_injector.AppConstants
 import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 import javax.inject.Inject
 
@@ -106,13 +103,6 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         Toast.makeText(applicationContext, R.string.cannot_without_permissions, Toast.LENGTH_LONG)
             .show()
         finish()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
-            Log.d(AppConstants.TAG, "onActivityResult")
-        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

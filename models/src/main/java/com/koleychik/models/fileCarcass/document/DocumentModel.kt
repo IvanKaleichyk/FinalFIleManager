@@ -12,7 +12,7 @@ data class DocumentModel(
     override val dateAdded: Long?,
     val format: DocumentType,
 //    private val formatSerializer: Serializable,
-    val imgRes: Int = R.drawable.documents_icon_48_black
+    val imgRes: Int = R.drawable.documents_icon_48_black,
 ) : FileCarcass(name, uri, sizeAbbreviation, dateAdded) {
     //    fun getDocumentType() = formatSerializer as DocumentType
     fun getDocumentType() = DocumentType.DOC

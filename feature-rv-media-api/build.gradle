@@ -1,12 +1,11 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-kapt'
 }
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
@@ -47,8 +46,4 @@ dependencies {
     implementation "androidx.core:core-ktx:${versions.core}"
     implementation "androidx.appcompat:appcompat:${versions.appComponent}"
     implementation "com.google.android.material:material:${versions.material}"
-
-    // dagger
-    implementation "com.google.dagger:dagger:${dagger.core}"
-    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 }

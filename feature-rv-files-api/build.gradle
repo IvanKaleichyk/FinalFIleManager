@@ -6,7 +6,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
@@ -44,6 +44,6 @@ dependencies {
     implementation "com.google.android.material:material:${versions.material}"
 
     // dagger
-    implementation "com.google.dagger:dagger:${dagger.core}"
-    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 }

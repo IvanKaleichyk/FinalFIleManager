@@ -6,7 +6,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
@@ -55,8 +55,8 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     // dagger
-    implementation "com.google.dagger:dagger:${dagger.core}"
-    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
     // viewModel
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"
@@ -64,12 +64,12 @@ dependencies {
     kapt "androidx.lifecycle:lifecycle-common-java8:${versions.lifecycle}"
 
     //coroutines
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutines.core}"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines.android}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutines}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:${versions.coroutines}"
 
 //    TEST
-    testImplementation "junit:junit:${tests.junitVersion}"
-    androidTestImplementation "androidx.test.ext:junit:${tests.junitTestImplementationVersion}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${tests.espressoVersion}"
+    testImplementation "junit:junit:${testVersion.jUnit}"
+    androidTestImplementation "androidx.test.ext:junit:${testVersion.junitTestImplementation}"
+    androidTestImplementation "androidx.test.espresso:espresso-core:${testVersion.espresso}"
 
 }
