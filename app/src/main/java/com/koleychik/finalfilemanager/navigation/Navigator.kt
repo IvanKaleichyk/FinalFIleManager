@@ -11,7 +11,7 @@ import com.koleychik.feature_images.di.api.ImagesFeatureApi
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_music.di.MusicFeatureApi
 import com.koleychik.feature_select_category.SelectCategoryApi
-import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
+import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_video.di.VideoFeatureApi
 import com.koleychik.finalfilemanager.R
 import javax.inject.Provider
@@ -24,7 +24,8 @@ class Navigator(
     private val videoFeatureApi: Provider<VideoFeatureApi>,
     private val imageInfoFeatureApi: Provider<ImageInfoFeatureApi>,
     private val foldersAndFilesFeatureApi: Provider<FoldersAndFilesFeatureApi>
-) : ImagesFeatureNavigationApi, SelectCategoryNavigationApi, FoldersAndFilesNavigationApi {
+) : ImagesFeatureNavigationApi,
+    SelectCategoryNavigationApi, FoldersAndFilesNavigationApi {
 
     private var _navController: NavController? = null
     private val navController get() = _navController!!

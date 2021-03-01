@@ -1,8 +1,7 @@
 package com.koleychik.models.fileCarcass.media
 
 import android.net.Uri
-import com.koleychik.models.R
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class ImageModel(

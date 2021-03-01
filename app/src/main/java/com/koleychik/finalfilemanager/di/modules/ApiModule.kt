@@ -15,7 +15,6 @@ import com.koleychik.feature_images.ImagesFeatureDestroyer
 import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
 import com.koleychik.feature_images.di.ImagesFeatureDependencies
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
-import com.koleychik.feature_images.navigation.ImagesFeatureNavigationComponentHolder
 import com.koleychik.feature_loading_api.FeatureLoadingApi
 import com.koleychik.feature_loading_impl.di.LoadingComponentHolder
 import com.koleychik.feature_music.di.MusicFeatureApi
@@ -30,7 +29,6 @@ import com.koleychik.feature_rv_files_impl.di.RvFilesAdapterComponentHolder.init
 import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_select_category.di.SelectCategoryComponentHolder
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
-import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationComponentHolder
 import com.koleychik.feature_video.di.VideoFeatureApi
 import com.koleychik.feature_video.di.VideoFeatureComponentHolder
 import com.koleychik.feature_video.di.VideoFeatureDependencies
@@ -60,7 +58,6 @@ class ApiModule {
         destroyer: ImagesFeatureDestroyer
     ): ImagesFeatureApi {
         ImagesFeatureComponentHolder.init(dependencies, destroyer)
-        ImagesFeatureNavigationComponentHolder.init(navigator)
         return ImagesFeatureComponentHolder.get()
     }
 
@@ -108,7 +105,6 @@ class ApiModule {
         destroyer: BaseDestroyer
     ): SelectCategoryApi {
         SelectCategoryComponentHolder.init(dependencies, destroyer)
-        SelectCategoryNavigationComponentHolder.init(navigator)
         return SelectCategoryComponentHolder.get()
     }
 

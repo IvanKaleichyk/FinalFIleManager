@@ -3,8 +3,8 @@ package com.koleychik.feature_select_category.ui
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_select_category.databinding.ItemRvSelectCategoryBinding
-import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
 import com.koleychik.models.CategoryModel
 import javax.inject.Inject
 

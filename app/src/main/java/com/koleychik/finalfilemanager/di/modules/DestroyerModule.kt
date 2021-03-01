@@ -4,7 +4,6 @@ import com.koleychik.feature_documents.di.DocumentFeatureDestroyer
 import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureComponentHolder
 import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureDestroyer
 import com.koleychik.feature_images.ImagesFeatureDestroyer
-import com.koleychik.feature_images.navigation.ImagesFeatureNavigationComponentHolder
 import com.koleychik.feature_loading_impl.di.LoadingComponentHolder
 import com.koleychik.feature_music.di.MusicFeatureDestroyer
 import com.koleychik.feature_rv_common_impl.di.RvMediaComponentHolder
@@ -62,7 +61,6 @@ class DestroyerModule {
         override fun destroy() {
             LoadingComponentHolder.reset()
             RvMediaComponentHolder.reset()
-            ImagesFeatureNavigationComponentHolder.reset()
         }
     }
 

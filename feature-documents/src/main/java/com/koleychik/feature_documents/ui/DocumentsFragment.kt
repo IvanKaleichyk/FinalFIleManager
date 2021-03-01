@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.koleychik.basic_resources.Constants.TAG
@@ -74,7 +75,7 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, Observer {
             resetUI()
             when {
                 it == null -> loading()
@@ -82,7 +83,7 @@ class DocumentsFragment : Fragment() {
                 else -> showList(it)
             }
         })
-        viewModel.listSelectFormats.observe(viewLifecycleOwner, {
+        viewModel.listSelectFormats.observe(viewLifecycleOwner, Observer {
             viewModel.setFullList(getTextFromEdtSearching())
         })
     }
@@ -95,8 +96,7 @@ class DocumentsFragment : Fragment() {
                 if (this!!.contains(type)) {
                     (it as TextView).setBackgroundResource(R.drawable.bg_type_document_dont_selected)
                     viewModel.listSelectFormats.value?.remove(type)
-                }
-                else {
+                } else {
                     (it as TextView).setBackgroundResource(R.drawable.bg_type_document)
                     viewModel.listSelectFormats.value?.add(type)
                 }

@@ -18,8 +18,8 @@ import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesApi
 import com.koleychik.feature_searching_impl.di.SearchingFeatureComponent
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
+import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
-import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
 import com.koleychik.feature_video.di.VideoFeatureDependencies
 import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.component_holder.BaseDependencies

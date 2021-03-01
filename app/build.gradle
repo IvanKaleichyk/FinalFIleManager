@@ -51,7 +51,7 @@ dependencies {
     implementation project(":feature-video")
     implementation project(":feature-rv-files-api")
     implementation project(":feature-rv-files-impl")
-    implementation project(':core-searching')
+    implementation project(':feature-searching')
     implementation project(":feature-rv-media-api")
     implementation project(":feature-rv-media-impl")
     implementation project(":feature-select-category")

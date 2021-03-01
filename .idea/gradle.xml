@@ -15,7 +15,6 @@
             <option value="$PROJECT_DIR$/app-annotations" />
             <option value="$PROJECT_DIR$/basic-resources" />
             <option value="$PROJECT_DIR$/core-files" />
-            <option value="$PROJECT_DIR$/core-searching" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/fake-data" />
             <option value="$PROJECT_DIR$/feature-documents" />
@@ -30,6 +29,7 @@
             <option value="$PROJECT_DIR$/feature-rv-files-impl" />
             <option value="$PROJECT_DIR$/feature-rv-media-api" />
             <option value="$PROJECT_DIR$/feature-rv-media-impl" />
+            <option value="$PROJECT_DIR$/feature-searching" />
             <option value="$PROJECT_DIR$/feature-select-category" />
             <option value="$PROJECT_DIR$/feature-video" />
             <option value="$PROJECT_DIR$/models" />
