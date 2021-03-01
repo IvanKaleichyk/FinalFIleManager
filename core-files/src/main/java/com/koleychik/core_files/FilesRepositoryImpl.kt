@@ -100,7 +100,7 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     cursor.getLong(5),
                     Uri.withAppendedPath(uriExternal, id.toString()),
                     context.getSizeAbbreviation(cursor.getLong(6)),
-                    cursor.getLong(7),
+                    cursor.getLong(7)
                 )
             )
         }
