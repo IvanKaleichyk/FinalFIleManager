@@ -35,7 +35,6 @@ import com.koleychik.feature_video.di.VideoFeatureApi
 import com.koleychik.feature_video.di.VideoFeatureComponentHolder
 import com.koleychik.feature_video.di.VideoFeatureDependencies
 import com.koleychik.feature_video.di.VideoFeatureDestroyer
-import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.component_holder.BaseDependencies
 import com.koleychik.module_injector.component_holder.BaseDestroyer
 import dagger.Module
@@ -65,7 +64,6 @@ class ApiModule {
     @Provides
     fun provideImagesFeatureApi(
         dependencies: ImagesFeatureDependencies,
-        navigator: Navigator,
         destroyer: ImagesFeatureDestroyer
     ): ImagesFeatureApi {
         ImagesFeatureComponentHolder.init(dependencies, destroyer)
@@ -112,7 +110,6 @@ class ApiModule {
     @Provides
     fun provideSelectCategoryApi(
         dependencies: SelectCategoryDependencies,
-        navigator: Navigator,
         destroyer: BaseDestroyer
     ): SelectCategoryApi {
         SelectCategoryComponentHolder.init(dependencies, destroyer)

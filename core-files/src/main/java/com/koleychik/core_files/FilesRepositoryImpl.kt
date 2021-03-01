@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
+import androidx.documentfile.provider.DocumentFile
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extensions.*
 import com.koleychik.models.extensions.getSizeAbbreviation
@@ -15,6 +16,7 @@ import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.document.getTypeOfDocument
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
+import com.koleychik.models.type.getFileType
 import java.io.File
 import javax.inject.Inject
 
@@ -66,7 +68,8 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3),
-                    format = getTypeOfDocument(name)
+                    format = getTypeOfDocument(name),
+                    type = getFileType(cursor.getString(4))
                 )
             )
         }
@@ -97,7 +100,7 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     cursor.getLong(5),
                     Uri.withAppendedPath(uriExternal, id.toString()),
                     context.getSizeAbbreviation(cursor.getLong(6)),
-                    cursor.getLong(7)
+                    cursor.getLong(7),
                 )
             )
         }
@@ -131,8 +134,9 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
     }
 
     override fun getFoldersAndFiles(path: String): List<FileCarcass> {
-        val file = File(path)
-        val list = file.listFiles() ?: return emptyList()
+        val file = DocumentFile.fromFile(File(path))
+//        val list = file.listFiles() ?: return emptyList()
+        val list = file.listFiles()
         val listRes = mutableListOf<FileCarcass>()
         for (i in list) {
             if (i.isDirectory) listRes.add(i.toFolderModel(context))

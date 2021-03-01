@@ -41,4 +41,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
     implementation "androidx.core:core-ktx:${versions.core}"
     implementation "androidx.appcompat:appcompat:${versions.appComponent}"
+    implementation "androidx.documentfile:documentfile:${versions.documentFile}"
 }

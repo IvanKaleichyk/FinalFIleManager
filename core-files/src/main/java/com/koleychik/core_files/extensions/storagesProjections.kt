@@ -9,7 +9,8 @@ val imagesProjections = arrayOf(
     ImagesStorage._ID,
     ImagesStorage.DISPLAY_NAME,
     ImagesStorage.SIZE,
-    ImagesStorage.DATE_ADDED
+    ImagesStorage.DATE_ADDED,
+    ImagesStorage.MIME_TYPE
 )
 
 val audioProjections = arrayOf(
@@ -20,7 +21,8 @@ val audioProjections = arrayOf(
     AudioStorage.ALBUM,
     AudioStorage.DURATION,
     AudioStorage.SIZE,
-    AudioStorage.DATE_ADDED
+    AudioStorage.DATE_ADDED,
+    AudioStorage.MIME_TYPE
 )
 
 val videoProjections = arrayOf(
@@ -28,18 +30,22 @@ val videoProjections = arrayOf(
     VideoStorage.DISPLAY_NAME,
     VideoStorage.DURATION,
     VideoStorage.SIZE,
-    VideoStorage.DATE_ADDED
+    VideoStorage.DATE_ADDED,
+    VideoStorage.MIME_TYPE,
+    VideoStorage.MIME_TYPE
 )
 
 val documentsProjections = arrayOf(
     FilesStorage._ID,
     FilesStorage.DISPLAY_NAME,
     FilesStorage.SIZE,
-    FilesStorage.DATE_ADDED
+    FilesStorage.DATE_ADDED,
+    FilesStorage.MIME_TYPE
 )
 
 val allFilesFromFolderProjections = arrayOf(
     FilesStorage._ID,
     FilesStorage.DISPLAY_NAME,
-    FilesStorage.RELATIVE_PATH
+    FilesStorage.RELATIVE_PATH,
+    FilesStorage.MIME_TYPE
 )

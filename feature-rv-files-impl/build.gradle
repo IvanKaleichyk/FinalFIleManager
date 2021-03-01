@@ -50,6 +50,10 @@ dependencies {
     implementation "com.google.android.material:material:${versions.material}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
 
+    //coil
+    implementation "io.coil-kt:coil:${versions.coil}"
+    implementation "io.coil-kt:coil-video:${versions.coil}"
+
     // dagger
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"

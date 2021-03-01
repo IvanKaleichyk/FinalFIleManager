@@ -10,8 +10,7 @@ def versions = [
         dagger          : '2.28.3',
         coil            : '1.1.1',
         navigation      : '2.3.3',
-
-
+        documentFile    : '1.0.1'
 ]
 ext.versions = versions
 
