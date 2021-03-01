@@ -1,11 +1,15 @@
 package com.koleychik.feature_searching_impl.framework
 
+import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.core.view.isVisible
 import com.koleychik.feature_searching_impl.R
 import com.koleychik.feature_searching_impl.databinding.LayoutSearchingBinding
 import javax.inject.Inject
+
 
 internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
 
@@ -19,7 +23,10 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
 
     override fun endSetup() {
         with(binding) {
-            edtSearching.addTextChangedListener(textWatcher)
+            edtSearching.run {
+                addTextChangedListener(textWatcher)
+                onFocusChangeListener = createOnFocusChangeListener(context)
+            }
             fabSearch.setOnClickListener(createOnClickToFabIcon())
             motionLayoutSearching.visibility = View.VISIBLE
         }
@@ -38,6 +45,7 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
                 transitionToState(R.id.open)
             }
             fabSearch.setImageResource(R.drawable.close_icon_32_black)
+            setEditTextFocus(true)
         }
     }
 
@@ -49,6 +57,7 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
                 transitionToState(R.id.close)
             }
             fabSearch.setImageResource(R.drawable.search_icon_32_black)
+            setEditTextFocus(false)
         }
     }
 
@@ -69,4 +78,33 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
     override fun isShowIconVisible(boolean: Boolean) {
         binding.fabSearch.isVisible = boolean
     }
+
+    fun setEditTextFocus(isFocused: Boolean) {
+        with(binding.edtSearching) {
+            isCursorVisible = isFocused
+            isFocusable = isFocused
+            isFocusableInTouchMode = isFocused
+            if (isFocused) {
+                requestFocus()
+            }
+        }
+    }
+
+    private fun createOnFocusChangeListener(context: Context) =
+        View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                // Open keyboard
+                (context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
+                    binding.edtSearching,
+                    InputMethodManager.SHOW_FORCED
+                )
+            } else {
+                // Close keyboard
+                (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                    binding.edtSearching.windowToken,
+                    0
+                )
+            }
+        }
+
 }

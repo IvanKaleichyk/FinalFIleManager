@@ -1,3 +1,4 @@
+include ':feature-nav-bar'
 include ':feature-folders-and-files'
 include ':feature-searching'
 include ':feature-video'
