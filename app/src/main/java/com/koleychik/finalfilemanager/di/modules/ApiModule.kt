@@ -26,6 +26,8 @@ import com.koleychik.feature_rv_common_impl.di.RvMediaComponentHolder
 import com.koleychik.feature_rv_documents_api.RvFilesApi
 import com.koleychik.feature_rv_files_impl.di.RvFilesAdapterComponentHolder
 import com.koleychik.feature_rv_files_impl.di.RvFilesAdapterComponentHolder.init
+import com.koleychik.feature_searching_impl.di.SearchingFeatureApi
+import com.koleychik.feature_searching_impl.di.SearchingFeatureComponentHolder
 import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_select_category.di.SelectCategoryComponentHolder
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
@@ -41,6 +43,15 @@ import dagger.Provides
 
 @Module
 class ApiModule {
+
+    @Provides
+    fun provideSearchingFeatureApi(
+        dependencies: BaseDependencies,
+        destroyer: BaseDestroyer
+    ): SearchingFeatureApi {
+        SearchingFeatureComponentHolder.init(dependencies, destroyer)
+        return SearchingFeatureComponentHolder.get()
+    }
 
     @Provides
     fun provideFoldersAndFilesApi(

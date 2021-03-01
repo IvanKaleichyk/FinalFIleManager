@@ -8,6 +8,7 @@ import com.koleychik.feature_loading_impl.di.LoadingComponentHolder
 import com.koleychik.feature_music.di.MusicFeatureDestroyer
 import com.koleychik.feature_rv_common_impl.di.RvMediaComponentHolder
 import com.koleychik.feature_rv_files_impl.di.RvFilesAdapterComponentHolder
+import com.koleychik.feature_searching_impl.di.SearchingFeatureComponentHolder
 import com.koleychik.feature_video.di.VideoFeatureDestroyer
 import com.koleychik.module_injector.component_holder.BaseDestroyer
 import dagger.Module
@@ -23,6 +24,7 @@ class DestroyerModule {
         override fun destroy() {
             LoadingComponentHolder.reset()
             RvFilesAdapterComponentHolder.reset()
+            SearchingFeatureComponentHolder.reset()
             FoldersAndFilesFeatureComponentHolder.reset()
             RvFilesAdapterComponentHolder.reset()
         }
@@ -33,6 +35,7 @@ class DestroyerModule {
     fun provideDocumentFeatureDestroyer() = object : DocumentFeatureDestroyer {
         override fun destroy() {
             LoadingComponentHolder.reset()
+            SearchingFeatureComponentHolder.reset()
             RvFilesAdapterComponentHolder.reset()
         }
     }
@@ -42,6 +45,7 @@ class DestroyerModule {
     fun provideVideoFeatureDestroyer() = object : VideoFeatureDestroyer {
         override fun destroy() {
             LoadingComponentHolder.reset()
+            SearchingFeatureComponentHolder.reset()
             RvMediaComponentHolder.reset()
         }
 
@@ -52,6 +56,7 @@ class DestroyerModule {
     fun provideMusicFeatureDestroyer() = object : MusicFeatureDestroyer {
         override fun destroy() {
             LoadingComponentHolder.reset()
+            SearchingFeatureComponentHolder.reset()
         }
     }
 
@@ -60,6 +65,7 @@ class DestroyerModule {
     fun providesImagesFeatureDestroyer() = object : ImagesFeatureDestroyer {
         override fun destroy() {
             LoadingComponentHolder.reset()
+            SearchingFeatureComponentHolder.reset()
             RvMediaComponentHolder.reset()
         }
     }
