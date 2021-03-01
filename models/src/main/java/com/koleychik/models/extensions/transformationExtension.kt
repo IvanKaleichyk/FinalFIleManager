@@ -1,23 +1,27 @@
 package com.koleychik.models.extensions
 
 import android.content.Context
-import androidx.core.net.toUri
+import androidx.documentfile.provider.DocumentFile
 import com.koleychik.models.fileCarcass.FolderModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.document.getTypeOfDocument
-import java.io.File
+import com.koleychik.models.type.getFileType
 
-fun File.toDocumentModel(context: Context) = DocumentModel(
-    name = name,
-    uri = toUri(),
+fun DocumentFile.toDocumentModel(context: Context): DocumentModel {
+    val rootName = name ?: ""
+    return DocumentModel(
+        name = rootName,
+        uri = uri,
+        sizeAbbreviation = context.getSizeAbbreviation(length()),
+        dateAdded = null,
+        format = getTypeOfDocument(rootName),
+        type = getFileType(rootName)
+    )
+}
+
+fun DocumentFile.toFolderModel(context: Context) = FolderModel(
+    name = name ?: "",
+    uri = uri,
     sizeAbbreviation = context.getSizeAbbreviation(length()),
-    dateAdded = null,
-    format = getTypeOfDocument(name)
-)
-
-fun File.toFolderModel(context: Context) = FolderModel(
-    name,
-    toUri(),
-    context.getSizeAbbreviation(length()),
-    null
+    dateAdded = null
 )

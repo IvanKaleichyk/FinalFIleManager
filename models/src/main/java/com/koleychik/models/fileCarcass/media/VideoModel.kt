@@ -1,7 +1,7 @@
 package com.koleychik.models.fileCarcass.media
 
 import android.net.Uri
-import com.koleychik.models.R
+import com.koleychik.models.type.FileType
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -12,4 +12,4 @@ class VideoModel(
     val duration: Long,
     override val sizeAbbreviation: String,
     override val dateAdded: Long,
-) : MediaCarcass(id, name, uri, sizeAbbreviation, dateAdded)
+) : MediaCarcass(id, name, uri, sizeAbbreviation, dateAdded, FileType.VideoType)

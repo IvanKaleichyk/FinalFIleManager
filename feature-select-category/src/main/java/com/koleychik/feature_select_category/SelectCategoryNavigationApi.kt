@@ -1,4 +1,4 @@
-package com.koleychik.feature_select_category.navigation
+package com.koleychik.feature_select_category
 
 import android.os.Bundle
 import com.koleychik.module_injector.navigation.NavigatorApi

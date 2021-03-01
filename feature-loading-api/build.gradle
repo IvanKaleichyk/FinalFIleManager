@@ -1,12 +1,11 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-kapt'
 }
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         minSdkVersion 21
@@ -38,10 +37,4 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
     implementation "androidx.core:core-ktx:${versions.core}"
-
-    implementation "androidx.media:media:${media.core}"
-
-    // dagger
-    implementation "com.google.dagger:dagger:${dagger.core}"
-    kapt "com.google.dagger:dagger-compiler:${dagger.compile}"
 }

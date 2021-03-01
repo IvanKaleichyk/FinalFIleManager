@@ -21,7 +21,7 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
         with(binding) {
             edtSearching.addTextChangedListener(textWatcher)
             fabSearch.setOnClickListener(createOnClickToFabIcon())
-            motionLayout.visibility = View.VISIBLE
+            motionLayoutSearching.visibility = View.VISIBLE
         }
     }
 
@@ -33,7 +33,7 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
 
     private fun openEdt() {
         with(binding) {
-            motionLayout.run {
+            motionLayoutSearching.run {
                 setTransitionDuration(500)
                 transitionToState(R.id.open)
             }
@@ -44,7 +44,7 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
     private fun closeEdt() {
         onClose?.let { close -> close() }
         with(binding) {
-            motionLayout.run {
+            motionLayoutSearching.run {
                 setTransitionDuration(500)
                 transitionToState(R.id.close)
             }

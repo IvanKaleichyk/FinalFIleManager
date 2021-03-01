@@ -1,8 +1,6 @@
 package com.koleychik.feature_image_info.ui.adapter
 
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.clear
 import coil.imageLoader
 import coil.request.ImageRequest
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.koleychik.feature_image_info.databinding.ImageSliderItemBinding
 import com.koleychik.models.fileCarcass.media.ImageModel
 import kotlinx.coroutines.CoroutineScope
@@ -71,7 +66,7 @@ class ImageInfoAdapter : RecyclerView.Adapter<ImageInfoAdapter.MainViewHolder>()
                 val request = ImageRequest.Builder(context)
                     .data(model.uri)
                     .target(
-                        onStart = { placeholder ->
+                        onStart = {
                             binding.progressBar.visibility = View.VISIBLE
                             binding.sliderImage.visibility = View.INVISIBLE
                             binding.infoText.visibility = View.GONE
@@ -94,22 +89,5 @@ class ImageInfoAdapter : RecyclerView.Adapter<ImageInfoAdapter.MainViewHolder>()
                     .build()
                 context.imageLoader.execute(request)
             }
-
-        private fun loadImageUsingGlide(model: ImageModel) {
-            Glide.with(binding.root.context)
-                .asBitmap()
-                .load(model.uri)
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        binding.sliderImage.setImageBitmap(resource)
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
-        }
-
     }
 }

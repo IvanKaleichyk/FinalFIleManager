@@ -15,7 +15,6 @@ import com.koleychik.feature_images.ImagesFeatureDestroyer
 import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
 import com.koleychik.feature_images.di.ImagesFeatureDependencies
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
-import com.koleychik.feature_images.navigation.ImagesFeatureNavigationComponentHolder
 import com.koleychik.feature_loading_api.FeatureLoadingApi
 import com.koleychik.feature_loading_impl.di.LoadingComponentHolder
 import com.koleychik.feature_music.di.MusicFeatureApi
@@ -27,15 +26,15 @@ import com.koleychik.feature_rv_common_impl.di.RvMediaComponentHolder
 import com.koleychik.feature_rv_documents_api.RvFilesApi
 import com.koleychik.feature_rv_files_impl.di.RvFilesAdapterComponentHolder
 import com.koleychik.feature_rv_files_impl.di.RvFilesAdapterComponentHolder.init
+import com.koleychik.feature_searching_impl.di.SearchingFeatureApi
+import com.koleychik.feature_searching_impl.di.SearchingFeatureComponentHolder
 import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_select_category.di.SelectCategoryComponentHolder
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
-import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationComponentHolder
 import com.koleychik.feature_video.di.VideoFeatureApi
 import com.koleychik.feature_video.di.VideoFeatureComponentHolder
 import com.koleychik.feature_video.di.VideoFeatureDependencies
 import com.koleychik.feature_video.di.VideoFeatureDestroyer
-import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.component_holder.BaseDependencies
 import com.koleychik.module_injector.component_holder.BaseDestroyer
 import dagger.Module
@@ -43,6 +42,15 @@ import dagger.Provides
 
 @Module
 class ApiModule {
+
+    @Provides
+    fun provideSearchingFeatureApi(
+        dependencies: BaseDependencies,
+        destroyer: BaseDestroyer
+    ): SearchingFeatureApi {
+        SearchingFeatureComponentHolder.init(dependencies, destroyer)
+        return SearchingFeatureComponentHolder.get()
+    }
 
     @Provides
     fun provideFoldersAndFilesApi(
@@ -56,11 +64,9 @@ class ApiModule {
     @Provides
     fun provideImagesFeatureApi(
         dependencies: ImagesFeatureDependencies,
-        navigator: Navigator,
         destroyer: ImagesFeatureDestroyer
     ): ImagesFeatureApi {
         ImagesFeatureComponentHolder.init(dependencies, destroyer)
-        ImagesFeatureNavigationComponentHolder.init(navigator)
         return ImagesFeatureComponentHolder.get()
     }
 
@@ -104,11 +110,9 @@ class ApiModule {
     @Provides
     fun provideSelectCategoryApi(
         dependencies: SelectCategoryDependencies,
-        navigator: Navigator,
         destroyer: BaseDestroyer
     ): SelectCategoryApi {
         SelectCategoryComponentHolder.init(dependencies, destroyer)
-        SelectCategoryNavigationComponentHolder.init(navigator)
         return SelectCategoryComponentHolder.get()
     }
 

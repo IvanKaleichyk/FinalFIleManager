@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.feature_loading_api.LoadingApi
@@ -65,7 +66,7 @@ class VideoFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, Observer {
             resetUI()
             when {
                 it == null -> loading()

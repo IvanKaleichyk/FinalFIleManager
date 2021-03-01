@@ -1,5 +1,5 @@
 include ':feature-folders-and-files'
-include ':core-searching'
+include ':feature-searching'
 include ':feature-video'
 include ':feature-image-info'
 include ':feature-documents'

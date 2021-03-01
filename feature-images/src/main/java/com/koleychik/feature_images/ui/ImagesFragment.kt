@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.basic_resources.Constants.PARCELABLE_LIST
@@ -73,7 +74,7 @@ class ImagesFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, {
+        viewModel.currentList.observe(viewLifecycleOwner, Observer {
             resetViews()
             when {
                 it == null -> {

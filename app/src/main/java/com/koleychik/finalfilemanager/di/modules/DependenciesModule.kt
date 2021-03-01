@@ -16,10 +16,10 @@ import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_rv_documents_api.RvFilesApi
-import com.koleychik.feature_searching_impl.di.SearchingFeatureComponent
+import com.koleychik.feature_searching_impl.di.SearchingFeatureApi
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
+import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
-import com.koleychik.feature_select_category.navigation.SelectCategoryNavigationApi
 import com.koleychik.feature_video.di.VideoFeatureDependencies
 import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.component_holder.BaseDependencies
@@ -36,14 +36,14 @@ class DependenciesModule {
         context: Context,
         featureLoadingApi: FeatureLoadingApi,
         navigator: Navigator,
-        rvFilesApi: RvFilesApi
+        rvFilesApi: RvFilesApi,
+        searchingFeatureApi: SearchingFeatureApi
     ) = object : FoldersAndFilesFeatureDependencies {
         override fun repository(): FilesRepository =
             FileCoreComponent.get(context).getFileRepository()
 
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
-        override fun searchingUIApi(): SearchingUIApi =
-            SearchingFeatureComponent.get().searchingUIApi()
+        override fun searchingUIApi(): SearchingUIApi = searchingFeatureApi.searchingUIApi()
 
         override fun navigationApi(): FoldersAndFilesNavigationApi = navigator
         override fun adapterApi(): RvFilesAdapterApi = rvFilesApi.getAdapter()
@@ -51,14 +51,17 @@ class DependenciesModule {
 
     @Provides
     @Singleton
-    fun provideMusicFeatureDependencies(context: Context, featureLoadingApi: FeatureLoadingApi) =
+    fun provideMusicFeatureDependencies(
+        context: Context,
+        featureLoadingApi: FeatureLoadingApi,
+        searchingFeatureApi: SearchingFeatureApi
+    ) =
         object : MusicFeatureDependencies {
             override fun filesRepository(): FilesRepository =
                 FileCoreComponent.get(context).getFileRepository()
 
             override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
-            override fun searchingUIApi(): SearchingUIApi =
-                SearchingFeatureComponent.get().searchingUIApi()
+            override fun searchingUIApi(): SearchingUIApi = searchingFeatureApi.searchingUIApi()
         }
 
     @Provides
@@ -66,15 +69,15 @@ class DependenciesModule {
     fun provideDocumentsDependencies(
         context: Context,
         featureLoadingApi: FeatureLoadingApi,
-        filesApi: RvFilesApi
+        filesApi: RvFilesApi,
+        searchingFeatureApi: SearchingFeatureApi
     ) = object : DocumentsFeatureDependencies {
         override fun repository(): FilesRepository =
             FileCoreComponent.get(context).getFileRepository()
 
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
         override fun rvFilesAdapterApi(): RvFilesAdapterApi = filesApi.getAdapter()
-        override fun searchingUIApi(): SearchingUIApi =
-            SearchingFeatureComponent.get().searchingUIApi()
+        override fun searchingUIApi(): SearchingUIApi = searchingFeatureApi.searchingUIApi()
     }
 
     @Provides
@@ -82,7 +85,8 @@ class DependenciesModule {
     fun provideVideoFeatureDependencies(
         context: Context,
         featureLoadingApi: FeatureLoadingApi,
-        rvMediaApi: RvMediaApi
+        rvMediaApi: RvMediaApi,
+        searchingFeatureApi: SearchingFeatureApi
     ) = object : VideoFeatureDependencies {
         override fun repository(): FilesRepository =
             FileCoreComponent.get(context).getFileRepository()
@@ -90,8 +94,7 @@ class DependenciesModule {
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
 
         override fun mediaAdapter(): RvMediaAdapterApi = rvMediaApi.rvMediaAdapterApi()
-        override fun searchingUiApi(): SearchingUIApi =
-            SearchingFeatureComponent.get().searchingUIApi()
+        override fun searchingUiApi(): SearchingUIApi = searchingFeatureApi.searchingUIApi()
 
     }
 
@@ -109,7 +112,7 @@ class DependenciesModule {
         context: Context,
         navigator: Navigator,
         rvMediaApi: RvMediaApi,
-        featureLoadingApi: FeatureLoadingApi,
+        featureLoadingApi: FeatureLoadingApi, searchingFeatureApi: SearchingFeatureApi
     ) = object : ImagesFeatureDependencies {
         override fun repository(): FilesRepository =
             FileCoreComponent.get(context).getFileRepository()
@@ -117,7 +120,7 @@ class DependenciesModule {
         override fun navigator(): ImagesFeatureNavigationApi = navigator
         override fun rvMediaAdapterApi(): RvMediaAdapterApi = rvMediaApi.rvMediaAdapterApi()
         override fun loadingApi(): LoadingApi = featureLoadingApi.getLoadingApi()
-        override fun searchingUIApi() = SearchingFeatureComponent.get().searchingUIApi()
+        override fun searchingUIApi() = searchingFeatureApi.searchingUIApi()
     }
 
     @Provides
