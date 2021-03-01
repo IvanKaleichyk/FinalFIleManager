@@ -6,7 +6,6 @@ import com.koleychik.finalfilemanager.di.modules.ApiModule
 import com.koleychik.finalfilemanager.di.modules.AppModule
 import com.koleychik.finalfilemanager.di.modules.DependenciesModule
 import com.koleychik.finalfilemanager.di.modules.DestroyerModule
-import com.koleychik.finalfilemanager.test.TestLoadingFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -22,5 +21,5 @@ interface AppComponent {
 
     fun inject(activity: MainActivity)
     fun inject(app: App)
-    fun inject(activity: TestLoadingFragment)
+//    fun inject(activity: TestLoadingFragment)
 }

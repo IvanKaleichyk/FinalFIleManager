@@ -50,6 +50,7 @@ dependencies {
 
     //coil
     implementation "io.coil-kt:coil:${versions.coil}"
+    implementation "io.coil-kt:coil-video:${versions.coil}"
 
     // dagger
     implementation "com.google.dagger:dagger:${versions.dagger}"

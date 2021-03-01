@@ -4,14 +4,12 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.koleychik.finalfilemanager.AppConstants.LAST_DESTINATION_ID
 import com.koleychik.finalfilemanager.AppConstants.START_FRAGMENT_ID
 import com.koleychik.finalfilemanager.navigation.Navigator
-import com.koleychik.finalfilemanager.test.TestLoadingFragment
 import com.koleychik.module_injector.AppConstants
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -40,9 +38,9 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         App.component.inject(this)
 
         // TODO TEST START
-        findViewById<Button>(R.id.btnTestLoading).setOnClickListener {
-            startActivity(Intent(applicationContext, TestLoadingFragment::class.java))
-        }
+//        findViewById<Button>(R.id.btnTestLoading).setOnClickListener {
+////            startActivity(Intent(applicationContext, TestLoadingFragment::class.java))
+//        }
         // TODO TEST END
 
         getStartFragment(savedInstanceState)

@@ -3,6 +3,7 @@ package com.koleychik.feature_rv_files_impl.framework
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -23,6 +24,7 @@ import com.koleychik.feature_rv_files_impl.databinding.ItemRvFilesLayoutBinding
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.FolderModel
 import com.koleychik.models.type.FileType
+import com.koleychik.module_injector.AppConstants.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -86,11 +88,15 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
             when (model.type) {
                 is FileType.ImageType -> loadImage(model.uri, model.type.imgRes)
                 is FileType.VideoType -> loadVideoPreview(model.uri, model.type.imgRes)
-                else -> binding.icon.setImageResource(model.type.imgRes)
+                else -> {
+                    Log.d(TAG, "model type = else")
+                    binding.icon.setImageResource(model.type.imgRes)
+                }
             }
         }
 
         private fun loadImage(uri: Uri, imagePlaceholder: Int) {
+            Log.d(TAG, "start load image")
             val context = binding.root.context
             binding.icon.load(uri) {
                 placeholder(imagePlaceholder)
