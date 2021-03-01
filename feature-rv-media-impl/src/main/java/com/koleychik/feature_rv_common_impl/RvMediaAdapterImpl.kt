@@ -3,6 +3,7 @@ package com.koleychik.feature_rv_common_impl
 import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import coil.Coil
@@ -81,6 +82,7 @@ internal class RvMediaAdapterImpl @Inject constructor() : RvMediaAdapterApi() {
 
         private fun loadVideoPreview(uri: Uri) = CoroutineScope(Dispatchers.Default).launch {
             val context = binding.root.context
+            binding.imgPlay.visibility = View.VISIBLE
             val imageLoader = ImageLoader.Builder(context)
                 .componentRegistry {
                     add(VideoFrameFileFetcher(context))
