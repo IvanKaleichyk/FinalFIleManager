@@ -12,6 +12,8 @@ import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_loading_api.FeatureLoadingApi
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_music.di.MusicFeatureDependencies
+import com.koleychik.feature_nav_bar.di.NavBarFeatureDependencies
+import com.koleychik.feature_nav_bar.framework.NavHosts
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
@@ -21,6 +23,7 @@ import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_video.di.VideoFeatureDependencies
+import com.koleychik.finalfilemanager.R
 import com.koleychik.finalfilemanager.navigation.Navigator
 import com.koleychik.module_injector.component_holder.BaseDependencies
 import dagger.Module
@@ -29,6 +32,22 @@ import javax.inject.Singleton
 
 @Module
 class DependenciesModule {
+
+    @Provides
+    @Singleton
+    fun provideNavBarFeatureDependencies(
+        navigator: Navigator
+    ) = object : NavBarFeatureDependencies {
+        override fun navHosts(): NavHosts = object : NavHosts {
+            override fun onDestinationChange(id: Int) {
+                navigator.startFragmentById(id)
+            }
+
+            override fun fileNavHost(): Int = R.navigation.files_nav_host
+
+            override fun folderNavHost(): Int = R.navigation.folders_nav_host
+        }
+    }
 
     @Provides
     @Singleton

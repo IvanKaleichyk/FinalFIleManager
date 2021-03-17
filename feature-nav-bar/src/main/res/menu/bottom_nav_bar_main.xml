@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/files"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/file_icon_dark_24"
+        android:title="@string/files" />
+
+    <item
+        android:id="@+id/folders"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/folder_icon_dark_24"
+        android:title="@string/folders" />
+
+</menu>

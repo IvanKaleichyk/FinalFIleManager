@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/files_nav_host"
+    app:startDestination="@id/foldersAndFilesFragment">
+
+    <fragment
+        android:id="@+id/foldersAndFilesFragment"
+        android:name="com.koleychik.feature_folders_and_files.ui.FoldersAndFilesFragment"
+        android:label="FoldersAndFilesFragment">
+        <action
+            android:id="@+id/action_foldersAndFilesFragment_self"
+            app:destination="@id/foldersAndFilesFragment" />
+    </fragment>
+</navigation>

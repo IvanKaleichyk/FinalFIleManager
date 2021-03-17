@@ -10,6 +10,7 @@ import com.koleychik.feature_image_info.di.ImageInfoFeatureApi
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_music.di.MusicFeatureApi
+import com.koleychik.feature_nav_bar.di.NavBarFeatureApi
 import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_video.di.VideoFeatureApi
@@ -23,7 +24,8 @@ class Navigator(
     private val documentsFeatureApi: Provider<DocumentsFeatureApi>,
     private val videoFeatureApi: Provider<VideoFeatureApi>,
     private val imageInfoFeatureApi: Provider<ImageInfoFeatureApi>,
-    private val foldersAndFilesFeatureApi: Provider<FoldersAndFilesFeatureApi>
+    private val foldersAndFilesFeatureApi: Provider<FoldersAndFilesFeatureApi>,
+    private val navBarFeatureApi: Provider<NavBarFeatureApi>
 ) : ImagesFeatureNavigationApi,
     SelectCategoryNavigationApi, FoldersAndFilesNavigationApi {
 
@@ -56,6 +58,7 @@ class Navigator(
             R.id.videoFragment -> videoFeatureApi.get()
             R.id.imageInfoFragment -> imageInfoFeatureApi.get()
             R.id.foldersAndFilesFragment -> foldersAndFilesFeatureApi.get()
+            R.id.navBarFragment -> navBarFeatureApi.get()
         }
     }
 
