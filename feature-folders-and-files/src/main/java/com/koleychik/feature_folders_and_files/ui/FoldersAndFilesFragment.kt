@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.koleychik.basic_resources.Constants.PATH
 import com.koleychik.core_files.FilesCoreConstants.ROOT_PATH
 import com.koleychik.feature_folders_and_files.databinding.FragmentFoldersAndFilesBinding
@@ -19,6 +19,7 @@ import com.koleychik.feature_folders_and_files.ui.viewModel.ViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.FileCarcass
 import javax.inject.Inject
 
@@ -42,7 +43,13 @@ class FoldersAndFilesFragment : Fragment() {
     @Inject
     internal lateinit var navigatorApi: FoldersAndFilesNavigationApi
 
-    private val path by lazy { requireArguments().getString(PATH, ROOT_PATH) }
+    private val path by lazy {
+        try {
+            requireArguments().getString(PATH, ROOT_PATH) ?: ROOT_PATH
+        } catch (E: IllegalStateException) {
+            ROOT_PATH
+        }
+    }
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[FoldersAndFilesViewModel::class.java]
@@ -52,6 +59,7 @@ class FoldersAndFilesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentFoldersAndFilesBinding.inflate(inflater, container, false)
         FoldersAndFilesFeatureComponentHolder.getComponent().inject(this)
         return binding.root
@@ -69,7 +77,7 @@ class FoldersAndFilesFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, Observer{
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetViews()
             when {
                 it == null -> loading()
@@ -98,7 +106,10 @@ class FoldersAndFilesFragment : Fragment() {
 
     private fun createOnClick() {
         adapterApi.setOnClick { model, _ ->
-            navigatorApi.openFileInNewFragment(createBundleForNavigation(model))
+            navigatorApi.openFileInNewFragment(
+                findNavController(),
+                createBundleForNavigation(model)
+            )
         }
     }
 

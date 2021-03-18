@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.koleychik.feature_nav_bar.databinding.FragmentNavBarBinding
 import com.koleychik.feature_nav_bar.di.NavBarFeatureComponentHolder
-import com.koleychik.feature_nav_bar.setup
+import com.koleychik.injector.NavigationSystem
 import javax.inject.Inject
 
 class NavBarFragment : Fragment() {
@@ -16,14 +16,14 @@ class NavBarFragment : Fragment() {
     private val binding get() = _binding!!
 
     @Inject
-    internal lateinit var navHosts: NavHosts
+    internal lateinit var navHosts: NavBarUtils
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentNavBarBinding.inflate(inflater, container, false)
-
         NavBarFeatureComponentHolder.getComponent().inject(this)
 
 //        requireActivity().findNavController(R.id.bottom_navController)

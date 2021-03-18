@@ -14,6 +14,5 @@ class App: Application() {
     override fun onCreate() {
         super.onCreate()
         component = DaggerAppComponent.builder().appModule(AppModule(applicationContext)).build()
-        component.inject(this)
     }
 }

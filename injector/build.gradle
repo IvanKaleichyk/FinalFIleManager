@@ -33,8 +33,8 @@ android {
 }
 
 dependencies {
-    implementation project(":injector")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
-    implementation "androidx.core:core-ktx:${versions.core}"
+    implementation 'androidx.core:core-ktx:1.3.2'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
 }

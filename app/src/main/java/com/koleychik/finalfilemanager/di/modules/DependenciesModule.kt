@@ -1,6 +1,7 @@
 package com.koleychik.finalfilemanager.di.modules
 
 import android.content.Context
+import androidx.navigation.fragment.NavHostFragment
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.di.FileCoreComponent
 import com.koleychik.feature_documents.di.DocumentsFeatureDependencies
@@ -13,7 +14,7 @@ import com.koleychik.feature_loading_api.FeatureLoadingApi
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_music.di.MusicFeatureDependencies
 import com.koleychik.feature_nav_bar.di.NavBarFeatureDependencies
-import com.koleychik.feature_nav_bar.framework.NavHosts
+import com.koleychik.feature_nav_bar.framework.NavBarUtils
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
@@ -35,17 +36,12 @@ class DependenciesModule {
 
     @Provides
     @Singleton
-    fun provideNavBarFeatureDependencies(
-        navigator: Navigator
-    ) = object : NavBarFeatureDependencies {
-        override fun navHosts(): NavHosts = object : NavHosts {
-            override fun onDestinationChange(id: Int) {
-                navigator.startFragmentById(id)
-            }
+    fun provideNavBarFeatureDependencies() = object : NavBarFeatureDependencies {
+        override fun navHosts(): NavBarUtils = object : NavBarUtils {
+            override fun fileNavHostFragment() = NavHostFragment.create(R.navigation.files_nav_host)
 
-            override fun fileNavHost(): Int = R.navigation.files_nav_host
-
-            override fun folderNavHost(): Int = R.navigation.folders_nav_host
+            override fun folderNavHostFragment() =
+                NavHostFragment.create(R.navigation.folders_nav_host)
         }
     }
 

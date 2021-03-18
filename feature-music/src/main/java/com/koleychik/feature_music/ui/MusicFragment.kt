@@ -16,6 +16,7 @@ import com.koleychik.feature_music.ui.adapters.MusicAdapter
 import com.koleychik.feature_music.ui.viewModel.MusicViewModel
 import com.koleychik.feature_music.ui.viewModel.ViewModelFactory
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.MusicModel
 import javax.inject.Inject
 
@@ -45,6 +46,7 @@ class MusicFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentMusicBinding.inflate(layoutInflater, container, false)
         MusicFeatureComponentHolder.getComponent().inject(this)
         return binding.root

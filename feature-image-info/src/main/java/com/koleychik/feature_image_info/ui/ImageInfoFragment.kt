@@ -19,6 +19,7 @@ import com.koleychik.feature_image_info.transformDateToDateFormat
 import com.koleychik.feature_image_info.ui.adapter.ImageInfoAdapter
 import com.koleychik.feature_image_info.ui.viewModels.ImageInfoViewModel
 import com.koleychik.feature_image_info.ui.viewModels.ViewModelFactory
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.media.ImageModel
 import javax.inject.Inject
 
@@ -44,6 +45,7 @@ class ImageInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentImageInfoBinding.inflate(layoutInflater, container, false)
         ImageInfoFeatureComponentHolder.getComponent().inject(this)
         return binding.root

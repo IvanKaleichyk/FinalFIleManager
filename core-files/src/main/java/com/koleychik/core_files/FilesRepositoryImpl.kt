@@ -64,12 +64,12 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
             val name = cursor.getString(1)
             listRes.add(
                 DocumentModel(
-                    name = name,
+                    name = name ?: "",
                     uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3),
-                    format = getTypeOfDocument(name),
-                    type = getFileType(cursor.getString(4))
+                    format = getTypeOfDocument(name ?: ""),
+                    type = getFileType(cursor.getString(4) ?: "")
                 )
             )
         }

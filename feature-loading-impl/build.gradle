@@ -35,7 +35,7 @@ android {
 
 dependencies {
     implementation project(":basic-resources")
-    implementation project(":module-injector")
+    implementation project(":injector")
     implementation project(":feature-loading-api")
 
 

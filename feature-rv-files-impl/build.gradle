@@ -40,7 +40,7 @@ android {
 dependencies {
 
     implementation project(':models')
-    implementation project(":module-injector")
+    implementation project(":injector")
     implementation project(':feature-rv-files-api')
 
 

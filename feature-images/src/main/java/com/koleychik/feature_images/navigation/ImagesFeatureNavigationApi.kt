@@ -1,10 +1,10 @@
 package com.koleychik.feature_images.navigation
 
 import android.os.Bundle
-import com.koleychik.module_injector.navigation.NavigatorApi
+import androidx.navigation.NavController
 
-interface ImagesFeatureNavigationApi : NavigatorApi {
+interface ImagesFeatureNavigationApi {
 
-    fun imagesFeatureGoToImageInfo(bundle: Bundle? = null)
+    fun imagesFeatureGoToImageInfo(navController: NavController, bundle: Bundle? = null)
 
 }

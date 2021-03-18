@@ -1,4 +1,4 @@
-package com.koleychik.module_injector.navigation
+package com.koleychik.injector
 
 import androidx.fragment.app.Fragment
 

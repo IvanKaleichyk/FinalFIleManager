@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.feature_select_category.databinding.FragmentSelectCategoryBinding
 import com.koleychik.feature_select_category.di.SelectCategoryComponentHolder
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.CategoryModel
 import javax.inject.Inject
 
@@ -24,6 +25,7 @@ class SelectCategoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentSelectCategoryBinding.inflate(layoutInflater, container, false)
         SelectCategoryComponentHolder.getComponent().inject(this)
         return binding.root

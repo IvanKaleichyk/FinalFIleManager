@@ -6,8 +6,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import com.koleychik.finalfilemanager.AppConstants.LAST_DESTINATION_ID
-import com.koleychik.finalfilemanager.AppConstants.START_FRAGMENT_ID
 import com.koleychik.finalfilemanager.navigation.Navigator
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
@@ -22,7 +20,8 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         findNavController(R.id.navController)
     }
 
-    private val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+    private val permissions =
+        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE)
 
     private val tag = "MAIN_APP_TAG"
 
@@ -31,29 +30,9 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         super.onCreate(savedInstanceState)
         App.component.inject(this)
 
-        getStartFragment(savedInstanceState)
         Log.d(tag, "MainActivity onCreate")
         checkPermission()
     }
-//
-//    private fun checkPermission() {
-//        for (i in permissions) {
-//            val permission = ActivityCompat.checkSelfPermission(applicationContext, i)
-//            if (permission != PackageManager.PERMISSION_GRANTED){
-//                getAccessForPermission()
-//                return
-//            }
-//        }
-//        startActivity()
-//    }
-
-
-    private fun getStartFragment(state: Bundle?) {
-        val id = state?.getInt(LAST_DESTINATION_ID, START_FRAGMENT_ID)
-            ?: START_FRAGMENT_ID
-        navigator.startFragmentById(id)
-    }
-
 
     private fun startActivity() {
         Log.d(tag, "MainActivity start setContentView")
@@ -62,13 +41,6 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         val id = controller.currentDestination?.id
         if (id == 0 || id == null) Log.d("MAIN_APP_TAG", "id = null")
         else Log.d("MAIN_APP_TAG", "id = $id")
-        navigator.bind(controller)
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        navigator.unbind()
     }
 
     @AfterPermissionGranted(123)
@@ -103,14 +75,5 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         Toast.makeText(applicationContext, R.string.cannot_without_permissions, Toast.LENGTH_LONG)
             .show()
         finish()
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        val id = controller.currentDestination?.id
-        Log.d(tag, "last DestinationId = $id")
-        controller.currentDestination?.id?.let {
-            outState.putInt(LAST_DESTINATION_ID, it)
-        }
-        super.onSaveInstanceState(outState)
     }
 }

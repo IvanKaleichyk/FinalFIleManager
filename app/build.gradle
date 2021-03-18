@@ -37,7 +37,7 @@ dependencies {
 
     implementation project(":app-annotations")
     implementation project(":feature-nav-bar")
-    implementation project(":module-injector")
+    implementation project(":injector")
     implementation project(":models")
     implementation project(":basic-resources")
     implementation project(":core-files")
