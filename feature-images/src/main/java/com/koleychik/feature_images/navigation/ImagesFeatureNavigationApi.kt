@@ -5,6 +5,6 @@ import androidx.navigation.NavController
 
 interface ImagesFeatureNavigationApi {
 
-    fun imagesFeatureGoToImageInfo(navController: NavController, bundle: Bundle? = null)
+    fun imagesFeatureGoToImageInfo(navController: NavController?, bundle: Bundle? = null)
 
 }

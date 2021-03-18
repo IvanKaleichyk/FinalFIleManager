@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.basic_resources.Constants.PARCELABLE_LIST
 import com.koleychik.basic_resources.Constants.PARCELABLE_POSITION
@@ -24,10 +23,6 @@ import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.media.ImageModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import javax.inject.Inject
 
 class ImagesFragment : Fragment() {
@@ -53,8 +48,6 @@ class ImagesFragment : Fragment() {
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory)[ImagesViewModel::class.java]
     }
-
-    private val coroutineScore = CoroutineScope(Job() + Dispatchers.IO)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -146,7 +139,7 @@ class ImagesFragment : Fragment() {
             putInt(PARCELABLE_POSITION, position)
             putParcelableArrayList(PARCELABLE_LIST, viewModel.currentList.value!! as ArrayList)
         }
-        navigationApi.imagesFeatureGoToImageInfo(findNavController(), bundle)
+        navigationApi.imagesFeatureGoToImageInfo(null, bundle = bundle)
     }
 
     private fun resetViews() {
@@ -199,7 +192,6 @@ class ImagesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        coroutineScore.cancel()
         ImagesFeatureComponentHolder.reset()
     }
 }

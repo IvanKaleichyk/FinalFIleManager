@@ -72,7 +72,7 @@ class FoldersAndFilesFragment : Fragment() {
         createRv()
         createOnClick()
         createOnSwipeToRefresh()
-        updatePath(path)
+        updateUI()
         subscribe()
     }
 
@@ -163,8 +163,11 @@ class FoldersAndFilesFragment : Fragment() {
         }
     }
 
-    private fun updatePath(path: String) {
-        binding.path.text = path
+    private fun updateUI() {
+        with(binding) {
+            path.text = this@FoldersAndFilesFragment.path
+//            folderSize.text =
+        }
     }
 
     private fun createRv() {

@@ -8,5 +8,13 @@
     <fragment
         android:id="@+id/navBarFragment"
         android:name="com.koleychik.feature_nav_bar.framework.NavBarFragment"
-        android:label="NavBarFragment" />
+        android:label="NavBarFragment" >
+        <action
+            android:id="@+id/action_navBarFragment_to_imageInfoFragment"
+            app:destination="@id/imageInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/imageInfoFragment"
+        android:name="com.koleychik.feature_image_info.ui.ImageInfoFragment"
+        android:label="ImageInfoFragment" />
 </navigation>

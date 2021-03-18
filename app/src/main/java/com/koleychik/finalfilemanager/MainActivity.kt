@@ -1,8 +1,10 @@
 package com.koleychik.finalfilemanager
 
 import android.Manifest
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     private val permissions =
-        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE)
+        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
 
     private val tag = "MAIN_APP_TAG"
 
@@ -29,6 +31,10 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         setTheme(R.style.Theme_FinalFIleManager)
         super.onCreate(savedInstanceState)
         App.component.inject(this)
+        // make the layout not change when the keyboard appears
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN or WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN)
+
+        Configuration.KEYBOARD_UNDEFINED
 
         Log.d(tag, "MainActivity onCreate")
         checkPermission()
@@ -37,6 +43,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     private fun startActivity() {
         Log.d(tag, "MainActivity start setContentView")
         setContentView(R.layout.activity_main)
+        navigator.bind(controller)
         Log.d(tag, "MainActivity start find controller")
         val id = controller.currentDestination?.id
         if (id == 0 || id == null) Log.d("MAIN_APP_TAG", "id = null")
@@ -75,5 +82,10 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
         Toast.makeText(applicationContext, R.string.cannot_without_permissions, Toast.LENGTH_LONG)
             .show()
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        navigator.unbind()
     }
 }
