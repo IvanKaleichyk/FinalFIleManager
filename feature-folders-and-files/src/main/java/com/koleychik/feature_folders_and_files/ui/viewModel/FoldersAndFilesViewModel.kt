@@ -3,6 +3,7 @@ package com.koleychik.feature_folders_and_files.ui.viewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.koleychik.core_files.FilesCoreConstants.ROOT_PATH
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.feature_searching_impl.framework.searchByName
 import com.koleychik.models.fileCarcass.FileCarcass
@@ -25,11 +26,10 @@ class FoldersAndFilesViewModel @Inject constructor(private val repository: Files
         }
     }
 
-    fun getFoldersAndFiles(path: String? = null, searchWord: String?) =
+    fun getFoldersAndFiles(path: String = ROOT_PATH, searchWord: String?) =
         viewModelScope.launch(Dispatchers.IO) {
-            val newFullList =
-                if (path == null) repository.gelFilesFromFolder()
-                else repository.getFoldersAndFiles(path)
+            val newFullList = repository.getFoldersAndFiles(path)
+//                if (path == null) repository.gelFilesFromFolder()
             val newCurrentList = newFullList.searchByName(searchWord)
 
             withContext(Dispatchers.Main) {
@@ -37,5 +37,4 @@ class FoldersAndFilesViewModel @Inject constructor(private val repository: Files
                 currentList.value = newCurrentList
             }
         }
-
 }

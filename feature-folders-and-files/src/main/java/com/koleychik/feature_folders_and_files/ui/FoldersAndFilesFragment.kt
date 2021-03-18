@@ -20,7 +20,9 @@ import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.injector.NavigationSystem
+import com.koleychik.models.extensions.getSizeAbbreviation
 import com.koleychik.models.fileCarcass.FileCarcass
+import java.io.File
 import javax.inject.Inject
 
 class FoldersAndFilesFragment : Fragment() {
@@ -164,9 +166,11 @@ class FoldersAndFilesFragment : Fragment() {
     }
 
     private fun updateUI() {
+        val rootFile = File(this@FoldersAndFilesFragment.path)
         with(binding) {
             path.text = this@FoldersAndFilesFragment.path
-//            folderSize.text =
+            folderSize.text = requireContext().getSizeAbbreviation(rootFile.length())
+            totalSize.text = requireContext().getSizeAbbreviation(rootFile.totalSpace)
         }
     }
 

@@ -4,9 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.documentfile.provider.DocumentFile
 import com.koleychik.core_files.api.FilesRepository
-import com.koleychik.core_files.extensions.*
+import com.koleychik.core_files.extensions.audioProjections
+import com.koleychik.core_files.extensions.documentsProjections
+import com.koleychik.core_files.extensions.imagesProjections
+import com.koleychik.core_files.extensions.videoProjections
+import com.koleychik.injector.AppConstants.TAG
 import com.koleychik.models.extensions.getSizeAbbreviation
 import com.koleychik.models.extensions.toDocumentModel
 import com.koleychik.models.extensions.toFolderModel
@@ -140,32 +145,35 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         val listRes = mutableListOf<FileCarcass>()
         for (i in list) {
             if (i.isDirectory) listRes.add(i.toFolderModel(context))
-            else listRes.add(i.toDocumentModel(context))
+            else {
+                Log.d(TAG, "file.type = ${i.type}")
+                listRes.add(i.toDocumentModel(context))
+            }
         }
         return listRes
     }
 
-    override fun gelFilesFromFolder(path: String): List<FileCarcass> {
-        val selection = "relative_path = '$path'"
-//        val selection = "_data LIKE '%.jpg'"
-
-        val cursor = queryContentResolver(
-            MediaStore.Files.getContentUri(contentUri),
-            allFilesFromFolderProjections,
-            selection = selection
-        ) ?: return emptyList()
-
-        val listRes = mutableListOf<FileCarcass>()
-//        while (cursor.moveToNext()) listRes.add(
-//            FileCarcass(
-//                cursor.getLong(0),
-//                cursor.getString(1),
-//                relativePath = cursor.getString(2)
-//            )
-//        )
-        cursor.close()
-        return listRes
-    }
+//    override fun gelFilesFromFolder(path: String): List<FileCarcass> {
+//        val selection = "relative_path = '$path'"
+////        val selection = "_data LIKE '%.jpg'"
+//
+//        val cursor = queryContentResolver(
+//            MediaStore.Files.getContentUri(contentUri),
+//            allFilesFromFolderProjections,
+//            selection = selection
+//        ) ?: return emptyList()
+//
+//        val listRes = mutableListOf<FileCarcass>()
+////        while (cursor.moveToNext()) listRes.add(
+////            FileCarcass(
+////                cursor.getLong(0),
+////                cursor.getString(1),
+////                relativePath = cursor.getString(2)
+////            )
+////        )
+//        cursor.close()
+//        return listRes
+//    }
 
     override fun delete(model: FileCarcass) {
         TODO("Not yet implemented")

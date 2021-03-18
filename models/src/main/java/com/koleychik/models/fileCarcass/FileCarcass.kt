@@ -15,5 +15,7 @@ abstract class FileCarcass(
 ) {
     val weight: Int by lazy { this.getWeight(name[0]) }
 
-
+    override fun toString(): String {
+        return name
+    }
 }

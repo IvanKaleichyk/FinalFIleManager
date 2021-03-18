@@ -15,7 +15,7 @@ fun DocumentFile.toDocumentModel(context: Context): DocumentModel {
         sizeAbbreviation = context.getSizeAbbreviation(length()),
         dateAdded = null,
         format = getTypeOfDocument(rootName),
-        type = getFileType(rootName)
+        type = getFileType(type ?: "")
     )
 }
 
