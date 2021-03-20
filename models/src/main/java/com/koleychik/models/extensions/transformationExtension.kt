@@ -19,9 +19,8 @@ fun DocumentFile.toDocumentModel(context: Context): DocumentModel {
     )
 }
 
-fun DocumentFile.toFolderModel(context: Context) = FolderModel(
+fun DocumentFile.toFolderModel() = FolderModel(
     name = name ?: "",
     uri = uri,
-    sizeAbbreviation = context.getSizeAbbreviation(length()),
     dateAdded = null
 )

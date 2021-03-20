@@ -75,7 +75,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
             loadIcon(model)
             with(binding) {
                 name.text = model.name
-                size.text = model.sizeAbbreviation
+                size.text = if (model is FolderModel) "" else model.sizeAbbreviation
                 root.setOnClickListener {
                     if (model is FolderModel) onClick?.let { click -> click(model, position) }
                     else openFile(model)
@@ -139,7 +139,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = model.uri
             val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-                intentOpen.flags = FLAG_ACTIVITY_NEW_TASK
+            intentOpen.flags = FLAG_ACTIVITY_NEW_TASK
 
             binding.root.context.startActivity(
 //                binding.root.context.applicationContext,

@@ -9,7 +9,7 @@ abstract class FileCarcass(
 //    open val id: Long,
     open val name: String,
     open val uri: Uri,
-    open val sizeAbbreviation: String,
+    open val sizeAbbreviation: String?,
     open val dateAdded: Long?,
     open val type: FileType
 ) {

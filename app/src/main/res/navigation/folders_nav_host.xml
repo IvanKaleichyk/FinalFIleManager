@@ -10,6 +10,10 @@
         android:label="FoldersAndFilesFragment">
         <action
             android:id="@+id/action_foldersAndFilesFragment_self"
-            app:destination="@id/foldersAndFilesFragment" />
+            app:destination="@id/foldersAndFilesFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
+<!--            app:popEnterAnim="@anim/go_to_right"-->
+<!--            app:popExitAnim="@anim/fade_out"/>-->
     </fragment>
 </navigation>

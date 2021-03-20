@@ -8,10 +8,14 @@
     <fragment
         android:id="@+id/navBarFragment"
         android:name="com.koleychik.feature_nav_bar.framework.NavBarFragment"
-        android:label="NavBarFragment" >
+        android:label="NavBarFragment">
         <action
             android:id="@+id/action_navBarFragment_to_imageInfoFragment"
-            app:destination="@id/imageInfoFragment" />
+            app:destination="@id/imageInfoFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/go_to_left"
+            app:popExitAnim="@anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/imageInfoFragment"

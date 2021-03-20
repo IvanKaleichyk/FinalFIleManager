@@ -7,6 +7,5 @@ import com.koleychik.models.type.FileType
 data class FolderModel(
     override val name: String,
     override val uri: Uri,
-    override val sizeAbbreviation: String,
     override val dateAdded: Long?,
-) : FileCarcass(name, uri, sizeAbbreviation, dateAdded, FileType.FolderType)
+) : FileCarcass(name, uri, null, dateAdded, FileType.FolderType)

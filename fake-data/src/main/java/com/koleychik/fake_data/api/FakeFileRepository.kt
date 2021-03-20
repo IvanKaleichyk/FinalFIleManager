@@ -30,9 +30,6 @@ class FakeFileRepository : FilesRepository {
         TODO("Not yet implemented")
     }
 
-    override fun gelFilesFromFolder(path: String): List<FileCarcass> {
-        TODO("Not yet implemented")
-    }
 
     override fun delete(model: FileCarcass) {
         TODO("Not yet implemented")

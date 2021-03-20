@@ -144,7 +144,7 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         val list = file.listFiles()
         val listRes = mutableListOf<FileCarcass>()
         for (i in list) {
-            if (i.isDirectory) listRes.add(i.toFolderModel(context))
+            if (i.isDirectory) listRes.add(i.toFolderModel())
             else {
                 Log.d(TAG, "file.type = ${i.type}")
                 listRes.add(i.toDocumentModel(context))
