@@ -54,7 +54,11 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = model.uri
             val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-            ContextCompat.startActivity(binding.root.context, intentOpen, Bundle())
+            ContextCompat.startActivity(
+                binding.root.context.applicationContext,
+                intentOpen,
+                Bundle()
+            )
         }
     }
 

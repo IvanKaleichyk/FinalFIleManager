@@ -1,11 +1,11 @@
 package com.koleychik.feature_rv_files_impl.framework
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import coil.Coil
@@ -49,6 +49,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
 
     override fun submitList(newList: List<FileCarcass>) {
+        list.clear()
         list.addAll(newList)
     }
 
@@ -127,10 +128,25 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
             }
 
         private fun openFile(model: FileCarcass) {
+//            val intent = Intent(Intent.ACTION_VIEW)
+//            intent.data = model.uri
+//            val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
+//            ContextCompat.startActivity(
+//                binding.root.context.applicationContext,
+//                intentOpen,
+//                Bundle()
+//            )
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = model.uri
             val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-            ContextCompat.startActivity(binding.root.context, intentOpen, Bundle())
+                intentOpen.flags = FLAG_ACTIVITY_NEW_TASK
+
+            binding.root.context.startActivity(
+//                binding.root.context.applicationContext,
+                intentOpen,
+                Bundle()
+            )
+
         }
 
     }

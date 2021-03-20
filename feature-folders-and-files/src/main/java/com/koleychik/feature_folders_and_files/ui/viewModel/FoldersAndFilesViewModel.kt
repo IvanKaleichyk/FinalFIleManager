@@ -30,7 +30,9 @@ class FoldersAndFilesViewModel @Inject constructor(private val repository: Files
         viewModelScope.launch(Dispatchers.IO) {
             val newFullList = repository.getFoldersAndFiles(path)
 //                if (path == null) repository.gelFilesFromFolder()
-            val newCurrentList = newFullList.searchByName(searchWord)
+            val newCurrentList =
+                if (searchWord == null || searchWord.isEmpty()) newFullList
+                else newFullList.searchByName(searchWord)
 
             withContext(Dispatchers.Main) {
                 fullList.value = newFullList

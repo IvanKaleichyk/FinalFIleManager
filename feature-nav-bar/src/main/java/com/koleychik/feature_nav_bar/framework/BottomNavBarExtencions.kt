@@ -12,13 +12,15 @@ fun BottomNavigationView.setup(
     fragmentManager: FragmentManager,
     navBarUtils: NavBarUtils
 ) {
+    val mapFragment = fragmentManager.createMap(navBarUtils)
     var currentFragment =
         fragmentManager.findFragmentByTag(getFragmentTag(selectedItemId))
-            ?: fragmentManager.getFragmentByItemId(selectedItemId, navBarUtils)
+            ?: fragmentManager.getFragmentByItemId(selectedItemId, mapFragment, navBarUtils)
+
 
     setOnNavigationItemSelectedListener {
         val newFragment: Fragment = fragmentManager.findFragmentByTag(getFragmentTag(it.itemId))
-            ?: fragmentManager.getFragmentByItemId(it.itemId, navBarUtils)
+            ?: fragmentManager.getFragmentByItemId(it.itemId, mapFragment, navBarUtils)
 
         if (newFragment != currentFragment) {
             Log.d(TAG, "newFragment != currentFragment")
@@ -30,6 +32,16 @@ fun BottomNavigationView.setup(
 
         true
     }
+}
+
+fun FragmentManager.createMap(navBarUtils: NavBarUtils): Map<Int, Fragment> {
+    val fileFragment = navBarUtils.fileNavHostFragment()
+    val folderFragment = navBarUtils.folderNavHostFragment()
+    addFragment(fileFragment, R.id.files)
+    addFragment(folderFragment, R.id.folders)
+    attachFragment(fileFragment)
+    detachFragment(folderFragment)
+    return mapOf(R.id.files to fileFragment, R.id.folders to folderFragment)
 }
 
 fun FragmentManager.attachFragment(newFragment: Fragment) {
@@ -48,13 +60,13 @@ fun FragmentManager.detachFragment(fragment: Fragment) {
     beginTransaction().detach(fragment).commit()
 }
 
-private fun FragmentManager.getFragmentByItemId(id: Int, navBarUtils: NavBarUtils): Fragment {
-    val fragment = when (id) {
-        R.id.files -> navBarUtils.fileNavHostFragment()
-        R.id.folders -> navBarUtils.folderNavHostFragment()
-        else -> navBarUtils.fileNavHostFragment()
-    }
-    addFragment(fragment, id)
+private fun FragmentManager.getFragmentByItemId(
+    id: Int,
+    map: Map<Int, Fragment>,
+    navBarUtils: NavBarUtils
+): Fragment {
+    val fragment = map[id] ?: navBarUtils.fileNavHostFragment()
+//    addFragment(fragment, id)
     return fragment
 }
 
