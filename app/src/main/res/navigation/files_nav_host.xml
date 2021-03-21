@@ -12,16 +12,24 @@
         tools:layout="@layout/fragment_select_category">
         <action
             android:id="@+id/action_selectCategoryFragment_to_imagesFragment"
-            app:destination="@id/imagesFragment" />
+            app:destination="@id/imagesFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_selectCategoryFragment_to_musicFragment"
-            app:destination="@id/musicFragment" />
+            app:destination="@id/musicFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_selectCategoryFragment_to_documentsFragment"
-            app:destination="@id/documentsFragment" />
+            app:destination="@id/documentsFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_selectCategoryFragment_to_videoFragment"
-            app:destination="@id/videoFragment" />
+            app:destination="@id/videoFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment
