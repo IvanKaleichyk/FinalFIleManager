@@ -26,6 +26,8 @@ class FoldersAndFilesViewModel @Inject constructor(private val repository: Files
         }
     }
 
+    fun openFile(model: FileCarcass) = repository.openFile(model)
+
     fun getFoldersAndFiles(path: String = ROOT_PATH, searchWord: String?) =
         viewModelScope.launch(Dispatchers.IO) {
             val newFullList = repository.getFoldersAndFiles(path)

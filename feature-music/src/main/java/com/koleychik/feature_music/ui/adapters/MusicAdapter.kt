@@ -1,12 +1,10 @@
 package com.koleychik.feature_music.ui.adapters
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.koleychik.feature_music.databinding.ItemRvMusicBinding
-import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.MusicModel
 
 class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
@@ -43,27 +41,9 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
                 textDuration.text = model.duration.toString()
                 textSize.text = model.sizeAbbreviation
                 binding.root.setOnClickListener {
-//                    onClick?.let { click -> click(model) }
-                    openFile(model)
+                    onClick?.let { click -> click(model) }
                 }
             }
-        }
-
-        private fun openFile(model: FileCarcass) {
-
-            val intent = Intent(Intent.ACTION_VIEW).apply { setDataAndType(model.uri, model.mimeType) }
-            binding.root.context.startActivity(intent)
-
-//            val intent = Intent(Intent.ACTION_VIEW)
-//            intent.data = model.uri
-//            val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-//            intentOpen.type = model.mimeType
-//            binding.root.context.startActivity(intentOpen)
-//            ContextCompat.startActivity(
-//                binding.root.context.applicationContext,
-//                intentOpen,
-//                Bundle()
-//            )
         }
     }
 

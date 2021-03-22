@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.FileUriExposedException
 import android.provider.MediaStore
 import android.util.Log
+import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.extensions.audioProjections
@@ -69,6 +71,7 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
 
         while (cursor.moveToNext()) {
             val name = cursor.getString(1)
+            val mimeType = cursor.getString(4) ?: ""
             listRes.add(
                 DocumentModel(
                     name = name ?: "",
@@ -76,8 +79,8 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3),
                     format = getTypeOfDocument(name ?: ""),
-                    type = getFileType(cursor.getString(4) ?: ""),
-                    mimeType = cursor.getString(5)
+                    type = getFileType(mimeType),
+                    mimeType = mimeType
                 )
             )
         }
@@ -159,8 +162,19 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
     }
 
     override fun openFile(model: FileCarcass) {
-        val intent = Intent(Intent.ACTION_VIEW).apply { setDataAndType(model.uri, model.mimeType) }
-        context.startActivity(intent)
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(model.uri, model.mimeType)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            try {
+                context.startActivity(intent)
+            } catch (e: FileUriExposedException) {
+                Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
+            }
+        } else context.startActivity(intent)
     }
 
     override fun delete(model: FileCarcass) {

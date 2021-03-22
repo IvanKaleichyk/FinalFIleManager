@@ -1,9 +1,6 @@
 package com.koleychik.feature_rv_files_impl.framework
 
-import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.net.Uri
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.SortedList
@@ -30,7 +27,6 @@ import javax.inject.Inject
 
 internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
-    private var onClick: ((model: FileCarcass, position: Int) -> Unit)? = null
 
     private val list: SortedList<FileCarcass> = SortedList(
         FileCarcass::class.java,
@@ -53,9 +49,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
         list.addAll(newList)
     }
 
-    override fun setOnClick(onClick: (model: FileCarcass, position: Int) -> Unit) {
-        this.onClick = onClick
-    }
+    override var onClick: ((model: FileCarcass, position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainViewHolder(
         ItemRvFilesLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -77,8 +71,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
                 name.text = model.name
                 size.text = if (model is FolderModel) "" else model.sizeAbbreviation
                 root.setOnClickListener {
-                    if (model is FolderModel) onClick?.let { click -> click(model, position) }
-                    else openFile(model)
+                    onClick?.let { click -> click(model, position) }
                 }
             }
         }
@@ -126,28 +119,5 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
                 imageLoader.execute(request)
             }
-
-        private fun openFile(model: FileCarcass) {
-//            val intent = Intent(Intent.ACTION_VIEW)
-//            intent.data = model.uri
-//            val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-//            ContextCompat.startActivity(
-//                binding.root.context.applicationContext,
-//                intentOpen,
-//                Bundle()
-//            )
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = model.uri
-            val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-            intentOpen.flags = FLAG_ACTIVITY_NEW_TASK
-
-            binding.root.context.startActivity(
-//                binding.root.context.applicationContext,
-                intentOpen,
-                Bundle()
-            )
-
-        }
-
     }
 }

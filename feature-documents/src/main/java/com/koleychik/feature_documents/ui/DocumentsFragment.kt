@@ -174,6 +174,9 @@ class DocumentsFragment : Fragment() {
             adapter = adapterApi
             addItemDecoration(itemDecoration)
         }
+        adapterApi.onClick = {model, position ->
+            viewModel.openFile(model)
+        }
     }
 
     private fun setupViewStub() {
