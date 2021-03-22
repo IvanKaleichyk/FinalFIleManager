@@ -1,7 +1,10 @@
 package com.koleychik.finalfilemanager.di.modules
 
 import android.content.Context
-import androidx.navigation.fragment.NavHostFragment
+import android.util.SparseIntArray
+import androidx.core.util.set
+import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.di.FileCoreComponent
 import com.koleychik.feature_documents.di.DocumentsFeatureDependencies
@@ -26,6 +29,7 @@ import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_video.di.VideoFeatureDependencies
 import com.koleychik.finalfilemanager.R
 import com.koleychik.finalfilemanager.navigation.Navigator
+import com.koleychik.finalfilemanager.utils.setup
 import com.koleychik.module_injector.component_holder.BaseDependencies
 import dagger.Module
 import dagger.Provides
@@ -38,10 +42,20 @@ class DependenciesModule {
     @Singleton
     fun provideNavBarFeatureDependencies() = object : NavBarFeatureDependencies {
         override fun navHosts(): NavBarUtils = object : NavBarUtils {
-            override fun fileNavHostFragment() = NavHostFragment.create(R.navigation.files_nav_host)
-
-            override fun folderNavHostFragment() =
-                NavHostFragment.create(R.navigation.folders_nav_host)
+            override fun setup(
+                bottomNavigationView: BottomNavigationView,
+                fragmentManager: FragmentManager,
+                containerId: Int
+            ) {
+                bottomNavigationView.setup(
+                    fragmentManager,
+                    SparseIntArray().apply {
+                        this[R.id.files] = R.navigation.files
+                        this[R.id.folders] = R.navigation.folders
+                    },
+                    containerId
+                )
+            }
         }
     }
 

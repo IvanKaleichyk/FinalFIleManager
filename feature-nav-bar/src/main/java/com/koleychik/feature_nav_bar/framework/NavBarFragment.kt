@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.koleychik.feature_nav_bar.R
 import com.koleychik.feature_nav_bar.databinding.FragmentNavBarBinding
 import com.koleychik.feature_nav_bar.di.NavBarFeatureComponentHolder
 import com.koleychik.injector.NavigationSystem
@@ -25,18 +26,12 @@ class NavBarFragment : Fragment() {
         NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentNavBarBinding.inflate(inflater, container, false)
         NavBarFeatureComponentHolder.getComponent().inject(this)
-
-//        requireActivity().findNavController(R.id.bottom_navController)
-//            .addOnDestinationChangedListener { _, destination, _ ->
-//                navHosts.onDestinationChange(destination.id)
-//            }
-
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        binding.bottomNav.setup(childFragmentManager, navHosts)
+        navHosts.setup(binding.bottomNav, childFragmentManager, R.id.bottom_navController)
     }
 
     override fun onDestroyView() {

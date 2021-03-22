@@ -8,4 +8,8 @@ data class FolderModel(
     override val name: String,
     override val uri: Uri,
     override val dateAdded: Long?,
-) : FileCarcass(name, uri, null, dateAdded, FileType.FolderType)
+    override val mimeType: String,
+) : FileCarcass() {
+    override val sizeAbbreviation: String? = null
+    override val type: FileType = FileType.FolderType
+}

@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     private val permissions =
-        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
     private val tag = "MAIN_APP_TAG"
 
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         navigator.unbind()
+        super.onDestroy()
     }
 }

@@ -5,15 +5,15 @@ import com.koleychik.models.getWeight
 import com.koleychik.models.type.FileType
 
 
-abstract class FileCarcass(
-//    open val id: Long,
-    open val name: String,
-    open val uri: Uri,
-    open val sizeAbbreviation: String?,
-    open val dateAdded: Long?,
-    open val type: FileType
-) {
+abstract class FileCarcass {
     val weight: Int by lazy { this.getWeight(name[0]) }
+
+    abstract val name: String
+    abstract val uri: Uri
+    abstract val sizeAbbreviation: String?
+    abstract val dateAdded: Long?
+    abstract val type: FileType
+    abstract val mimeType: String
 
     override fun toString(): String {
         return name

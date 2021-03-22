@@ -67,12 +67,10 @@ class Navigator(
         }
     }
 
-    override fun imagesFeatureGoToImageInfo(navController: NavController?, bundle: Bundle?) {
+    override fun imagesFeatureGoToImageInfo(bundle: Bundle) {
         Log.d(TAG, "imagesFeatureGoToImageInfo")
-        val controller = navController ?: this.navController
-        if (controller == null) Log.d(TAG, "controller == null")
-        if (controller?.currentDestination?.id == R.id.navBarFragment) {
-            controller.navigate(R.id.action_navBarFragment_to_imageInfoFragment, bundle)
+        if (navController?.currentDestination?.id == R.id.navBarFragment) {
+            navController!!.navigate(R.id.action_navBarFragment_to_imageInfoFragment, bundle)
         }
     }
 

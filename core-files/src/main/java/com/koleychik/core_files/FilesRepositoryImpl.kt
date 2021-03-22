@@ -2,6 +2,7 @@ package com.koleychik.core_files
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
@@ -52,7 +53,8 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     name = cursor.getString(1),
                     uri = Uri.withAppendedPath(uriExternal, id.toString()),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
-                    dateAdded = cursor.getLong(3)
+                    dateAdded = cursor.getLong(3),
+                    mimeType = cursor.getString(4)
                 )
             )
         }
@@ -74,7 +76,8 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3),
                     format = getTypeOfDocument(name ?: ""),
-                    type = getFileType(cursor.getString(4) ?: "")
+                    type = getFileType(cursor.getString(4) ?: ""),
+                    mimeType = cursor.getString(5)
                 )
             )
         }
@@ -97,15 +100,16 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
             val id = cursor.getLong(0)
             listRes.add(
                 MusicModel(
-                    id,
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getLong(5),
-                    Uri.withAppendedPath(uriExternal, id.toString()),
-                    context.getSizeAbbreviation(cursor.getLong(6)),
-                    cursor.getLong(7)
+                    id = id,
+                    name = cursor.getString(1),
+                    artist = cursor.getString(2),
+                    title = cursor.getString(3),
+                    album = cursor.getString(4),
+                    duration = cursor.getLong(5),
+                    uri = Uri.withAppendedPath(uriExternal, id.toString()),
+                    sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(6)),
+                    dateAdded = cursor.getLong(7),
+                    mimeType = cursor.getString(8)
                 )
             )
         }
@@ -130,7 +134,8 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     uri = Uri.withAppendedPath(uriExternal, id.toString()),
                     duration = cursor.getLong(2),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(3)),
-                    dateAdded = cursor.getLong(4)
+                    dateAdded = cursor.getLong(4),
+                    mimeType = cursor.getString(5)
                 )
             )
         }
@@ -153,30 +158,21 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         return listRes
     }
 
-//    override fun gelFilesFromFolder(path: String): List<FileCarcass> {
-//        val selection = "relative_path = '$path'"
-////        val selection = "_data LIKE '%.jpg'"
-//
-//        val cursor = queryContentResolver(
-//            MediaStore.Files.getContentUri(contentUri),
-//            allFilesFromFolderProjections,
-//            selection = selection
-//        ) ?: return emptyList()
-//
-//        val listRes = mutableListOf<FileCarcass>()
-////        while (cursor.moveToNext()) listRes.add(
-////            FileCarcass(
-////                cursor.getLong(0),
-////                cursor.getString(1),
-////                relativePath = cursor.getString(2)
-////            )
-////        )
-//        cursor.close()
-//        return listRes
-//    }
+    override fun openFile(model: FileCarcass) {
+        val intent = Intent(Intent.ACTION_VIEW).apply { setDataAndType(model.uri, model.mimeType) }
+        context.startActivity(intent)
+    }
 
     override fun delete(model: FileCarcass) {
-        TODO("Not yet implemented")
+        val file = DocumentFile.fromSingleUri(context, model.uri)
+        if (file == null) {
+            Log.d(TAG, "file = null")
+            return
+        }
+        if (file.exists()) {
+            if (file.delete()) Log.d(TAG, "file was deleted")
+            else Log.d(TAG, "cannot delete file")
+        } else Log.d(TAG, "file doesn't exists")
     }
 
     private fun queryContentResolver(
@@ -192,10 +188,4 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         selectionArgs,
         sortedOrder
     )
-
-
-    fun test() {
-
-    }
-
 }

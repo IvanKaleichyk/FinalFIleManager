@@ -139,7 +139,7 @@ class ImagesFragment : Fragment() {
             putInt(PARCELABLE_POSITION, position)
             putParcelableArrayList(PARCELABLE_LIST, viewModel.currentList.value!! as ArrayList)
         }
-        navigationApi.imagesFeatureGoToImageInfo(null, bundle = bundle)
+        navigationApi.imagesFeatureGoToImageInfo(bundle)
     }
 
     private fun resetViews() {

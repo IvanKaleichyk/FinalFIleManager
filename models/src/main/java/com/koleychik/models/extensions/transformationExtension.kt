@@ -9,18 +9,21 @@ import com.koleychik.models.type.getFileType
 
 fun DocumentFile.toDocumentModel(context: Context): DocumentModel {
     val rootName = name ?: ""
+    val mimeType = type ?: ""
     return DocumentModel(
         name = rootName,
         uri = uri,
         sizeAbbreviation = context.getSizeAbbreviation(length()),
         dateAdded = null,
         format = getTypeOfDocument(rootName),
-        type = getFileType(type ?: "")
+        type = getFileType(mimeType),
+        mimeType = mimeType
     )
 }
 
 fun DocumentFile.toFolderModel() = FolderModel(
     name = name ?: "",
     uri = uri,
-    dateAdded = null
+    dateAdded = null,
+    mimeType = type ?: ""
 )
