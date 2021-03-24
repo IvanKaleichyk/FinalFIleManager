@@ -65,6 +65,8 @@ fun BottomNavigationView.setup(
         }
     }
 
+    setupItemReselected(fragmentManager)
+
     fragmentManager.addOnBackStackChangedListener {
         if (!isOnFirstFragment && !fragmentManager.isOnBackStack(getFragmentTag(firstFragmentItemId))) {
             this.selectedItemId = firstFragmentItemId
@@ -78,7 +80,20 @@ fun BottomNavigationView.setup(
         }
 
     }
+}
 
+private fun BottomNavigationView.setupItemReselected(
+    fragmentManager: FragmentManager
+) {
+    setOnNavigationItemReselectedListener { item ->
+        val selectedFragment = fragmentManager.findFragmentByTag(getFragmentTag(item.itemId))
+                as NavHostFragment
+        val navController = selectedFragment.navController
+        // Pop the back stack to the start destination of the current navController graph
+        navController.popBackStack(
+            navController.graph.startDestination, false
+        )
+    }
 }
 
 private fun FragmentManager.isOnBackStack(backStackName: String): Boolean {

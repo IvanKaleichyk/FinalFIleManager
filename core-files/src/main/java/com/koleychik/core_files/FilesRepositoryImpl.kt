@@ -1,10 +1,10 @@
 package com.koleychik.core_files
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.FileUriExposedException
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
@@ -168,13 +168,19 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            try {
-                context.startActivity(intent)
-            } catch (e: FileUriExposedException) {
-                Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
-            }
-        } else context.startActivity(intent)
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+//            try {
+//                context.startActivity(intent)
+//            } catch (e: FileUriExposedException) {
+//                Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
+//            }
+//        } else context.startActivity(intent)
+        try {
+            context.startActivity(intent)
+        }catch (e : ActivityNotFoundException){
+            Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
+        }
+
     }
 
     override fun delete(model: FileCarcass) {

@@ -19,6 +19,8 @@ class NavBarFragment : Fragment() {
     @Inject
     internal lateinit var navHosts: NavBarUtils
 
+    var isViewWasReset = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,12 +28,20 @@ class NavBarFragment : Fragment() {
         NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentNavBarBinding.inflate(inflater, container, false)
         NavBarFeatureComponentHolder.getComponent().inject(this)
+
+        if (savedInstanceState == null) {
+            navHosts.setup(binding.bottomNav, childFragmentManager, R.id.bottom_navController)
+        } else isViewWasReset = true
+
+
         return binding.root
     }
 
     override fun onStart() {
         super.onStart()
-        navHosts.setup(binding.bottomNav, childFragmentManager, R.id.bottom_navController)
+        if (isViewWasReset) {
+            navHosts.setup(binding.bottomNav, childFragmentManager, R.id.bottom_navController)
+        }
     }
 
     override fun onDestroyView() {

@@ -21,7 +21,7 @@ import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.FileCarcass
-import com.koleychik.models.fileCarcass.media.ImageModel
+import com.koleychik.models.fileCarcass.FolderModel
 import javax.inject.Inject
 
 class FoldersAndFilesFragment : Fragment() {
@@ -107,12 +107,12 @@ class FoldersAndFilesFragment : Fragment() {
 
     private fun createOnClick() {
         adapterApi.onClick = { model, _ ->
-            if (model is ImageModel) openImage(model)
+            if (model is FolderModel) openFolder(model)
             else viewModel.openFile(model)
         }
     }
 
-    private fun openImage(model: ImageModel) {
+    private fun openFolder(model: FolderModel) {
         navigatorApi.openFileInNewFragment(
             findNavController(),
             createBundleForNavigation(model)

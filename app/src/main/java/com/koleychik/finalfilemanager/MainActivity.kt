@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     }
 
     override fun onDestroy() {
-        navigator.unbind()
         super.onDestroy()
+        navigator.unbind()
     }
 }

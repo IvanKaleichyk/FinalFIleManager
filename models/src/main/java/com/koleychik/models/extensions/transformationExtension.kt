@@ -1,6 +1,8 @@
 package com.koleychik.models.extensions
 
 import android.content.Context
+import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.documentfile.provider.DocumentFile
 import com.koleychik.models.fileCarcass.FolderModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
@@ -12,7 +14,11 @@ fun DocumentFile.toDocumentModel(context: Context): DocumentModel {
     val mimeType = type ?: ""
     return DocumentModel(
         name = rootName,
-        uri = uri,
+        uri = FileProvider.getUriForFile(
+            context,
+            context.packageName + ".provider",
+            uri.toFile()
+        ),
         sizeAbbreviation = context.getSizeAbbreviation(length()),
         dateAdded = null,
         format = getTypeOfDocument(rootName),
