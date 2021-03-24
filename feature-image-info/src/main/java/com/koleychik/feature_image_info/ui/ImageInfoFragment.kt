@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.koleychik.basic_resources.Constants
@@ -19,6 +18,7 @@ import com.koleychik.feature_image_info.transformDateToDateFormat
 import com.koleychik.feature_image_info.ui.adapter.ImageInfoAdapter
 import com.koleychik.feature_image_info.ui.viewModels.ImageInfoViewModel
 import com.koleychik.feature_image_info.ui.viewModels.ViewModelFactory
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.media.ImageModel
 import javax.inject.Inject
 
@@ -44,6 +44,7 @@ class ImageInfoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentImageInfoBinding.inflate(layoutInflater, container, false)
         ImageInfoFeatureComponentHolder.getComponent().inject(this)
         return binding.root
@@ -57,7 +58,7 @@ class ImageInfoFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentImagePosition.observe(viewLifecycleOwner, Observer{ updateUI(adapter.list[it]) })
+        viewModel.currentImagePosition.observe(viewLifecycleOwner, { updateUI(adapter.list[it]) })
     }
 
     private fun shareImage(model: ImageModel) {

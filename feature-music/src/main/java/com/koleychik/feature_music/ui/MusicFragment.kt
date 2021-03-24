@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_music.databinding.FragmentMusicBinding
@@ -16,6 +15,7 @@ import com.koleychik.feature_music.ui.adapters.MusicAdapter
 import com.koleychik.feature_music.ui.viewModel.MusicViewModel
 import com.koleychik.feature_music.ui.viewModel.ViewModelFactory
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.MusicModel
 import javax.inject.Inject
 
@@ -45,6 +45,7 @@ class MusicFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentMusicBinding.inflate(layoutInflater, container, false)
         MusicFeatureComponentHolder.getComponent().inject(this)
         return binding.root
@@ -73,7 +74,7 @@ class MusicFragment : Fragment() {
 
     private fun createRv() {
         binding.carcass.rv.adapter = adapter
-//        adapter.onClick = onClick
+        adapter.onClick = { viewModel.openFile(it) }
     }
 
     private fun createSwipeToRefresh() {
@@ -86,7 +87,7 @@ class MusicFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, Observer{
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetViews()
             when {
                 it == null -> loading()

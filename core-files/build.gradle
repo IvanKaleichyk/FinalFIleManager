@@ -37,7 +37,7 @@ dependencies {
 
     implementation project(":app-annotations")
     implementation project(":models")
-    implementation project(":module-injector")
+    implementation project(":injector")
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}"
     implementation "androidx.core:core-ktx:${versions.core}"

@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.koleychik.finalfilemanager"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -36,7 +36,8 @@ android {
 dependencies {
 
     implementation project(":app-annotations")
-    implementation project(":module-injector")
+    implementation project(":feature-nav-bar")
+    implementation project(":injector")
     implementation project(":models")
     implementation project(":basic-resources")
     implementation project(":core-files")

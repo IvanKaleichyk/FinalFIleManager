@@ -6,6 +6,7 @@ import com.koleychik.feature_folders_and_files.di.FoldersAndFilesFeatureApi
 import com.koleychik.feature_image_info.di.ImageInfoFeatureApi
 import com.koleychik.feature_images.di.api.ImagesFeatureApi
 import com.koleychik.feature_music.di.MusicFeatureApi
+import com.koleychik.feature_nav_bar.di.NavBarFeatureApi
 import com.koleychik.feature_select_category.SelectCategoryApi
 import com.koleychik.feature_video.di.VideoFeatureApi
 import com.koleychik.finalfilemanager.navigation.Navigator
@@ -30,7 +31,8 @@ class AppModule(private val context: Context) {
         documentsFeatureApi: Provider<DocumentsFeatureApi>,
         videoFeatureApi: Provider<VideoFeatureApi>,
         imageInfoFeatureApi: Provider<ImageInfoFeatureApi>,
-        foldersAndFilesFeatureApi: Provider<FoldersAndFilesFeatureApi>
+        foldersAndFilesFeatureApi: Provider<FoldersAndFilesFeatureApi>,
+        navBarFeatureApi: Provider<NavBarFeatureApi>
     ) = Navigator(
         selectCategoryApi,
         imagesFeatureApi,
@@ -38,7 +40,8 @@ class AppModule(private val context: Context) {
         documentsFeatureApi,
         videoFeatureApi,
         imageInfoFeatureApi,
-        foldersAndFilesFeatureApi
+        foldersAndFilesFeatureApi,
+        navBarFeatureApi
     )
 
 }

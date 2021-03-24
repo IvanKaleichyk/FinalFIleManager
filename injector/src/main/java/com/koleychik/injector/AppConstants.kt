@@ -1,4 +1,4 @@
-package com.koleychik.module_injector
+package com.koleychik.injector
 
 object AppConstants {
 

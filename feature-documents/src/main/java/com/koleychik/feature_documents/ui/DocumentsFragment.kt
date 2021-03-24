@@ -22,6 +22,7 @@ import com.koleychik.feature_documents.ui.viewModels.DocumentsViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.document.DocumentType
 import javax.inject.Inject
@@ -55,6 +56,7 @@ class DocumentsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentDocumentsBinding.inflate(layoutInflater, container, false)
         DocumentsFeatureComponentHolder.getComponent().inject(this)
 
@@ -171,6 +173,9 @@ class DocumentsFragment : Fragment() {
         binding.carcass.rv.apply {
             adapter = adapterApi
             addItemDecoration(itemDecoration)
+        }
+        adapterApi.onClick = {model, position ->
+            viewModel.openFile(model)
         }
     }
 

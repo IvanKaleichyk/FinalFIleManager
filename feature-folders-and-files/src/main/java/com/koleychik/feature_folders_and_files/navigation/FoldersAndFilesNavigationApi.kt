@@ -1,10 +1,10 @@
 package com.koleychik.feature_folders_and_files.navigation
 
 import android.os.Bundle
-import com.koleychik.module_injector.navigation.NavigatorApi
+import androidx.navigation.NavController
 
-interface FoldersAndFilesNavigationApi : NavigatorApi {
+interface FoldersAndFilesNavigationApi {
 
-    fun openFileInNewFragment(bundle: Bundle)
+    fun openFileInNewFragment(controller: NavController, bundle: Bundle)
 
 }

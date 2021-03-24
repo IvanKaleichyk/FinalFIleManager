@@ -34,16 +34,9 @@ class DocumentsViewModel @Inject constructor(private val repository: FilesReposi
         )
     )
 
-    val listTypes = listOf(
-        DocumentType.TXT,
-        DocumentType.PDF,
-        DocumentType.EPUB,
-        DocumentType.B2,
-        DocumentType.DOC,
-        DocumentType.DOCX,
-        DocumentType.PPT,
-        DocumentType.OTHER
-    )
+    fun openFile(model: FileCarcass) {
+        repository.openFile(model)
+    }
 
     fun search(word: String) = viewModelScope.launch(Dispatchers.IO) {
         var newCurrentList: List<DocumentModel> = emptyList()

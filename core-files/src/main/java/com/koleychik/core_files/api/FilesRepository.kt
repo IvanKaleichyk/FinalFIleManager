@@ -19,7 +19,9 @@ interface FilesRepository {
 
     fun getFoldersAndFiles(path: String = ROOT_PATH): List<FileCarcass>
 
-    fun gelFilesFromFolder(path: String = ROOT_PATH): List<FileCarcass>
+//    fun gelFilesFromFolder(path: String = ROOT_PATH): List<FileCarcass>
+
+    fun openFile(model: FileCarcass)
 
     fun delete(model: FileCarcass)
 }

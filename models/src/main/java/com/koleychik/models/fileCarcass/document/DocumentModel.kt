@@ -11,5 +11,6 @@ data class DocumentModel(
     override val sizeAbbreviation: String,
     override val dateAdded: Long?,
     val format: DocumentType,
-    override val type: FileType
-) : FileCarcass(name, uri, sizeAbbreviation, dateAdded, type)
+    override val type: FileType,
+    override val mimeType: String
+) : FileCarcass()

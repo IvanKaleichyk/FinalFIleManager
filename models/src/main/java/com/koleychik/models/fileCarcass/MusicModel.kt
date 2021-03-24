@@ -13,4 +13,7 @@ data class MusicModel(
     override val uri: Uri,
     override val sizeAbbreviation: String,
     override val dateAdded: Long,
-) : FileCarcass(name, uri, sizeAbbreviation, dateAdded, FileType.AudioType)
+    override val mimeType: String,
+) : FileCarcass() {
+    override val type: FileType = FileType.AudioType
+}

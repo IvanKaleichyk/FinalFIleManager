@@ -1,12 +1,20 @@
 package com.koleychik.core_files
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
+import android.widget.Toast
 import androidx.documentfile.provider.DocumentFile
 import com.koleychik.core_files.api.FilesRepository
-import com.koleychik.core_files.extensions.*
+import com.koleychik.core_files.extensions.audioProjections
+import com.koleychik.core_files.extensions.documentsProjections
+import com.koleychik.core_files.extensions.imagesProjections
+import com.koleychik.core_files.extensions.videoProjections
+import com.koleychik.injector.AppConstants.TAG
 import com.koleychik.models.extensions.getSizeAbbreviation
 import com.koleychik.models.extensions.toDocumentModel
 import com.koleychik.models.extensions.toFolderModel
@@ -47,7 +55,8 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     name = cursor.getString(1),
                     uri = Uri.withAppendedPath(uriExternal, id.toString()),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
-                    dateAdded = cursor.getLong(3)
+                    dateAdded = cursor.getLong(3),
+                    mimeType = cursor.getString(4)
                 )
             )
         }
@@ -62,14 +71,16 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
 
         while (cursor.moveToNext()) {
             val name = cursor.getString(1)
+            val mimeType = cursor.getString(4) ?: ""
             listRes.add(
                 DocumentModel(
-                    name = name,
+                    name = name ?: "",
                     uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3),
-                    format = getTypeOfDocument(name = name),
-                    type = getFileType(name)
+                    format = getTypeOfDocument(name ?: ""),
+                    type = getFileType(mimeType),
+                    mimeType = mimeType
                 )
             )
         }
@@ -92,15 +103,16 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
             val id = cursor.getLong(0)
             listRes.add(
                 MusicModel(
-                    id,
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getLong(5),
-                    Uri.withAppendedPath(uriExternal, id.toString()),
-                    context.getSizeAbbreviation(cursor.getLong(6)),
-                    cursor.getLong(7)
+                    id = id,
+                    name = cursor.getString(1),
+                    artist = cursor.getString(2),
+                    title = cursor.getString(3),
+                    album = cursor.getString(4),
+                    duration = cursor.getLong(5),
+                    uri = Uri.withAppendedPath(uriExternal, id.toString()),
+                    sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(6)),
+                    dateAdded = cursor.getLong(7),
+                    mimeType = cursor.getString(8)
                 )
             )
         }
@@ -125,7 +137,8 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
                     uri = Uri.withAppendedPath(uriExternal, id.toString()),
                     duration = cursor.getLong(2),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(3)),
-                    dateAdded = cursor.getLong(4)
+                    dateAdded = cursor.getLong(4),
+                    mimeType = cursor.getString(5)
                 )
             )
         }
@@ -135,39 +148,51 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
 
     override fun getFoldersAndFiles(path: String): List<FileCarcass> {
         val file = DocumentFile.fromFile(File(path))
+//        val list = file.listFiles() ?: return emptyList()
         val list = file.listFiles()
         val listRes = mutableListOf<FileCarcass>()
         for (i in list) {
-            if (i.isDirectory) listRes.add(i.toFolderModel(context))
-            else listRes.add(i.toDocumentModel(context))
+            if (i.isDirectory) listRes.add(i.toFolderModel())
+            else {
+                Log.d(TAG, "file.type = ${i.type}")
+                listRes.add(i.toDocumentModel(context))
+            }
         }
         return listRes
     }
 
-    override fun gelFilesFromFolder(path: String): List<FileCarcass> {
-        val selection = "relative_path = '$path'"
-//        val selection = "_data LIKE '%.jpg'"
+    override fun openFile(model: FileCarcass) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(model.uri, model.mimeType)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
 
-        val cursor = queryContentResolver(
-            MediaStore.Files.getContentUri(contentUri),
-            allFilesFromFolderProjections,
-            selection = selection
-        ) ?: return emptyList()
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+//            try {
+//                context.startActivity(intent)
+//            } catch (e: FileUriExposedException) {
+//                Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
+//            }
+//        } else context.startActivity(intent)
+        try {
+            context.startActivity(intent)
+        }catch (e : ActivityNotFoundException){
+            Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
+        }
 
-        val listRes = mutableListOf<FileCarcass>()
-//        while (cursor.moveToNext()) listRes.add(
-//            FileCarcass(
-//                cursor.getLong(0),
-//                cursor.getString(1),
-//                relativePath = cursor.getString(2)
-//            )
-//        )
-        cursor.close()
-        return listRes
     }
 
     override fun delete(model: FileCarcass) {
-        TODO("Not yet implemented")
+        val file = DocumentFile.fromSingleUri(context, model.uri)
+        if (file == null) {
+            Log.d(TAG, "file = null")
+            return
+        }
+        if (file.exists()) {
+            if (file.delete()) Log.d(TAG, "file was deleted")
+            else Log.d(TAG, "cannot delete file")
+        } else Log.d(TAG, "file doesn't exists")
     }
 
     private fun queryContentResolver(
@@ -183,10 +208,4 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         selectionArgs,
         sortedOrder
     )
-
-
-    fun test() {
-
-    }
-
 }

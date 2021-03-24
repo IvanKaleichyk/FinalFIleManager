@@ -1,12 +1,8 @@
 package com.koleychik.feature_rv_files_impl.framework
 
-import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import coil.Coil
@@ -24,7 +20,6 @@ import com.koleychik.feature_rv_files_impl.databinding.ItemRvFilesLayoutBinding
 import com.koleychik.models.fileCarcass.FileCarcass
 import com.koleychik.models.fileCarcass.FolderModel
 import com.koleychik.models.type.FileType
-import com.koleychik.module_injector.AppConstants.TAG
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,7 +27,6 @@ import javax.inject.Inject
 
 internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
-    private var onClick: ((model: FileCarcass, position: Int) -> Unit)? = null
 
     private val list: SortedList<FileCarcass> = SortedList(
         FileCarcass::class.java,
@@ -51,12 +45,11 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
 
     override fun submitList(newList: List<FileCarcass>) {
+        list.clear()
         list.addAll(newList)
     }
 
-    override fun setOnClick(onClick: (model: FileCarcass, position: Int) -> Unit) {
-        this.onClick = onClick
-    }
+    override var onClick: ((model: FileCarcass, position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MainViewHolder(
         ItemRvFilesLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -76,10 +69,9 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
             loadIcon(model)
             with(binding) {
                 name.text = model.name
-                size.text = model.sizeAbbreviation
+                size.text = if (model is FolderModel) "" else model.sizeAbbreviation
                 root.setOnClickListener {
-                    if (model is FolderModel) onClick?.let { click -> click(model, position) }
-                    else openFile(model)
+                    onClick?.let { click -> click(model, position) }
                 }
             }
         }
@@ -88,15 +80,11 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
             when (model.type) {
                 is FileType.ImageType -> loadImage(model.uri, model.type.imgRes)
                 is FileType.VideoType -> loadVideoPreview(model.uri, model.type.imgRes)
-                else -> {
-                    Log.d(TAG, "model type = else")
-                    binding.icon.setImageResource(model.type.imgRes)
-                }
+                else -> binding.icon.setImageResource(model.type.imgRes)
             }
         }
 
         private fun loadImage(uri: Uri, imagePlaceholder: Int) {
-            Log.d(TAG, "start load image")
             val context = binding.root.context
             binding.icon.load(uri) {
                 placeholder(imagePlaceholder)
@@ -131,13 +119,5 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
                 imageLoader.execute(request)
             }
-
-        private fun openFile(model: FileCarcass) {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = model.uri
-            val intentOpen = Intent.createChooser(intent, "Choose an application to open with:")
-            ContextCompat.startActivity(binding.root.context, intentOpen, Bundle())
-        }
-
     }
 }

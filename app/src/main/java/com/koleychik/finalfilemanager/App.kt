@@ -5,16 +5,14 @@ import com.koleychik.finalfilemanager.di.AppComponent
 import com.koleychik.finalfilemanager.di.DaggerAppComponent
 import com.koleychik.finalfilemanager.di.modules.AppModule
 
-class App : Application() {
+class App: Application() {
 
-    companion object {
+    companion object{
         lateinit var component: AppComponent
     }
 
     override fun onCreate() {
         super.onCreate()
-        component =
-            DaggerAppComponent.builder().appModule(AppModule(applicationContext)).build()
-        component.inject(this)
+        component = DaggerAppComponent.builder().appModule(AppModule(applicationContext)).build()
     }
 }

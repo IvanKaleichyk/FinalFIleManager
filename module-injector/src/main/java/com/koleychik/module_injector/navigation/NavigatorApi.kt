@@ -1,3 +1,0 @@
-package com.koleychik.module_injector.navigation
-
-interface NavigatorApi

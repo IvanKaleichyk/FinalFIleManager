@@ -30,6 +30,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/info"
         android:layout_width="0dp"
+        android:paddingEnd="@dimen/basicPadding"
+        android:paddingStart="@dimen/basicPadding"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,12 +69,10 @@
         <TextView
             android:id="@+id/size"
             style="@style/textForMemoryInfo"
-            android:paddingEnd="10dp"
             android:text="64 gb"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="RtlSymmetry" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

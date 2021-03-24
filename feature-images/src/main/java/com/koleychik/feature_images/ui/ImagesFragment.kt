@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.basic_resources.Constants.PARCELABLE_LIST
@@ -22,11 +21,8 @@ import com.koleychik.feature_images.ui.viewModels.ImagesViewModelFactory
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_searching_impl.framework.SearchingUIApi
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.media.ImageModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import javax.inject.Inject
 
 class ImagesFragment : Fragment() {
@@ -53,12 +49,11 @@ class ImagesFragment : Fragment() {
         ViewModelProvider(this, viewModelFactory)[ImagesViewModel::class.java]
     }
 
-    private val coroutineScore = CoroutineScope(Job() + Dispatchers.IO)
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentImagesBinding.inflate(layoutInflater, container, false)
         ImagesFeatureComponentHolder.getComponent().inject(this)
         return binding.root
@@ -74,7 +69,7 @@ class ImagesFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, Observer {
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetViews()
             when {
                 it == null -> {
@@ -197,7 +192,6 @@ class ImagesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        coroutineScore.cancel()
         ImagesFeatureComponentHolder.reset()
     }
 }

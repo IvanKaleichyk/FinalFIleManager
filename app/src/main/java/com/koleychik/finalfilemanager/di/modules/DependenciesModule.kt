@@ -1,6 +1,10 @@
 package com.koleychik.finalfilemanager.di.modules
 
 import android.content.Context
+import android.util.SparseIntArray
+import androidx.core.util.set
+import androidx.fragment.app.FragmentManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.koleychik.core_files.api.FilesRepository
 import com.koleychik.core_files.di.FileCoreComponent
 import com.koleychik.feature_documents.di.DocumentsFeatureDependencies
@@ -12,6 +16,8 @@ import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
 import com.koleychik.feature_loading_api.FeatureLoadingApi
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_music.di.MusicFeatureDependencies
+import com.koleychik.feature_nav_bar.di.NavBarFeatureDependencies
+import com.koleychik.feature_nav_bar.framework.NavBarUtils
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
 import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_documents_api.RvFilesAdapterApi
@@ -21,7 +27,9 @@ import com.koleychik.feature_searching_impl.framework.SearchingUIApi
 import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_select_category.di.SelectCategoryDependencies
 import com.koleychik.feature_video.di.VideoFeatureDependencies
+import com.koleychik.finalfilemanager.R
 import com.koleychik.finalfilemanager.navigation.Navigator
+import com.koleychik.finalfilemanager.utils.setup
 import com.koleychik.module_injector.component_holder.BaseDependencies
 import dagger.Module
 import dagger.Provides
@@ -29,6 +37,27 @@ import javax.inject.Singleton
 
 @Module
 class DependenciesModule {
+
+    @Provides
+    @Singleton
+    fun provideNavBarFeatureDependencies() = object : NavBarFeatureDependencies {
+        override fun navHosts(): NavBarUtils = object : NavBarUtils {
+            override fun setup(
+                bottomNavigationView: BottomNavigationView,
+                fragmentManager: FragmentManager,
+                containerId: Int
+            ) {
+                bottomNavigationView.setup(
+                    fragmentManager,
+                    SparseIntArray().apply {
+                        this[R.id.files] = R.navigation.files
+                        this[R.id.folders] = R.navigation.folders
+                    },
+                    containerId
+                )
+            }
+        }
+    }
 
     @Provides
     @Singleton

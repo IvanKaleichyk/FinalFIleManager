@@ -43,7 +43,7 @@ dependencies {
     implementation project(":basic-resources")
     implementation project(':feature-searching')
     implementation project(":models")
-    implementation project(":module-injector")
+    implementation project(":injector")
     implementation project(":feature-loading-api")
     implementation project(":core-files")
 

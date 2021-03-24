@@ -2,6 +2,7 @@ package com.koleychik.feature_select_category.ui
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.koleychik.feature_select_category.SelectCategoryNavigationApi
 import com.koleychik.feature_select_category.databinding.ItemRvSelectCategoryBinding
@@ -36,10 +37,26 @@ class SelectCategoryAdapter @Inject constructor(private val navigationApi: Selec
 
             binding.cardView.setOnClickListener {
                 when (model.id) {
-                    0 -> navigationApi.selectCategoryFeatureGoToImagesFragment()
-                    1 -> navigationApi.selectCategoryFeatureGoToVideoFragment()
-                    2 -> navigationApi.selectCategoryFeatureGoToMusicFragment()
-                    3 -> navigationApi.selectCategoryFeatureGoToDocumentsFragment()
+                    0 -> navigationApi.selectCategoryFeatureGoToImagesFragment(
+                        Navigation.findNavController(
+                            binding.root
+                        )
+                    )
+                    1 -> navigationApi.selectCategoryFeatureGoToVideoFragment(
+                        Navigation.findNavController(
+                            binding.root
+                        )
+                    )
+                    2 -> navigationApi.selectCategoryFeatureGoToMusicFragment(
+                        Navigation.findNavController(
+                            binding.root
+                        )
+                    )
+                    3 -> navigationApi.selectCategoryFeatureGoToDocumentsFragment(
+                        Navigation.findNavController(
+                            binding.root
+                        )
+                    )
                 }
             }
         }

@@ -1,12 +1,15 @@
 package com.koleychik.feature_select_category
 
 import android.os.Bundle
-import com.koleychik.module_injector.navigation.NavigatorApi
+import androidx.navigation.NavController
 
-interface SelectCategoryNavigationApi : NavigatorApi {
+interface SelectCategoryNavigationApi {
+    fun selectCategoryFeatureGoToMusicFragment(controller: NavController, bundle: Bundle? = null)
+    fun selectCategoryFeatureGoToImagesFragment(controller: NavController, bundle: Bundle? = null)
+    fun selectCategoryFeatureGoToDocumentsFragment(
+        controller: NavController,
+        bundle: Bundle? = null
+    )
 
-    fun selectCategoryFeatureGoToMusicFragment(bundle: Bundle? = null)
-    fun selectCategoryFeatureGoToImagesFragment(bundle: Bundle? = null)
-    fun selectCategoryFeatureGoToDocumentsFragment(bundle: Bundle? = null)
-    fun selectCategoryFeatureGoToVideoFragment(bundle: Bundle? = null)
+    fun selectCategoryFeatureGoToVideoFragment(controller: NavController, bundle: Bundle? = null)
 }

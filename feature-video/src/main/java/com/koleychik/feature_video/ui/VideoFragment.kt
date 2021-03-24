@@ -19,6 +19,7 @@ import com.koleychik.feature_video.databinding.FragmentVideoBinding
 import com.koleychik.feature_video.di.VideoFeatureComponentHolder
 import com.koleychik.feature_video.ui.viewModel.VideoViewModel
 import com.koleychik.feature_video.ui.viewModel.ViewModelFactory
+import com.koleychik.injector.NavigationSystem
 import com.koleychik.models.fileCarcass.media.MediaCarcass
 import com.koleychik.models.fileCarcass.media.VideoModel
 import javax.inject.Inject
@@ -51,6 +52,7 @@ class VideoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        NavigationSystem.onStartFeature?.let { start -> start(this) }
         _binding = FragmentVideoBinding.inflate(layoutInflater, container, false)
         VideoFeatureComponentHolder.getComponent().inject(this)
         return binding.root

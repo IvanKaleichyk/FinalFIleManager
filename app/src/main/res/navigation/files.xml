@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/files_nav_host"
+    app:startDestination="@id/selectCategoryFragment">
+
+    <fragment
+        android:id="@+id/selectCategoryFragment"
+        android:name="com.koleychik.feature_select_category.ui.SelectCategoryFragment"
+        android:label="SelectCategoryFragment"
+        tools:layout="@layout/fragment_select_category">
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_imagesFragment"
+            app:destination="@id/imagesFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_musicFragment"
+            app:destination="@id/musicFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_documentsFragment"
+            app:destination="@id/documentsFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_selectCategoryFragment_to_videoFragment"
+            app:destination="@id/videoFragment"
+            app:enterAnim="@anim/go_to_right"
+            app:exitAnim="@anim/fade_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/imagesFragment"
+        android:name="com.koleychik.feature_images.ui.ImagesFragment"
+        android:label="ImagesFragment"
+        tools:layout="@layout/fragment_images" />
+
+    <fragment
+        android:id="@+id/musicFragment"
+        android:name="com.koleychik.feature_music.ui.MusicFragment"
+        android:label="MusicFragment"
+        tools:layout="@layout/fragment_music" />
+
+    <fragment
+        android:id="@+id/documentsFragment"
+        android:name="com.koleychik.feature_documents.ui.DocumentsFragment"
+        android:label="DocumentsFragment"
+        tools:layout="@layout/fragment_documents" />
+    <fragment
+        android:id="@+id/videoFragment"
+        android:name="com.koleychik.feature_video.ui.VideoFragment"
+        android:label="VideoFragment"
+        tools:layout="@layout/fragment_video" />
+</navigation>

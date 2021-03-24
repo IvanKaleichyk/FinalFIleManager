@@ -42,7 +42,7 @@ dependencies {
     implementation project(":app-annotations")
     implementation project(":basic-resources")
     implementation project(':feature-searching')
-    implementation project(":module-injector")
+    implementation project(":injector")
     implementation project(":models")
     implementation project(":core-files")
     implementation project(":feature-rv-media-api")
@@ -58,6 +58,9 @@ dependencies {
     //dagger
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
+
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navigation}"
 
     // viewModel
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle}"

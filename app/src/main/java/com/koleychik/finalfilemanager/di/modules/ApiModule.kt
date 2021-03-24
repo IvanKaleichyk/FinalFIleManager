@@ -21,6 +21,9 @@ import com.koleychik.feature_music.di.MusicFeatureApi
 import com.koleychik.feature_music.di.MusicFeatureComponentHolder
 import com.koleychik.feature_music.di.MusicFeatureDependencies
 import com.koleychik.feature_music.di.MusicFeatureDestroyer
+import com.koleychik.feature_nav_bar.di.NavBarFeatureApi
+import com.koleychik.feature_nav_bar.di.NavBarFeatureComponentHolder
+import com.koleychik.feature_nav_bar.di.NavBarFeatureDependencies
 import com.koleychik.feature_rv_common_api.api.RvMediaApi
 import com.koleychik.feature_rv_common_impl.di.RvMediaComponentHolder
 import com.koleychik.feature_rv_documents_api.RvFilesApi
@@ -42,6 +45,15 @@ import dagger.Provides
 
 @Module
 class ApiModule {
+
+    @Provides
+    fun provideNavBarFeatureApi(
+        dependencies: NavBarFeatureDependencies,
+        destroyer: BaseDestroyer
+    ): NavBarFeatureApi {
+        NavBarFeatureComponentHolder.init(dependencies, destroyer)
+        return NavBarFeatureComponentHolder.get()
+    }
 
     @Provides
     fun provideSearchingFeatureApi(

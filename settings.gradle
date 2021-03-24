@@ -1,3 +1,5 @@
+include ':injector'
+include ':feature-nav-bar'
 include ':feature-folders-and-files'
 include ':feature-searching'
 include ':feature-video'
@@ -19,6 +21,5 @@ include ':feature-images'
 include ':models'
 include ':data'
 include ':core-files'
-include ':module-injector'
 include ':app'
 rootProject.name = "FinalFIleManager"
