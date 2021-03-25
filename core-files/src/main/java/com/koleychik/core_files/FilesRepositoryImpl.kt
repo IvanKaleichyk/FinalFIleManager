@@ -70,12 +70,14 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
         val cursor = queryContentResolver(uriExternal, documentsProjections) ?: return emptyList()
 
         while (cursor.moveToNext()) {
+            val id = cursor.getLong(0)
             val name = cursor.getString(1)
             val mimeType = cursor.getString(4) ?: ""
             listRes.add(
                 DocumentModel(
+                    id = id,
                     name = name ?: "",
-                    uri = Uri.withAppendedPath(uriExternal, cursor.getString(0)),
+                    uri = Uri.withAppendedPath(uriExternal, id.toString()),
                     sizeAbbreviation = context.getSizeAbbreviation(cursor.getLong(2)),
                     dateAdded = cursor.getLong(3),
                     format = getTypeOfDocument(name ?: ""),
@@ -177,7 +179,7 @@ internal class FilesRepositoryImpl @Inject constructor(private val context: Cont
 //        } else context.startActivity(intent)
         try {
             context.startActivity(intent)
-        }catch (e : ActivityNotFoundException){
+        } catch (e: ActivityNotFoundException) {
             Toast.makeText(context, e.message.toString(), Toast.LENGTH_LONG).show()
         }
 

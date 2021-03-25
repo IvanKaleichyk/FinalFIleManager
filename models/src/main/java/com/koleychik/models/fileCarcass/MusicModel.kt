@@ -4,7 +4,7 @@ import android.net.Uri
 import com.koleychik.models.type.FileType
 
 data class MusicModel(
-    val id: Long,
+    override val id: Long,
     override val name: String,
     val artist: String,
     val title: String,

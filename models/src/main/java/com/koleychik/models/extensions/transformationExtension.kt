@@ -8,11 +8,13 @@ import com.koleychik.models.fileCarcass.FolderModel
 import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.document.getTypeOfDocument
 import com.koleychik.models.type.getFileType
+import java.util.*
 
 fun DocumentFile.toDocumentModel(context: Context): DocumentModel {
     val rootName = name ?: ""
     val mimeType = type ?: ""
     return DocumentModel(
+        id = Random().nextLong(),
         name = rootName,
         uri = FileProvider.getUriForFile(
             context,
@@ -28,6 +30,7 @@ fun DocumentFile.toDocumentModel(context: Context): DocumentModel {
 }
 
 fun DocumentFile.toFolderModel() = FolderModel(
+    id = Random().nextLong(),
     name = name ?: "",
     uri = uri,
     dateAdded = null,
