@@ -25,7 +25,6 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
         with(binding) {
             edtSearching.run {
                 addTextChangedListener(textWatcher)
-                onFocusChangeListener = createOnFocusChangeListener(context)
             }
             fabSearch.setOnClickListener(createOnClickToFabIcon())
             motionLayoutSearching.visibility = View.VISIBLE
@@ -45,7 +44,7 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
                 transitionToState(R.id.open)
             }
             fabSearch.setImageResource(R.drawable.close_icon_32_black)
-            setEditTextFocus(true)
+            openKeyboard(root.context.applicationContext)
         }
     }
 
@@ -57,7 +56,7 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
                 transitionToState(R.id.close)
             }
             fabSearch.setImageResource(R.drawable.search_icon_32_black)
-            setEditTextFocus(false)
+            closeKeyboard(root.context.applicationContext)
         }
     }
 
@@ -79,32 +78,17 @@ internal class SearchingUIImpl @Inject constructor() : SearchingUIApi {
         binding.fabSearch.isVisible = boolean
     }
 
-    fun setEditTextFocus(isFocused: Boolean) {
-        with(binding.edtSearching) {
-            isCursorVisible = isFocused
-            isFocusable = isFocused
-            isFocusableInTouchMode = isFocused
-            if (isFocused) {
-                requestFocus()
-            }
-        }
+    private fun openKeyboard(context: Context) {
+        (context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
+            binding.edtSearching,
+            InputMethodManager.SHOW_FORCED
+        )
     }
 
-    private fun createOnFocusChangeListener(context: Context) =
-        View.OnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                // Open keyboard
-                (context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(
-                    binding.edtSearching,
-                    InputMethodManager.SHOW_FORCED
-                )
-            } else {
-                // Close keyboard
-                (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
-                    binding.edtSearching.windowToken,
-                    0
-                )
-            }
-        }
-
+    private fun closeKeyboard(context: Context) {
+        (context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+            binding.edtSearching.windowToken,
+            0
+        )
+    }
 }
