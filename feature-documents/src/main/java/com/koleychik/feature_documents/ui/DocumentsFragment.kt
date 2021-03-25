@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.util.set
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.koleychik.basic_resources.Constants.TAG
@@ -33,7 +34,7 @@ class DocumentsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val mapTypes: Map<Int, DocumentType> by lazy { createMap() }
+    private val mapTypes: SparseArray<DocumentType> by lazy { createMap() }
 
     @Inject
     internal lateinit var loadingApi: LoadingApi
@@ -66,8 +67,6 @@ class DocumentsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        mapTypes = createMap()
-
         setupViewStub()
         setupSearching()
         createOnClickListener()
@@ -77,7 +76,7 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, Observer {
+        viewModel.currentList.observe(viewLifecycleOwner, {
             resetUI()
             when {
                 it == null -> loading()
@@ -85,8 +84,9 @@ class DocumentsFragment : Fragment() {
                 else -> showList(it)
             }
         })
-        viewModel.listSelectFormats.observe(viewLifecycleOwner, Observer {
+        viewModel.listSelectFormats.observe(viewLifecycleOwner, {
             viewModel.setFullList(getTextFromEdtSearching())
+
         })
     }
 
@@ -117,7 +117,6 @@ class DocumentsFragment : Fragment() {
         }
 
     }
-
 
     private fun loading() {
         Log.d(TAG, "start loading")
@@ -152,10 +151,6 @@ class DocumentsFragment : Fragment() {
         }
     }
 
-    private fun delete() {
-
-    }
-
     private fun createSwipeToRefresh() {
         binding.carcass.swipeToRefresh.apply {
             setOnRefreshListener {
@@ -174,7 +169,7 @@ class DocumentsFragment : Fragment() {
             adapter = adapterApi
             addItemDecoration(itemDecoration)
         }
-        adapterApi.onClick = {model, position ->
+        adapterApi.onClick = { model, _ ->
             viewModel.openFile(model)
         }
     }
@@ -224,16 +219,16 @@ class DocumentsFragment : Fragment() {
     private fun getTextFromEdtSearching() =
         binding.searchingInclude.edtSearching.text.toString().trim()
 
-    private fun createMap() = mapOf(
-        binding.typeTxt.id to DocumentType.TXT,
-        binding.typePdf.id to DocumentType.PDF,
-        binding.typeEpub.id to DocumentType.EPUB,
-        binding.typeB2.id to DocumentType.B2,
-        binding.typeDoc.id to DocumentType.DOC,
-        binding.typeDocx.id to DocumentType.DOCX,
-        binding.typePpt.id to DocumentType.PPT,
-        binding.typeOther.id to DocumentType.OTHER
-    )
+    private fun createMap() = SparseArray<DocumentType>().apply {
+        this[binding.typeTxt.id] = DocumentType.TXT
+        this[binding.typePdf.id] = DocumentType.PDF
+        this[binding.typeEpub.id] = DocumentType.EPUB
+        this[binding.typeB2.id] = DocumentType.B2
+        this[binding.typeDoc.id] = DocumentType.DOC
+        this[binding.typeDocx.id] = DocumentType.DOCX
+        this[binding.typePpt.id] = DocumentType.PPT
+        this[binding.typeOther.id] = DocumentType.OTHER
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.SortedList
 import androidx.recyclerview.widget.SortedListAdapterCallback
 import coil.Coil
 import coil.ImageLoader
+import coil.clear
 import coil.fetch.VideoFrameFileFetcher
 import coil.fetch.VideoFrameUriFetcher
 import coil.load
@@ -61,6 +62,11 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
     override fun getItemCount(): Int = list.size()
 
+    override fun onViewRecycled(holder: RvFilesAdapterViewHolder) {
+        super.onViewRecycled(holder)
+        holder.clearImage()
+    }
+
     inner class MainViewHolder(private val binding: ItemRvFilesLayoutBinding) :
         RvFilesAdapterViewHolder(binding.root) {
 
@@ -74,6 +80,10 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
                     onClick?.let { click -> click(model, position) }
                 }
             }
+        }
+
+        override fun clearImage(){
+            binding.icon.clear()
         }
 
         private fun loadIcon(model: FileCarcass) {

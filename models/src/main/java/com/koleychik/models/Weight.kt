@@ -7,7 +7,7 @@ import com.koleychik.models.fileCarcass.document.DocumentModel
 import com.koleychik.models.fileCarcass.media.ImageModel
 import com.koleychik.models.fileCarcass.media.VideoModel
 
-fun FileCarcass.getWeight(firstLatter: Char): Int {
+fun FileCarcass.getWeight(firstLatter: Char?): Int {
 
     var weight = 1
 
@@ -38,8 +38,8 @@ fun FileCarcass.getWeight(firstLatter: Char): Int {
         }
     }
 
-    println("firstLatter.toInt() = ${firstLatter.toInt()}")
-    return weight * firstLatter.toInt()
+//    println("firstLatter.toInt() = ${firstLatter.toInt()}")
+    return weight * (firstLatter ?: ' ').toInt()
 }
 
 private fun DocumentModel.getWeightOfDocumentModel(): Int {
