@@ -11,6 +11,7 @@ abstract class FileCarcass {
         else this.getWeight(name[0])
     }
 
+    abstract val id: Long
     abstract val name: String
     abstract val uri: Uri
     abstract val sizeAbbreviation: String?

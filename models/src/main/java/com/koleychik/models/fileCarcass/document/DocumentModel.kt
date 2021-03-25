@@ -6,6 +6,7 @@ import com.koleychik.models.type.FileType
 
 
 data class DocumentModel(
+    override val id: Long,
     override val name: String,
     override val uri: Uri,
     override val sizeAbbreviation: String,

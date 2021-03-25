@@ -13,7 +13,7 @@ data class ImageModel(
     override val sizeAbbreviation: String,
     override val dateAdded: Long?,
     override val mimeType: String,
-) : MediaCarcass(id) {
+) : MediaCarcass() {
 
     @IgnoredOnParcel
     override val type: FileType = FileType.ImageType

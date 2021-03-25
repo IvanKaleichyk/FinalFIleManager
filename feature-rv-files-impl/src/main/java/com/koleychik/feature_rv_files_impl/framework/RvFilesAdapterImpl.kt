@@ -3,8 +3,7 @@ package com.koleychik.feature_rv_files_impl.framework
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.SortedList
-import androidx.recyclerview.widget.SortedListAdapterCallback
+import androidx.recyclerview.widget.DiffUtil
 import coil.Coil
 import coil.ImageLoader
 import coil.clear
@@ -28,26 +27,14 @@ import javax.inject.Inject
 
 internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
 
-
-    private val list: SortedList<FileCarcass> = SortedList(
-        FileCarcass::class.java,
-        object : SortedListAdapterCallback<FileCarcass>(this) {
-            override fun compare(o1: FileCarcass, o2: FileCarcass): Int = o1.weight - o2.weight
-
-            override fun areContentsTheSame(
-                oldItem: FileCarcass,
-                newItem: FileCarcass
-            ): Boolean =
-                oldItem.dateAdded == newItem.dateAdded
-
-            override fun areItemsTheSame(item1: FileCarcass, item2: FileCarcass): Boolean =
-                item1 == item2
-        })
-
+    private val list = mutableListOf<FileCarcass>()
 
     override fun submitList(newList: List<FileCarcass>) {
+        val diffUtil = RvFilesDiffUtils(newList, list)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         list.clear()
         list.addAll(newList)
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override var onClick: ((model: FileCarcass, position: Int) -> Unit)? = null
@@ -60,7 +47,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
         holder.bind(list[position], position)
     }
 
-    override fun getItemCount(): Int = list.size()
+    override fun getItemCount(): Int = list.size
 
     override fun onViewRecycled(holder: RvFilesAdapterViewHolder) {
         super.onViewRecycled(holder)
@@ -82,7 +69,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
             }
         }
 
-        override fun clearImage(){
+        override fun clearImage() {
             binding.icon.clear()
         }
 
