@@ -2,7 +2,6 @@ plugins {
     id 'android-feature'
 }
 
-
 dependencies {
     implementation project(":app-annotations")
     implementation project(":basic-resources")
