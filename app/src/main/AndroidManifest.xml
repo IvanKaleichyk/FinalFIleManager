@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalFIleManager">
-        <activity android:name=".test.TestLoadingFragment" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/splashTheme"
@@ -36,15 +35,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-        <!--        <service android:name=".MediaPlayerService"-->
-        <!--            android:exported="false">-->
-        <!--            <intent-filter>-->
-        <!--                <action android:name="android.media.browse.MediaBrowserService" />-->
-        <!--                <action android:name="android.intent.action.MEDIA_BUTTON" />-->
-        <!--            </intent-filter>-->
-        <!--        </service>-->
-
     </application>
 
 </manifest>
