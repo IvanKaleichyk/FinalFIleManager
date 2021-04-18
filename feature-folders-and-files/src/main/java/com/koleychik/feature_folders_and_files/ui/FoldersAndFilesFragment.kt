@@ -197,9 +197,13 @@ class FoldersAndFilesFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        FoldersAndFilesFeatureComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        FoldersAndFilesFeatureComponentHolder.reset()
     }
 }

@@ -189,9 +189,13 @@ class ImagesFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        ImagesFeatureComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        ImagesFeatureComponentHolder.reset()
     }
 }

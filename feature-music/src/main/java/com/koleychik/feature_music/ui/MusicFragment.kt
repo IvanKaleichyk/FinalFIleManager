@@ -160,6 +160,11 @@ class MusicFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        MusicFeatureComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

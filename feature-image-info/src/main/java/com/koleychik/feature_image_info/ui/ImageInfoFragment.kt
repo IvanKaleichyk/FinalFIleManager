@@ -131,9 +131,13 @@ class ImageInfoFragment : Fragment() {
         binding.viewPager.setCurrentItem(getStartPosition(), false)
     }
 
+    override fun onStop() {
+        super.onStop()
+        ImageInfoFeatureComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        ImageInfoFeatureComponentHolder.reset()
     }
 }

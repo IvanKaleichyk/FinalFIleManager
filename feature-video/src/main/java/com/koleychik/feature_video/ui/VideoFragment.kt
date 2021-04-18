@@ -177,9 +177,13 @@ class VideoFragment : Fragment() {
     private fun getTextFromEdtSearching() =
         binding.searchingInclude.edtSearching.text.toString().trim()
 
+    override fun onStop() {
+        super.onStop()
+        VideoFeatureComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        VideoFeatureComponentHolder.reset()
     }
 }

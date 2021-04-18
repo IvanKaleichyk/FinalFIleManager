@@ -44,9 +44,13 @@ class NavBarFragment : Fragment() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        NavBarFeatureComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        NavBarFeatureComponentHolder.reset()
     }
 }

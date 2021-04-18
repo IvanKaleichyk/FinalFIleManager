@@ -55,9 +55,14 @@ class SelectCategoryFragment : Fragment() {
         CategoryModel.DownloadsCategory
     )
 
+
+    override fun onStop() {
+        super.onStop()
+        SelectCategoryComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        SelectCategoryComponentHolder.reset()
     }
 }

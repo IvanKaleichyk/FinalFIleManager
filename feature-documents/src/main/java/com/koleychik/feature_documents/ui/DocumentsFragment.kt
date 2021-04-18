@@ -230,6 +230,11 @@ class DocumentsFragment : Fragment() {
         this[binding.typeOther.id] = DocumentType.OTHER
     }
 
+    override fun onStop() {
+        super.onStop()
+        DocumentsFeatureComponentHolder.reset()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
