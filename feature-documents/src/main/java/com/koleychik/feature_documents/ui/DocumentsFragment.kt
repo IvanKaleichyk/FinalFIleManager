@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.util.set
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.koleychik.basic_resources.Constants.TAG
 import com.koleychik.feature_documents.R
@@ -86,7 +87,6 @@ class DocumentsFragment : Fragment() {
         })
         viewModel.listSelectFormats.observe(viewLifecycleOwner, {
             viewModel.setFullList(getTextFromEdtSearching())
-
         })
     }
 
@@ -167,6 +167,7 @@ class DocumentsFragment : Fragment() {
         )
         binding.carcass.rv.apply {
             adapter = adapterApi
+            itemAnimator = DefaultItemAnimator()
             addItemDecoration(itemDecoration)
         }
         adapterApi.onClick = { model, _ ->

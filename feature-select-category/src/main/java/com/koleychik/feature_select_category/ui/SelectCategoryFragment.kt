@@ -40,10 +40,9 @@ class SelectCategoryFragment : Fragment() {
     }
 
     private fun createRv() {
-        with(binding) {
-
-            rv.layoutManager = GridLayoutManager(requireContext(), 2)
-            rv.adapter = this@SelectCategoryFragment.adapter
+        with(binding.rv) {
+            layoutManager = GridLayoutManager(requireContext(), 2)
+            adapter = this@SelectCategoryFragment.adapter
         }
         adapter.submitList(getData())
     }

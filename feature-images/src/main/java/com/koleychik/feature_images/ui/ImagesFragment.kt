@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.basic_resources.Constants.PARCELABLE_LIST
 import com.koleychik.basic_resources.Constants.PARCELABLE_POSITION
@@ -126,10 +127,11 @@ class ImagesFragment : Fragment() {
     }
 
     private fun createRv() {
-        with(binding.carcass) {
-            rv.layoutManager = GridLayoutManager(context, 2)
-            rv.adapter = adapter
-            rv.setHasFixedSize(true)
+        with(binding.carcass.rv) {
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = this@ImagesFragment.adapter
+            setHasFixedSize(true)
         }
         adapter.setOnCLick { _, position -> createOnCLick(position) }
     }

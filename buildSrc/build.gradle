@@ -17,8 +17,8 @@ buildscript {
 }
 
 repositories {
-    jcenter()
     google()
+    jcenter()
 }
 
 gradlePlugin {
@@ -53,6 +53,8 @@ gradlePlugin {
         }
     }
 }
+
+
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

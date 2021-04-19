@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DefaultItemAnimator
 import com.koleychik.basic_resources.Constants.PATH
 import com.koleychik.core_files.FilesCoreConstants.ROOT_PATH
 import com.koleychik.feature_folders_and_files.databinding.FragmentFoldersAndFilesBinding
@@ -174,7 +175,10 @@ class FoldersAndFilesFragment : Fragment() {
     }
 
     private fun createRv() {
-        binding.carcass.rv.adapter = adapterApi
+        binding.carcass.rv.apply {
+            itemAnimator = DefaultItemAnimator()
+            adapter = adapterApi
+        }
     }
 
     private fun setupViewStub() {

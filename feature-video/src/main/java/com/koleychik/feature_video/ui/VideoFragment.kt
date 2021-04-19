@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.feature_loading_api.LoadingApi
 import com.koleychik.feature_rv_common_api.RvMediaAdapterApi
@@ -118,10 +119,11 @@ class VideoFragment : Fragment() {
     }
 
     private fun createRv() {
-        with(binding.carcass) {
-            rv.layoutManager = GridLayoutManager(context, 2)
-            rv.adapter = adapterApi
-            rv.setHasFixedSize(true)
+        with(binding.carcass.rv) {
+            itemAnimator = DefaultItemAnimator()
+            layoutManager = GridLayoutManager(context, 2)
+            adapter = adapterApi
+            setHasFixedSize(true)
         }
         adapterApi.setOnCLick { model, _ ->
             openFile(model)
