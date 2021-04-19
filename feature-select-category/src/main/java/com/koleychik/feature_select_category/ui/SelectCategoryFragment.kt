@@ -49,10 +49,10 @@ class SelectCategoryFragment : Fragment() {
     }
 
     private fun getData() = listOf(
-        CategoryModel.ImageCategory,
-        CategoryModel.VideoCategory,
-        CategoryModel.MusicCategory,
-        CategoryModel.DownloadsCategory
+        CategoryModel.IMAGE,
+        CategoryModel.VIDEO,
+        CategoryModel.MUSIC,
+        CategoryModel.DOCUMENT
     )
 
 

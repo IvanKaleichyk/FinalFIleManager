@@ -33,7 +33,7 @@ class SelectCategoryAdapter @Inject constructor(private val navigationApi: Selec
 
         fun bind(model: CategoryModel) {
             binding.icon.setImageResource(model.imgRes)
-            binding.name.setText(model.name)
+            binding.name.setText(model.nameRes)
 
             binding.cardView.setOnClickListener {
                 when (model.id) {
