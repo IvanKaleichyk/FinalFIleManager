@@ -30,7 +30,7 @@ internal class RvFilesAdapterImpl @Inject constructor() : RvFilesAdapterApi() {
     private val list = mutableListOf<FileCarcass>()
 
     override fun submitList(newList: List<FileCarcass>) {
-        val diffUtil = RvFilesDiffUtils(newList, list)
+        val diffUtil = RvFilesDiffUtils(newList = newList, oldList = list)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
         list.clear()
         list.addAll(newList)
