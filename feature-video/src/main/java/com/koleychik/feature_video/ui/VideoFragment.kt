@@ -68,22 +68,34 @@ class VideoFragment : Fragment() {
     }
 
     private fun subscribe() {
+        viewModel.isLoading.observe(viewLifecycleOwner){ isLoading ->
+            if (binding.carcass.swipeToRefresh.isRefreshing) return@observe
+            if (isLoading) startLoading()
+            else stopLoading()
+        }
         viewModel.currentList.observe(viewLifecycleOwner, {
-            resetUI()
+            resetViews()
             when {
-                it == null -> loading()
+                it == null -> viewModel.getFirstTimeVideoData(getTextFromEdtSearching())
                 it.isEmpty() -> emptyList()
                 else -> showList(it)
             }
         })
     }
 
-    private fun loading() {
+    private fun startLoading() {
+        resetViews()
         loadingApi.run {
             setVisible(true)
             startAnimation()
         }
-        viewModel.getVideo(getTextFromEdtSearching())
+    }
+
+    private fun stopLoading() {
+        loadingApi.run {
+            setVisible(false)
+            endAnimation()
+        }
     }
 
     private fun emptyList() {
@@ -95,26 +107,18 @@ class VideoFragment : Fragment() {
         binding.carcass.rv.visibility = View.VISIBLE
     }
 
-    private fun resetUI() {
+    private fun resetViews() {
         with(binding.carcass) {
             rv.visibility = View.INVISIBLE
             infoText.visibility = View.GONE
             swipeToRefresh.isRefreshing = false
-        }
-        loadingApi.run {
-            endAnimation()
-            setVisible(false)
         }
     }
 
     private fun startSearch() {
         val word = getTextFromEdtSearching()
         if (word.isEmpty()) return
-        resetUI()
-        loadingApi.run {
-            setVisible(true)
-            startAnimation()
-        }
+
         viewModel.search(word)
     }
 
@@ -148,7 +152,7 @@ class VideoFragment : Fragment() {
         searchingUIApi.run {
             setOnCloseSearching {
                 binding.searchingInclude.edtSearching.text = null
-                viewModel.currentList.value = viewModel.fullList.value
+                viewModel.search(null)
             }
             setRootView(binding.searchingInclude)
             setTextWatcher(createTextWatcher())

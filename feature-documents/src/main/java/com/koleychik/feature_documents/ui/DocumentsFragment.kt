@@ -3,7 +3,6 @@ package com.koleychik.feature_documents.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.koleychik.basic_resources.Constants.TAG
 import com.koleychik.feature_documents.R
 import com.koleychik.feature_documents.databinding.FragmentDocumentsBinding
 import com.koleychik.feature_documents.di.DocumentsFeatureComponentHolder
@@ -77,10 +75,16 @@ class DocumentsFragment : Fragment() {
     }
 
     private fun subscribe() {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (binding.carcass.swipeToRefresh.isRefreshing) return@observe
+
+            if (isLoading) startLoading()
+            else stopLoading()
+        }
         viewModel.currentList.observe(viewLifecycleOwner, {
-            resetUI()
+            resetViews()
             when {
-                it == null -> loading()
+                it == null -> viewModel.getFirstTimeDocumentModelsData(getTextFromEdtSearching())
                 it.isEmpty() -> emptyList()
                 else -> showList(it)
             }
@@ -118,43 +122,42 @@ class DocumentsFragment : Fragment() {
 
     }
 
-    private fun loading() {
-        Log.d(TAG, "start loading")
+    private fun startLoading() {
+        resetViews()
         loadingApi.run {
             setVisible(true)
             startAnimation()
         }
-        viewModel.getDocuments(getTextFromEdtSearching())
     }
 
-
-    private fun showList(list: List<FileCarcass>) {
-        Log.d(TAG, "show list")
-        adapterApi.submitList(list)
-        binding.carcass.rv.visibility = View.VISIBLE
-    }
-
-    private fun emptyList() {
-        Log.d(TAG, "show list")
-        binding.carcass.infoText.visibility = View.VISIBLE
-    }
-
-    private fun resetUI() {
-        with(binding.carcass) {
-            rv.visibility = View.INVISIBLE
-            infoText.visibility = View.GONE
-            swipeToRefresh.isRefreshing = false
-        }
+    private fun stopLoading() {
         loadingApi.run {
             setVisible(false)
             endAnimation()
         }
     }
 
+    private fun showList(list: List<FileCarcass>) {
+        adapterApi.submitList(list)
+        binding.carcass.rv.visibility = View.VISIBLE
+    }
+
+    private fun emptyList() {
+        binding.carcass.infoText.visibility = View.VISIBLE
+    }
+
+    private fun resetViews() {
+        with(binding.carcass) {
+            rv.visibility = View.INVISIBLE
+            infoText.visibility = View.GONE
+            swipeToRefresh.isRefreshing = false
+        }
+    }
+
     private fun createSwipeToRefresh() {
-        binding.carcass.swipeToRefresh.apply {
+        with(binding.carcass.swipeToRefresh) {
             setOnRefreshListener {
-                isRefreshing = false
+                isRefreshing = true
                 viewModel.getDocuments(getTextFromEdtSearching())
             }
         }
@@ -187,7 +190,7 @@ class DocumentsFragment : Fragment() {
         searchingUIApi.run {
             setOnCloseSearching {
                 binding.searchingInclude.edtSearching.text = null
-                viewModel.currentList.value = viewModel.fullList.value
+                viewModel.search(null)
             }
             setRootView(binding.searchingInclude)
             setTextWatcher(createTextWatcher())
@@ -199,11 +202,6 @@ class DocumentsFragment : Fragment() {
     private fun startSearch() {
         val word = getTextFromEdtSearching()
         if (word.isEmpty()) return
-        resetUI()
-        loadingApi.run {
-            setVisible(true)
-            startAnimation()
-        }
         viewModel.search(word)
     }
 

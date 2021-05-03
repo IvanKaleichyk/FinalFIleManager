@@ -79,22 +79,36 @@ class FoldersAndFilesFragment : Fragment() {
     }
 
     private fun subscribe() {
+        viewModel.isLoading.observe(viewLifecycleOwner){ isLoading ->
+            if (binding.carcass.swipeToRefresh.isRefreshing) return@observe
+
+            if (isLoading) startLoading()
+            else stopLoading()
+        }
         viewModel.currentList.observe(viewLifecycleOwner, {
             resetViews()
             when {
-                it == null -> loading()
+                it == null ->
+                    viewModel.getFirstTimeGetFoldersAndFiles(path, getTextFromEdtSearching())
                 it.isEmpty() -> emptyList()
                 else -> showList(it)
             }
         })
     }
 
-    private fun loading() {
+    private fun startLoading(){
+        resetViews()
         loadingApi.run {
             setVisible(true)
             startAnimation()
         }
-        viewModel.getFoldersAndFiles(path, getTextFromEdtSearching())
+    }
+
+    private fun stopLoading(){
+        loadingApi.run {
+            setVisible(false)
+            endAnimation()
+        }
     }
 
     private fun emptyList() {
@@ -128,7 +142,7 @@ class FoldersAndFilesFragment : Fragment() {
         searchingUIApi.run {
             setOnCloseSearching {
                 binding.searchingInclude.edtSearching.text = null
-                viewModel.currentList.value = viewModel.fullList.value
+                viewModel.search(null)
             }
             setRootView(binding.searchingInclude)
             setTextWatcher(createTextWatcher())
@@ -140,11 +154,6 @@ class FoldersAndFilesFragment : Fragment() {
     private fun startSearch() {
         val word = getTextFromEdtSearching()
         if (word.isEmpty()) return
-        resetViews()
-        loadingApi.run {
-            setVisible(true)
-            startAnimation()
-        }
         viewModel.search(word)
     }
 
@@ -162,7 +171,7 @@ class FoldersAndFilesFragment : Fragment() {
     }
 
     private fun createOnSwipeToRefresh() {
-        binding.carcass.swipeToRefresh.run {
+        with(binding.carcass.swipeToRefresh) {
             setOnRefreshListener {
                 isRefreshing = true
                 viewModel.getFoldersAndFiles(path, getTextFromEdtSearching())
@@ -190,10 +199,6 @@ class FoldersAndFilesFragment : Fragment() {
     }
 
     private fun resetViews() {
-        loadingApi.run {
-            setVisible(false)
-            endAnimation()
-        }
         with(binding.carcass) {
             rv.visibility = View.INVISIBLE
             infoText.visibility = View.GONE

@@ -62,14 +62,43 @@ class MusicFragment : Fragment() {
         subscribe()
     }
 
-    private fun startSearch() {
-        val word = getTextFromEdtSearching()
-        if (word.isEmpty()) return
+    private fun subscribe() {
+        viewModel.isLoading.observe(viewLifecycleOwner){ isLoading ->
+            if (binding.carcass.swipeToRefresh.isRefreshing) return@observe
+
+            if (isLoading) startLoading()
+            else stopLoading()
+        }
+
+        viewModel.currentList.observe(viewLifecycleOwner, {
+            resetViews()
+            when {
+                it == null -> viewModel.getFirstTimeMusic(getTextFromEdtSearching())
+                it.isEmpty() -> emptyList()
+                else -> showList(it)
+            }
+        })
+    }
+
+    private fun startLoading(){
         resetViews()
         loadingApi.run {
             setVisible(true)
             startAnimation()
         }
+    }
+
+    private fun stopLoading(){
+        loadingApi.run {
+            setVisible(false)
+            endAnimation()
+        }
+    }
+
+
+    private fun startSearch() {
+        val word = getTextFromEdtSearching()
+        if (word.isEmpty()) return
         viewModel.search(word)
     }
 
@@ -91,17 +120,6 @@ class MusicFragment : Fragment() {
         }
     }
 
-    private fun subscribe() {
-        viewModel.currentList.observe(viewLifecycleOwner, {
-            resetViews()
-            when {
-                it == null -> loading()
-                it.isEmpty() -> emptyList()
-                else -> showList(it)
-            }
-        })
-    }
-
     private fun showList(list: List<MusicModel>) {
         adapter.submitList(list)
         binding.carcass.rv.visibility = View.VISIBLE
@@ -111,19 +129,11 @@ class MusicFragment : Fragment() {
         binding.carcass.infoText.visibility = View.VISIBLE
     }
 
-    private fun loading() {
-        loadingApi.apply {
-            setVisible(true)
-            startAnimation()
-        }
-        viewModel.getMusic(getTextFromEdtSearching())
-    }
-
     private fun setupSearching() {
         searchingUIApi.run {
             setOnCloseSearching {
                 binding.searchingInclude.edtSearching.text = null
-                viewModel.currentList.value = viewModel.fullList.value
+                viewModel.search(null)
             }
             setRootView(binding.searchingInclude)
             setTextWatcher(createTextWatcher())
@@ -154,10 +164,6 @@ class MusicFragment : Fragment() {
     }
 
     private fun resetViews() {
-        loadingApi.apply {
-            setVisible(false)
-            endAnimation()
-        }
         with(binding.carcass) {
             infoText.visibility = View.GONE
             rv.visibility = View.INVISIBLE

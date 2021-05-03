@@ -3,7 +3,6 @@ package com.koleychik.feature_images.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.koleychik.basic_resources.Constants.PARCELABLE_LIST
 import com.koleychik.basic_resources.Constants.PARCELABLE_POSITION
-import com.koleychik.basic_resources.Constants.TAG
 import com.koleychik.feature_images.databinding.FragmentImagesBinding
 import com.koleychik.feature_images.di.ImagesFeatureComponentHolder
 import com.koleychik.feature_images.navigation.ImagesFeatureNavigationApi
@@ -70,21 +68,18 @@ class ImagesFragment : Fragment() {
     }
 
     private fun subscribe() {
+        viewModel.isLoading.observe(viewLifecycleOwner){ isLoading ->
+            if (binding.carcass.swipeToRefresh.isRefreshing) return@observe
+
+            if (isLoading) startLoading()
+            else stopLoading()
+        }
         viewModel.currentList.observe(viewLifecycleOwner, {
             resetViews()
             when {
-                it == null -> {
-                    Log.d(TAG, "list was null")
-                    loading()
-                }
-                it.isEmpty() -> {
-                    emptyList()
-                    Log.d(TAG, "list was empty")
-                }
-                else -> {
-                    showList(it)
-                    Log.d(TAG, "list was full")
-                }
+                it == null -> viewModel.getFirstTimeImagesData(getTextFromEdtSearching())
+                it.isEmpty() -> emptyList()
+                else -> showList(it)
             }
         })
     }
@@ -92,20 +87,22 @@ class ImagesFragment : Fragment() {
     private fun startSearch() {
         val word = getTextFromEdtSearching()
         if (word.isEmpty()) return
+        viewModel.search(word)
+    }
+
+    private fun startLoading(){
         resetViews()
         loadingApi.run {
             setVisible(true)
             startAnimation()
         }
-        viewModel.search(word)
     }
 
-    private fun loading() {
+    private fun stopLoading(){
         loadingApi.run {
-            setVisible(true)
-            startAnimation()
+            setVisible(false)
+            endAnimation()
         }
-        viewModel.getImages(getTextFromEdtSearching())
     }
 
     private fun emptyList() {
@@ -145,11 +142,6 @@ class ImagesFragment : Fragment() {
     }
 
     private fun resetViews() {
-        Log.d(TAG, "resetViews")
-        loadingApi.apply {
-            setVisible(false)
-            endAnimation()
-        }
         with(binding.carcass) {
             rv.visibility = View.INVISIBLE
             infoText.visibility = View.GONE
@@ -161,7 +153,7 @@ class ImagesFragment : Fragment() {
         searchingUIApi.run {
             setOnCloseSearching {
                 binding.searchingInclude.edtSearching.text = null
-                viewModel.currentList.value = viewModel.fullList.value
+                viewModel.search(null)
             }
             setRootView(binding.searchingInclude)
             setTextWatcher(createTextWatcher())
