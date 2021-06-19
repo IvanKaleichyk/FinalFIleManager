@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.koleychik.feature_music.databinding.ItemRvMusicBinding
+import com.koleychik.models.extensions.getTime
 import com.koleychik.models.fileCarcass.MusicModel
 
 class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
@@ -38,7 +39,7 @@ class MusicAdapter : RecyclerView.Adapter<MusicAdapter.MainViewHolder>() {
             with(binding) {
                 textTitle.text = model.title
                 textAuthor.text = model.artist
-                textDuration.text = model.duration.toString()
+                textDuration.text = root.context.getTime(model.duration)
                 textSize.text = model.sizeAbbreviation
                 binding.root.setOnClickListener {
                     onClick?.let { click -> click(model) }

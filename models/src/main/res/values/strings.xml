@@ -15,4 +15,8 @@
     <string name="kb">KB</string>
     <string name="mb">MB</string>
     <string name="gb">GB</string>
+    <string name="milliseconds">milliseconds</string>
+    <string name="seconds">sec</string>
+    <string name="minutes">min</string>
+    <string name="hours">h</string>
 </resources>
